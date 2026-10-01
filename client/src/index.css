@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Della+Respira&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  background-color: #e5f3f1;
+  width: 100vw;
+  overflow-x: hidden;
+  font-family: "Montserrat", sans-serif;
+}
+
+.animatedButton{
+  animation-duration: 10000ms;
+}
+
+.ql-container{
+  border: none !important;
+}
+.ql-toolbar{
+  border: none !important;
+}
+.ql-editor{
+  border: none !important;
+}
+
+/* Post content typography */
+.post-content {
+  color: #374151;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.post-content p {
+  margin-bottom: 1.25rem;
+}
+
+.post-content h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+.post-content h2 {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-top: 2rem;
+  margin-bottom: 0.85rem;
+  line-height: 1.35;
+}
+
+.post-content h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.post-content ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+.post-content ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+.post-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.75;
+}
+
+.post-content blockquote {
+  border-left: 4px solid #166534;
+  padding-left: 1.25rem;
+  margin: 1.75rem 0;
+  font-style: italic;
+  color: #4b5563;
+}
+
+.post-content img {
+  border-radius: 1rem;
+  margin: 1.75rem 0;
+  max-width: 100%;
+  height: auto;
+}
+
+.post-content iframe {
+  border-radius: 1rem;
+  margin: 1.75rem 0;
+  max-width: 100%;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.post-content strong,
+.post-content b {
+  font-weight: 700;
+  color: #111827;
+}
+
+.post-content a {
+  color: #166534;
+  text-decoration: underline;
+}
