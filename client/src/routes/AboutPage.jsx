@@ -256,22 +256,7 @@ const AboutPage = () => {
       </section>
 
       {/* FOOTER CTA SECTION */}
-      <section className="rounded-2xl border border-emerald-900/10 bg-[#153252]  p-8 md:p-12 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold font-[Philosopher]">
-            Have a story, idea, or tech tutorial to share?
-          </h2>
-          <p className="text-white/80 text-sm md:text-base mt-2 max-w-xl">
-            Join our growing community of writers and developers today. Share your unique perspective with readers worldwide.
-          </p>
-        </div>
-        <Link
-          to="/write"
-          className="whitespace-nowrap rounded-full bg-emerald-500 hover:bg-emerald-400 text-[#153252] font-bold px-7 py-3.5 shadow-md transition-colors text-sm md:text-base"
-        >
-          Start Writing Now
-        </Link>
-      </section>
+      
     </div>
   );
 };

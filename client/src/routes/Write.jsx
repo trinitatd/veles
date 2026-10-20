@@ -105,7 +105,7 @@ const Write = () => {
         <input
           className="text-4xl font-semibold bg-transparent outline-none"
           type="text"
-          placeholder="My Awesome Story"
+          placeholder="Article Title"
           name="title"
           required
         />

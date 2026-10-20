@@ -5,7 +5,7 @@ import { format } from "timeago.js";
 const PostListItem = ({ post }) => {
 
   return (
-    <div className="flex flex-col xl:flex-row gap-8 mb-12">
+    <div className="flex flex-col xl:flex-row gap-8 mb-12 border border-[#176B3A] rounded-l p-5 md:p-6 overflow-hidden transition-all duration-300 ease-in-out hover:border-[#0f4424] hover:shadow-md">
       {/* image */}
       {post.img && (
         <div className="md:hidden xl:block xl:w-1/3">
