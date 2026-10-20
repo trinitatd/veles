@@ -35,7 +35,7 @@ const SinglePostPage = () => {
           <div className="flex items-center gap-2 text-gray-400 text-sm flex-wrap">
             <span>Written by</span>
             <Link
-              to={data.user?.username ? `/posts?author=${data.user.username}` : "#"}
+              to={data.user?.username ? `/author/${data.user.username}` : "#"}
               className="text-green-800 font-medium hover:underline"
             >
               {data.user?.username || "Author"}
@@ -76,22 +76,24 @@ const SinglePostPage = () => {
           <h1 className="mb-4 text-sm font-medium">Author</h1>
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <img
-                src={
-                  data.user?.img
-                    ? data.user.img.startsWith("http") || data.user.img.startsWith("/")
-                      ? data.user.img
-                      : `${import.meta.env.VITE_IK_URL_ENDPOINT}/${data.user.img}`
-                    : "/userImg.jpeg"
-                }
-                alt={data.user?.username || "Author"}
-                className="w-12 h-12 rounded-full object-cover shrink-0 shadow-sm border border-gray-100"
-                onError={(e) => {
-                  e.currentTarget.src = "/userImg.jpeg";
-                }}
-              />
+              <Link to={data.user?.username ? `/author/${data.user.username}` : "#"} className="shrink-0 group">
+                <img
+                  src={
+                    data.user?.img
+                      ? data.user.img.startsWith("http") || data.user.img.startsWith("/")
+                        ? data.user.img
+                        : `${import.meta.env.VITE_IK_URL_ENDPOINT}/${data.user.img}`
+                      : "/userImg.jpeg"
+                  }
+                  alt={data.user?.username || "Author"}
+                  className="w-12 h-12 rounded-full object-cover shrink-0 shadow-sm border border-gray-100 group-hover:ring-2 group-hover:ring-green-800/40 transition-all"
+                  onError={(e) => {
+                    e.currentTarget.src = "/userImg.jpeg";
+                  }}
+                />
+              </Link>
               <Link
-                to={`/posts?author=${data.user?.username}`}
+                to={data.user?.username ? `/author/${data.user.username}` : "#"}
                 className="text-green-800 font-semibold hover:underline"
               >
                 {data.user?.username || "Author"}

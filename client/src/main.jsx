@@ -11,6 +11,7 @@ import LoginPage from "./routes/LoginPage.jsx";
 import RegisterPage from "./routes/RegisterPage.jsx";
 import SinglePostPage from "./routes/SinglePostPage.jsx";
 import AboutPage from "./routes/AboutPage.jsx";
+import AuthorProfilePage from "./routes/AuthorProfilePage.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import AdminOverview from "./routes/admin/AdminOverview.jsx";
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <AboutPage />,
+      },
+      {
+        path: "/author/:username",
+        element: <AuthorProfilePage />,
       },
       {
         path: "/:slug",

@@ -3,7 +3,7 @@ import "react-quill-new/dist/quill.snow.css";
 import ReactQuill from "react-quill-new";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Upload from "../components/Upload";
@@ -52,17 +52,58 @@ const EditPost = () => {
     }
   }, [post]);
 
-  // Append embedded images to editor
+  const quillRef = useRef(null);
+  const lastRangeRef = useRef(null);
+
+  const saveSelection = () => {
+    const editor = quillRef.current?.getEditor();
+    if (editor) {
+      const range = editor.getSelection();
+      if (range) {
+        lastRangeRef.current = range;
+      }
+    }
+  };
+
+  const handleSelectionChange = (range) => {
+    if (range) {
+      lastRangeRef.current = range;
+    }
+  };
+
+  const insertEmbed = (type, url) => {
+    const editor = quillRef.current?.getEditor();
+    if (!editor || !url) return;
+
+    editor.enable(true);
+    const range = lastRangeRef.current || editor.getSelection();
+    const index = range ? range.index : Math.max(0, editor.getLength() - 1);
+
+    if (range && range.length > 0) {
+      editor.deleteText(range.index, range.length, "user");
+    }
+
+    editor.insertEmbed(index, type, url, "user");
+    editor.setSelection(index + 1, "user");
+    lastRangeRef.current = { index: index + 1, length: 0 };
+    setContent(editor.root.innerHTML);
+    editor.focus();
+  };
+
+  // Insert embedded image into editor at cursor position
   useEffect(() => {
-    img && setContent((prev) => prev + `<p><img src="${img.url}"/></p>`);
+    if (img && img.url) {
+      insertEmbed("image", img.url);
+      setImg("");
+    }
   }, [img]);
 
-  // Append embedded video to editor
+  // Insert embedded video into editor at cursor position
   useEffect(() => {
-    video &&
-      setContent(
-        (prev) => prev + `<p><iframe class="ql-video" src="${video.url}"/></p>`
-      );
+    if (video && video.url) {
+      insertEmbed("video", video.url);
+      setVideo("");
+    }
   }, [video]);
 
   const updateMutation = useMutation({
@@ -258,23 +299,25 @@ const EditPost = () => {
 
         {/* QUILL EDITOR */}
         <div className="flex flex-1 min-h-[300px]">
-          <div className="flex flex-col gap-2 mr-2">
-            <Upload type="image" setProgress={setProgress} setData={setImg}>
+          <div className="flex flex-col gap-2 mr-2" onMouseDown={saveSelection}>
+            <Upload type="image" setProgress={setProgress} setData={setImg} onClick={saveSelection}>
               <span className="cursor-pointer text-xl p-1 rounded hover:bg-gray-100" title="Insert Image">
                 🌆
               </span>
             </Upload>
-            <Upload type="video" setProgress={setProgress} setData={setVideo}>
+            <Upload type="video" setProgress={setProgress} setData={setVideo} onClick={saveSelection}>
               <span className="cursor-pointer text-xl p-1 rounded hover:bg-gray-100" title="Insert Video">
                 ▶️
               </span>
             </Upload>
           </div>
           <ReactQuill
+            ref={quillRef}
             theme="snow"
             className="flex-1 rounded-xl bg-white shadow-sm"
             value={content}
             onChange={setContent}
+            onChangeSelection={handleSelectionChange}
             readOnly={0 < progress && progress < 100}
           />
         </div>

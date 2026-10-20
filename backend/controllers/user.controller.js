@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import Post from "../models/post.model.js";
 import { getOrSyncUser } from "../lib/userSync.js";
 
 export const getUserSavedPosts = async (req, res) => {
@@ -152,6 +153,37 @@ export const updateUserProfile = async (req, res) => {
         .json("Username is already taken. Please choose another one.");
     }
     res.status(500).json("An error occurred while updating profile.");
+  }
+};
+
+export const getPublicUserProfile = async (req, res) => {
+  try {
+    const { username } = req.params;
+    if (!username) {
+      return res.status(400).json("Username is required");
+    }
+
+    const user = await User.findOne({
+      username: { $regex: new RegExp(`^${username}$`, "i") },
+    }).select("username img about createdAt");
+
+    if (!user) {
+      return res.status(404).json("Author not found");
+    }
+
+    const postCount = await Post.countDocuments({ user: user._id });
+
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      img: user.img,
+      about: user.about || "",
+      createdAt: user.createdAt,
+      postCount,
+    });
+  } catch (err) {
+    console.error("Error fetching author profile:", err);
+    res.status(500).json("Server error");
   }
 };
 

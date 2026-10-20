@@ -23,16 +23,18 @@ const authenticator = async () => {
   }
 };
 
-const Upload = ({ children, type, setProgress, setData }) => {
+const Upload = ({ children, type, setProgress, setData, onClick }) => {
   const ref = useRef(null);
 
   const onError = (err) => {
     console.log(err);
+    setProgress?.(0);
     toast.error("Image upload failed!");
   };
   const onSuccess = (res) => {
     console.log(res);
-    setData(res);
+    setProgress?.(0);
+    setData?.(res);
   };
   const onUploadProgress = (progress) => {
     console.log(progress);
@@ -54,7 +56,13 @@ const Upload = ({ children, type, setProgress, setData }) => {
         ref={ref}
         accept={`${type}/*`}
       />
-      <div className="cursor-pointer" onClick={() => ref.current.click()}>
+      <div
+        className="cursor-pointer"
+        onClick={() => {
+          onClick?.();
+          ref.current.click();
+        }}
+      >
         {children}
       </div>
     </IKContext>

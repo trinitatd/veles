@@ -4,6 +4,7 @@ import {
   getPost,
   getMyPosts,
   getPostById,
+  getPostsByAuthor,
   createPost,
   updatePost,
   deletePost,
@@ -24,6 +25,7 @@ router.get("/user/liked-posts", getLikedPosts);
 router.get("/user/saved-posts", getSavedPostsDetailed);
 router.get("/user/readlist-posts", getReadlistPostsDetailed);
 router.get("/by-id/:id", getPostById);
+router.get("/author/:username", getPostsByAuthor);
 router.get("/", getPosts);
 router.get("/:slug", increaseVisit, getPost);
 router.post("/", createPost);

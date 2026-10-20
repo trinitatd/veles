@@ -73,7 +73,7 @@ export const getPosts = async (req, res) => {
     .limit(limit)
     .skip((page - 1) * limit);
 
-  const totalPosts = await Post.countDocuments();
+  const totalPosts = await Post.countDocuments(query);
   const hasMore = page * limit < totalPosts;
 
   res.status(200).json({ posts, hasMore });
@@ -247,6 +247,32 @@ export const getPostById = async (req, res) => {
   }
 
   res.status(200).json(post);
+};
+
+export const getPostsByAuthor = async (req, res) => {
+  try {
+    const { username } = req.params;
+    if (!username) {
+      return res.status(400).json("Username is required");
+    }
+
+    const user = await User.findOne({
+      username: { $regex: new RegExp(`^${username}$`, "i") },
+    });
+
+    if (!user) {
+      return res.status(404).json("Author not found");
+    }
+
+    const posts = await Post.find({ user: user._id })
+      .populate("user", "username img about")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error("Error fetching posts by author:", err);
+    res.status(500).json("Server error");
+  }
 };
 
 export const updatePost = async (req, res) => {

@@ -28,6 +28,21 @@ body {
   border: none !important;
 }
 
+.ql-editor img {
+  border-radius: 1rem;
+  margin: 1.25rem 0;
+  max-width: 100%;
+  height: auto;
+}
+
+.ql-editor iframe.ql-video {
+  border-radius: 1rem;
+  margin: 1.25rem 0;
+  max-width: 100%;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
 /* Post content typography */
 .post-content {
   color: #374151;

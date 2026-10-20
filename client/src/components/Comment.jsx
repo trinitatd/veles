@@ -1,5 +1,6 @@
 import { format } from "timeago.js";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
@@ -113,18 +114,26 @@ const Comment = ({ comment, postId, post }) => {
       <div className="flex items-center justify-between gap-4">
         {/* USER INFO */}
         <div className="flex items-center gap-3">
-          <img
-            src={avatarSrc}
-            alt={comment.user?.username || "User"}
-            className="w-10 h-10 rounded-full object-cover border border-gray-100 shadow-sm shrink-0"
-            onError={(e) => {
-              e.currentTarget.src = "/userImg.jpeg";
-            }}
-          />
+          <Link
+            to={comment.user?.username ? `/author/${comment.user.username}` : "#"}
+            className="shrink-0 group"
+          >
+            <img
+              src={avatarSrc}
+              alt={comment.user?.username || "User"}
+              className="w-10 h-10 rounded-full object-cover border border-gray-100 shadow-sm group-hover:ring-2 group-hover:ring-green-800/40 transition-all"
+              onError={(e) => {
+                e.currentTarget.src = "/userImg.jpeg";
+              }}
+            />
+          </Link>
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-semibold text-gray-800 text-sm">
+            <Link
+              to={comment.user?.username ? `/author/${comment.user.username}` : "#"}
+              className="font-semibold text-gray-800 text-sm hover:text-green-800 hover:underline transition-colors"
+            >
               {comment.user?.username || "User"}
-            </span>
+            </Link>
             {((post?.user?.clerkUserId &&
               comment.user?.clerkUserId &&
               post.user.clerkUserId === comment.user.clerkUserId) ||

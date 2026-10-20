@@ -21,7 +21,7 @@ const PostListItem = ({ post }) => {
           <span>Written by</span>
           <Link
             className="text-green-800 font-medium hover:underline"
-            to={post.user?.username ? `/posts?author=${post.user.username}` : "#"}
+            to={post.user?.username ? `/author/${post.user.username}` : "#"}
           >
             {post.user?.username || "Anonymous"}
           </Link>
