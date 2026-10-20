@@ -12,6 +12,10 @@ import {
   getAdminUsers,
   updateAdminUserRole,
   getAdminLogs,
+  getAdminChannels,
+  deleteAdminChannel,
+  getAdminReports,
+  resolveAdminReport,
 } from "../controllers/admin.controller.js";
 
 const router = express.Router();
@@ -38,5 +42,11 @@ router.delete("/comments/:id", deleteAdminComment);
 // User Management
 router.get("/users", getAdminUsers);
 router.patch("/users/:id/role", updateAdminUserRole);
+
+// Channel & Moderation Management
+router.get("/channels", getAdminChannels);
+router.delete("/channels/:id", deleteAdminChannel);
+router.get("/reports", getAdminReports);
+router.patch("/reports/:id", resolveAdminReport);
 
 export default router;

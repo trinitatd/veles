@@ -6,14 +6,23 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { format } from "timeago.js";
 import Image from "../components/Image";
+import CreateChannelModal from "../components/CreateChannelModal";
+import EditChannelModal from "../components/EditChannelModal";
+import ConfirmModal from "../components/ConfirmModal";
+import ManageRequestsModal from "../components/ManageRequestsModal";
 
 const Dashboard = () => {
   const { isLoaded, isSignedIn, user } = useUser();
   const { getToken } = useAuth();
   const queryClient = useQueryClient();
 
-  const [activeTab, setActiveTab] = useState("myPosts"); // "myPosts" | "saved" | "readlist" | "liked"
+  const [activeTab, setActiveTab] = useState("myPosts"); // "myPosts" | "saved" | "channels" | "readlist" | "liked"
   const [postToDelete, setPostToDelete] = useState(null);
+  const [isCreateChannelOpen, setIsCreateChannelOpen] = useState(false);
+  const [channelToEdit, setChannelToEdit] = useState(null);
+  const [channelToDelete, setChannelToDelete] = useState(null);
+  const [channelToLeave, setChannelToLeave] = useState(null);
+  const [channelForRequests, setChannelForRequests] = useState(null);
   const [aboutText, setAboutText] = useState("");
   const [isEditingAbout, setIsEditingAbout] = useState(false);
   const [usernameText, setUsernameText] = useState("");
@@ -322,6 +331,83 @@ const Dashboard = () => {
     },
     onError: (err) => {
       toast.error(err?.response?.data || "Failed to unlike post");
+    },
+  });
+
+  // User Channels Query (Owned & Joined)
+  const {
+    data: userChannels,
+    isPending: isChannelsPending,
+    error: channelsError,
+  } = useQuery({
+    queryKey: ["userChannels"],
+    queryFn: async () => {
+      const token = await getToken();
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/channels/user`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    },
+    enabled: !!isSignedIn,
+  });
+
+  // Delete Channel Mutation
+  const deleteChannelMutation = useMutation({
+    mutationFn: async (channelId) => {
+      const token = await getToken();
+      return axios.delete(
+        `${import.meta.env.VITE_API_URL}/channels/${channelId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    },
+    onSuccess: () => {
+      toast.success("Channel deleted successfully!");
+      setChannelToDelete(null);
+      queryClient.invalidateQueries({ queryKey: ["userChannels"] });
+    },
+    onError: (err) => {
+      const msg =
+        err.response?.data?.message ||
+        err.response?.data ||
+        "Failed to delete channel";
+      toast.error(typeof msg === "string" ? msg : "Failed to delete channel");
+    },
+  });
+
+  // Leave Channel Mutation
+  const leaveChannelMutation = useMutation({
+    mutationFn: async (channelId) => {
+      const token = await getToken();
+      return axios.post(
+        `${import.meta.env.VITE_API_URL}/channels/${channelId}/leave`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    },
+    onSuccess: () => {
+      toast.info("Left channel successfully");
+      setChannelToLeave(null);
+      queryClient.invalidateQueries({ queryKey: ["userChannels"] });
+    },
+    onError: (err) => {
+      const msg =
+        err.response?.data?.message ||
+        err.response?.data ||
+        "Failed to leave channel";
+      toast.error(typeof msg === "string" ? msg : "Failed to leave channel");
     },
   });
 
@@ -670,6 +756,20 @@ const Dashboard = () => {
           </button>
 
           <button
+            onClick={() => setActiveTab("channels")}
+            className={`flex items-center gap-2 pb-2 px-3 text-sm font-semibold transition-colors border-b-2 whitespace-nowrap ${
+              activeTab === "channels"
+                ? "border-emerald-800 text-emerald-800"
+                : "border-transparent text-gray-500 hover:text-gray-800"
+            }`}
+          >
+            <span>My Channels</span>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800">
+              {(userChannels?.owned?.length || 0) + (userChannels?.joined?.length || 0)}
+            </span>
+          </button>
+
+          <button
             onClick={() => setActiveTab("readlist")}
             className={`flex items-center gap-2 pb-2 px-3 text-sm font-semibold transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "readlist"
@@ -982,6 +1082,267 @@ const Dashboard = () => {
           </div>
         )}
 
+        {/* TAB: MY CHANNELS */}
+        {activeTab === "channels" && (
+          <div className="flex flex-col gap-8">
+            {/* TOP BAR / ACTION HEADER */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-gray-100">
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">
+                  Channel & Community Management
+                </h3>
+                <p className="text-xs text-gray-500">
+                  Manage channels you created and participate in real-time discussions.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <Link
+                  to="/channels"
+                  className="px-4 py-2 rounded-xl border border-gray-200 hover:border-gray-300 text-xs font-semibold text-gray-700 transition-colors"
+                >
+                  Browse Channels →
+                </Link>
+                <button
+                  onClick={() => setIsCreateChannelOpen(true)}
+                  className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
+                >
+                  <span>+</span>
+                  <span>Create Channel</span>
+                </button>
+              </div>
+            </div>
+
+            {isChannelsPending ? (
+              <div className="py-12 text-center text-gray-400 text-xs">
+                Loading your channels...
+              </div>
+            ) : channelsError ? (
+              <div className="py-12 text-center text-red-500 text-xs">
+                Failed to load channels. Please refresh.
+              </div>
+            ) : (
+              <div className="flex flex-col gap-8">
+                {/* 1. OWNED CHANNELS GROUP */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                      <span>👑</span>
+                      <span>Owned Channels</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200/50">
+                        {userChannels?.owned?.length || 0}
+                      </span>
+                    </h4>
+                  </div>
+
+                  {userChannels?.owned?.length === 0 ? (
+                    <div className="p-8 rounded-2xl border border-dashed border-gray-200 text-center flex flex-col items-center justify-center gap-2 bg-gray-50/50">
+                      <span className="text-2xl">🌱</span>
+                      <p className="text-xs font-semibold text-gray-700">
+                        You haven't created any channels yet
+                      </p>
+                      <p className="text-[11px] text-gray-400 max-w-sm">
+                        Create topic-based community channels where readers and fellow engineers can discuss articles and technology.
+                      </p>
+                      <button
+                        onClick={() => setIsCreateChannelOpen(true)}
+                        className="mt-2 px-4 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-medium transition-colors"
+                      >
+                        Create your first channel
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="border-b border-gray-200 text-xs font-semibold uppercase text-gray-400 tracking-wider">
+                            <th className="pb-3 pr-4">Channel</th>
+                            <th className="pb-3 px-4">Visibility</th>
+                            <th className="pb-3 px-4">Members</th>
+                            <th className="pb-3 px-4">Last Active</th>
+                            <th className="pb-3 pl-4 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100 text-sm">
+                          {userChannels.owned.map((ch) => (
+                            <tr
+                              key={ch._id}
+                              className="hover:bg-gray-50/60 transition-colors group"
+                            >
+                              <td className="py-4 pr-4">
+                                <div className="flex flex-col">
+                                  <Link
+                                    to={`/channels/${ch.slug}`}
+                                    className="font-bold text-gray-900 group-hover:text-green-800 transition-colors flex items-center gap-1.5"
+                                  >
+                                    <span>#</span>
+                                    <span>{ch.name}</span>
+                                  </Link>
+                                  <span className="text-xs text-gray-500 line-clamp-1">
+                                    {ch.description || "No description"}
+                                  </span>
+                                </div>
+                              </td>
+
+                              <td className="py-4 px-4 whitespace-nowrap">
+                                <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 capitalize">
+                                  {ch.visibility === "private" ? "🔒 Private" : "🌐 Public"}
+                                </span>
+                              </td>
+
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-700 font-semibold">
+                                {ch.memberCount || 1} members
+                              </td>
+
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-500">
+                                {format(ch.lastActivityAt || ch.createdAt)}
+                              </td>
+
+                              <td className="py-4 pl-4 text-right whitespace-nowrap">
+                                <div className="flex items-center justify-end gap-2">
+                                  {ch.visibility === "private" && (
+                                    <button
+                                      onClick={() => setChannelForRequests(ch)}
+                                      className="relative px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 text-xs font-semibold transition-colors flex items-center gap-1.5 border border-emerald-200/60"
+                                      title="Manage Join Requests"
+                                    >
+                                      <span>📬 Requests</span>
+                                      {ch.pendingRequestCount > 0 && (
+                                        <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-white text-[10px] font-bold">
+                                          {ch.pendingRequestCount}
+                                        </span>
+                                      )}
+                                    </button>
+                                  )}
+                                  <Link
+                                    to={`/channels/${ch.slug}`}
+                                    className="px-3 py-1.5 rounded-lg bg-green-50 text-green-800 hover:bg-green-100 text-xs font-semibold transition-colors"
+                                  >
+                                    Open
+                                  </Link>
+                                  <button
+                                    onClick={() => setChannelToEdit(ch)}
+                                    className="px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 text-gray-700 text-xs font-semibold transition-colors"
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    onClick={() => setChannelToDelete(ch)}
+                                    className="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 text-xs font-semibold transition-colors"
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+
+                {/* 2. JOINED CHANNELS GROUP */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                      <span>💬</span>
+                      <span>Joined Channels</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-800 border border-blue-200/50">
+                        {userChannels?.joined?.length || 0}
+                      </span>
+                    </h4>
+                  </div>
+
+                  {userChannels?.joined?.length === 0 ? (
+                    <div className="p-8 rounded-2xl border border-dashed border-gray-200 text-center flex flex-col items-center justify-center gap-2 bg-gray-50/50">
+                      <span className="text-2xl">🔍</span>
+                      <p className="text-xs font-semibold text-gray-700">
+                        You haven't joined any other channels yet
+                      </p>
+                      <p className="text-[11px] text-gray-400 max-w-sm">
+                        Explore channels hosted by other authors and engineers to join relevant technical communities.
+                      </p>
+                      <Link
+                        to="/channels"
+                        className="mt-2 px-4 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-medium transition-colors"
+                      >
+                        Explore Public Channels
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="border-b border-gray-200 text-xs font-semibold uppercase text-gray-400 tracking-wider">
+                            <th className="pb-3 pr-4">Channel</th>
+                            <th className="pb-3 px-4">Creator</th>
+                            <th className="pb-3 px-4">Members</th>
+                            <th className="pb-3 px-4">Last Active</th>
+                            <th className="pb-3 pl-4 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100 text-sm">
+                          {userChannels.joined.map((ch) => (
+                            <tr
+                              key={ch._id}
+                              className="hover:bg-gray-50/60 transition-colors group"
+                            >
+                              <td className="py-4 pr-4">
+                                <div className="flex flex-col">
+                                  <Link
+                                    to={`/channels/${ch.slug}`}
+                                    className="font-bold text-gray-900 group-hover:text-green-800 transition-colors flex items-center gap-1.5"
+                                  >
+                                    <span>#</span>
+                                    <span>{ch.name}</span>
+                                  </Link>
+                                  <span className="text-xs text-gray-500 line-clamp-1">
+                                    {ch.description || "No description"}
+                                  </span>
+                                </div>
+                              </td>
+
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-600 font-medium">
+                                @{ch.creator?.username || "Author"}
+                              </td>
+
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-700 font-semibold">
+                                {ch.memberCount || 1} members
+                              </td>
+
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-500">
+                                {format(ch.lastActivityAt || ch.createdAt)}
+                              </td>
+
+                              <td className="py-4 pl-4 text-right whitespace-nowrap">
+                                <div className="flex items-center justify-end gap-2">
+                                  <Link
+                                    to={`/channels/${ch.slug}`}
+                                    className="px-3 py-1.5 rounded-lg bg-green-50 text-green-800 hover:bg-green-100 text-xs font-semibold transition-colors"
+                                  >
+                                    Open
+                                  </Link>
+                                  <button
+                                    onClick={() => setChannelToLeave(ch)}
+                                    className="px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-red-50 text-gray-600 hover:text-red-600 text-xs font-semibold transition-colors"
+                                  >
+                                    Leave
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* TAB 3: READLIST */}
         {activeTab === "readlist" && (
           <div>
@@ -1257,6 +1618,58 @@ const Dashboard = () => {
           </div>
         </div>
       )}
+      {/* CHANNEL MODALS */}
+      <CreateChannelModal
+        isOpen={isCreateChannelOpen}
+        onClose={() => setIsCreateChannelOpen(false)}
+        onCreated={() => {
+          queryClient.invalidateQueries({ queryKey: ["userChannels"] });
+        }}
+      />
+
+      <EditChannelModal
+        isOpen={!!channelToEdit}
+        channel={channelToEdit}
+        onClose={() => setChannelToEdit(null)}
+        onUpdated={() => {
+          queryClient.invalidateQueries({ queryKey: ["userChannels"] });
+        }}
+      />
+
+      <ConfirmModal
+        isOpen={!!channelToDelete}
+        title="Delete Channel"
+        message={`Are you sure you want to delete #${channelToDelete?.name}? This channel will be removed and members will no longer be able to message.`}
+        confirmText="Delete Channel"
+        confirmStyle="danger"
+        isLoading={deleteChannelMutation.isPending}
+        onConfirm={() => {
+          if (channelToDelete) deleteChannelMutation.mutate(channelToDelete._id);
+        }}
+        onClose={() => setChannelToDelete(null)}
+      />
+
+      <ConfirmModal
+        isOpen={!!channelToLeave}
+        title="Leave Channel"
+        message={`Are you sure you want to leave #${channelToLeave?.name}? You can rejoin anytime.`}
+        confirmText="Leave Channel"
+        confirmStyle="danger"
+        isLoading={leaveChannelMutation.isPending}
+        onConfirm={() => {
+          if (channelToLeave) leaveChannelMutation.mutate(channelToLeave._id);
+        }}
+        onClose={() => setChannelToLeave(null)}
+      />
+
+      <ManageRequestsModal
+        isOpen={!!channelForRequests}
+        channel={channelForRequests}
+        onClose={() => setChannelForRequests(null)}
+        onRequestHandled={() => {
+          queryClient.invalidateQueries({ queryKey: ["userChannels"] });
+        }}
+      />
     </div>
   );
 };

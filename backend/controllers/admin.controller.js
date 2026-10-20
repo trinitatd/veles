@@ -2,6 +2,11 @@ import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 import Comment from "../models/comment.model.js";
 import AdminLog from "../models/adminLog.model.js";
+import Channel from "../models/channel.model.js";
+import Message from "../models/message.model.js";
+import MessageReport from "../models/messageReport.model.js";
+import ModerationRecord from "../models/moderationRecord.model.js";
+import { getIO } from "../socket.js";
 import { clerkClient } from "@clerk/express";
 import { getOrSyncUser } from "../lib/userSync.js";
 
@@ -614,6 +619,223 @@ export const getAdminLogs = async (req, res, next) => {
       .lean();
 
     res.status(200).json(logs);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * GET /admin/channels
+ * Paginated list of channels across the platform (Platform Admin)
+ */
+export const getAdminChannels = async (req, res, next) => {
+  try {
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.max(1, Math.min(100, parseInt(req.query.limit) || 15));
+    const search = req.query.search?.trim();
+    const status = req.query.status || "all";
+
+    const query = {};
+    if (status !== "all") {
+      query.status = status;
+    }
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { slug: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const totalChannels = await Channel.countDocuments(query);
+    const channels = await Channel.find(query)
+      .populate("creator", "username img clerkUserId email")
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+
+    res.status(200).json({
+      channels,
+      totalChannels,
+      page,
+      totalPages: Math.ceil(totalChannels / limit) || 1,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * DELETE /admin/channels/:id
+ * Admin soft-delete any channel
+ */
+export const deleteAdminChannel = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const channel = await Channel.findById(id);
+
+    if (!channel) {
+      return res.status(404).json("Channel not found!");
+    }
+
+    const clerkUserId = req.auth?.userId;
+    const user = await getOrSyncUser(clerkUserId);
+    const reason = req.body.reason || "Deleted by platform administrator";
+
+    channel.status = "deleted";
+    channel.deletedAt = new Date();
+    channel.deletedByClerkId = clerkUserId;
+    channel.deletionReason = reason;
+    await channel.save();
+
+    await ModerationRecord.create({
+      targetId: channel._id.toString(),
+      targetType: "channel",
+      channel: channel._id,
+      moderator: user?._id,
+      moderatorClerkId: clerkUserId,
+      moderatorRole: "admin",
+      action: "DELETE_CHANNEL",
+      reason,
+      details: `Admin deleted channel: ${channel.name} (${channel.slug})`,
+    });
+
+    await recordAdminLog(
+      req,
+      "DELETE_POST",
+      `Platform admin deleted channel "${channel.name}"`,
+      channel._id,
+      "post"
+    );
+
+    const io = getIO();
+    if (io) {
+      io.to(channel._id.toString()).emit("channel_deleted", {
+        channelId: channel._id.toString(),
+        name: channel.name,
+        reason,
+      });
+    }
+
+    res.status(200).json("Channel deleted by administrator");
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * GET /admin/reports
+ * View reported messages across all channels
+ */
+export const getAdminReports = async (req, res, next) => {
+  try {
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.max(1, Math.min(50, parseInt(req.query.limit) || 20));
+    const status = req.query.status || "all";
+
+    const query = {};
+    if (status !== "all") {
+      query.status = status;
+    }
+
+    const totalReports = await MessageReport.countDocuments(query);
+    const reports = await MessageReport.find(query)
+      .populate("reporter", "username img clerkUserId email")
+      .populate("channel", "name slug")
+      .populate({
+        path: "message",
+        populate: { path: "sender", select: "username img email" },
+      })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+
+    res.status(200).json({
+      reports,
+      totalReports,
+      page,
+      totalPages: Math.ceil(totalReports / limit) || 1,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * PATCH /admin/reports/:id
+ * Resolve or dismiss a message report
+ */
+export const resolveAdminReport = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { status, action, reason } = req.body; // status: "reviewed" | "dismissed" | "actioned"
+
+    if (!["reviewed", "dismissed", "actioned"].includes(status)) {
+      return res.status(400).json("Invalid report status");
+    }
+
+    const report = await MessageReport.findById(id).populate("message");
+    if (!report) {
+      return res.status(404).json("Report not found!");
+    }
+
+    const clerkUserId = req.auth?.userId;
+    const user = await getOrSyncUser(clerkUserId);
+
+    report.status = status;
+    report.resolvedBy = user?._id;
+    report.resolvedByClerkId = clerkUserId;
+    report.resolvedAt = new Date();
+    report.resolutionNote = reason || `Report marked as ${status}`;
+    await report.save();
+
+    // If action is DELETE_MESSAGE, delete the message as well
+    if (action === "DELETE_MESSAGE" && report.message && !report.message.isDeleted) {
+      const message = await Message.findById(report.message._id);
+      if (message) {
+        message.isDeleted = true;
+        message.deletedAt = new Date();
+        message.deletedBy = user?._id;
+        message.deletedByClerkId = clerkUserId;
+        message.deletionReason = reason || "Removed by administrator following user report";
+        message.content = "[This message was deleted]";
+        await message.save();
+
+        const channel = await Channel.findById(message.channel);
+        if (channel) {
+          const io = getIO();
+          if (io) {
+            io.to(channel._id.toString()).emit("message_deleted", {
+              messageId: message._id.toString(),
+              channelId: channel._id.toString(),
+              isDeleted: true,
+              content: "[This message was deleted]",
+              deletedAt: message.deletedAt,
+              deletedByClerkId,
+            });
+          }
+        }
+      }
+    }
+
+    await ModerationRecord.create({
+      targetId: report._id.toString(),
+      targetType: "report",
+      channel: report.channel,
+      moderator: user?._id,
+      moderatorClerkId: clerkUserId,
+      moderatorRole: "admin",
+      action: action === "DELETE_MESSAGE" ? "DELETE_MESSAGE" : "RESOLVE_REPORT",
+      reason: reason || `Report ${status}`,
+      details: `Admin ${status} report for message ${report.message?._id || "unknown"}`,
+    });
+
+    res.status(200).json({
+      message: `Report successfully marked as ${status}`,
+      report,
+    });
   } catch (error) {
     next(error);
   }

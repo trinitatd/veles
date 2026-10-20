@@ -18,6 +18,8 @@ import AdminOverview from "./routes/admin/AdminOverview.jsx";
 import AdminPosts from "./routes/admin/AdminPosts.jsx";
 import AdminComments from "./routes/admin/AdminComments.jsx";
 import AdminUsers from "./routes/admin/AdminUsers.jsx";
+import AdminChannels from "./routes/admin/AdminChannels.jsx";
+import ChannelsPage from "./routes/ChannelsPage.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
@@ -51,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "users",
         element: <AdminUsers />,
+      },
+      {
+        path: "channels",
+        element: <AdminChannels />,
       },
     ],
   },
@@ -88,6 +94,14 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <AboutPage />,
+      },
+      {
+        path: "/channels",
+        element: <ChannelsPage />,
+      },
+      {
+        path: "/channels/:slug",
+        element: <ChannelsPage />,
       },
       {
         path: "/author/:username",

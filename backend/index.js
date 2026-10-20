@@ -1,5 +1,6 @@
 import "dotenv/config";
 import dns from "dns";
+import http from "http";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -11,10 +12,16 @@ import postRouter from "./routes/post.route.js";
 import commentRouter from "./routes/comment.route.js";
 import webhookRouter from "./routes/webhook.route.js";
 import adminRouter from "./routes/admin.route.js";
-import { clerkMiddleware, requireAuth } from "@clerk/express";
+import channelRouter from "./routes/channel.route.js";
+import { initSocket } from "./socket.js";
+import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 
 const app = express();
+const server = http.createServer(app);
+
+// Initialize real-time Socket.IO with server
+initSocket(server);
 
 app.use(
   cors({
@@ -34,31 +41,18 @@ app.use(function (req, res, next) {
   next();
 });
 
-// app.get("/test",(req,res)=>{
-//   res.status(200).send("it works!")
-// })
-
-// app.get("/auth-state", (req, res) => {
-//   const authState = req.auth;
-//   res.json(authState);
-// });
-
-// app.get("/protect", (req, res) => {
-//   const {userId} = req.auth;
-//   if(!userId){
-//     return res.status(401).json("not authenticated")
-//   }
-//   res.status(200).json("content")
-// });
-
-// app.get("/protect2", requireAuth(), (req, res) => {
-//   res.status(200).json("content")
-// });
-
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
 app.use("/admin", adminRouter);
+app.use("/channels", channelRouter);
+
+// Catch-all 404 handler for undefined routes to always return consistent JSON errors
+app.use((req, res) => {
+  res.status(404).json({
+    message: `Cannot ${req.method} ${req.originalUrl}`,
+  });
+});
 
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
@@ -70,7 +64,11 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
   connectDB();
-  console.log("Server is running!");
+  console.log(`Server is running on port ${PORT}!`);
 });
+
+export { app, server };
