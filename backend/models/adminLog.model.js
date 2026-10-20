@@ -22,6 +22,7 @@ const adminLogSchema = new Schema(
         "DELETE_COMMENT",
         "UPDATE_COMMENT",
         "UPDATE_USER_ROLE",
+        "DELETE_USER",
       ],
     },
     details: {

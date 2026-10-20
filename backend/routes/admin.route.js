@@ -11,6 +11,7 @@ import {
   deleteAdminComment,
   getAdminUsers,
   updateAdminUserRole,
+  deleteAdminUser,
   getAdminLogs,
   getAdminChannels,
   deleteAdminChannel,
@@ -42,6 +43,7 @@ router.delete("/comments/:id", deleteAdminComment);
 // User Management
 router.get("/users", getAdminUsers);
 router.patch("/users/:id/role", updateAdminUserRole);
+router.delete("/users/:id", deleteAdminUser);
 
 // Channel & Moderation Management
 router.get("/channels", getAdminChannels);

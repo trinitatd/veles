@@ -158,7 +158,7 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
                   <span className="text-xs font-bold text-gray-900">
                     Public
                   </span>
-                  <span className="text-xs">🌐</span>
+                  <span className="text-xs"></span>
                 </div>
                 <p className="text-[11px] text-gray-500">
                   Anyone can discover and join this channel.
@@ -177,7 +177,7 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
                   <span className="text-xs font-bold text-gray-900">
                     Private
                   </span>
-                  <span className="text-xs">🔒</span>
+                  <span className="text-xs"></span>
                 </div>
                 <p className="text-[11px] text-gray-500">
                   Visible only to invited or authorized members.

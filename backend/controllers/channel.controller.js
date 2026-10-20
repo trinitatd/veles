@@ -214,6 +214,107 @@ export const getUserChannels = async (req, res, next) => {
 };
 
 /**
+ * GET /channels/author/:username
+ * Public author profile channels: returns active PUBLIC channels created or joined by the author.
+ * Strictly enforces privacy: private channels and confidential memberships are NEVER returned.
+ */
+export const getAuthorChannels = async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    if (!username || typeof username !== "string") {
+      return res.status(400).json({ message: "Username is required" });
+    }
+
+    const cleanUsername = username.trim();
+    const authorUser = await User.findOne({
+      username: { $regex: new RegExp(`^${cleanUsername}$`, "i") },
+    }).lean();
+
+    if (!authorUser) {
+      return res.status(404).json({ message: "Author not found" });
+    }
+
+    // 1. Fetch active PUBLIC channels created by this author
+    const creatorQuery = {
+      status: "active",
+      visibility: "public",
+      $or: [{ creator: authorUser._id }],
+    };
+    if (authorUser.clerkUserId) {
+      creatorQuery.$or.push({ creatorClerkId: authorUser.clerkUserId });
+    }
+
+    const createdChannels = await Channel.find(creatorQuery)
+      .populate("creator", "username img")
+      .select("name slug description memberCount visibility lastActivityAt createdAt creator")
+      .sort({ lastActivityAt: -1, createdAt: -1 })
+      .lean();
+
+    const createdIds = new Set(createdChannels.map((c) => c._id.toString()));
+
+    // 2. Fetch active PUBLIC channels where author is a joined active member
+    const memberQuery = {
+      status: "active",
+      role: "member",
+      $or: [{ user: authorUser._id }],
+    };
+    if (authorUser.clerkUserId) {
+      memberQuery.$or.push({ clerkUserId: authorUser.clerkUserId });
+    }
+
+    const activeMemberships = await ChannelMember.find(memberQuery).lean();
+    const joinedChannelIds = activeMemberships
+      .map((m) => m.channel.toString())
+      .filter((id) => !createdIds.has(id));
+
+    let joinedChannels = [];
+    if (joinedChannelIds.length > 0) {
+      joinedChannels = await Channel.find({
+        _id: { $in: joinedChannelIds },
+        status: "active",
+        visibility: "public", // STRICT: only public channels
+      })
+        .populate("creator", "username img")
+        .select("name slug description memberCount visibility lastActivityAt createdAt creator")
+        .sort({ lastActivityAt: -1, createdAt: -1 })
+        .lean();
+    }
+
+    // Map channels with relationship tag: "creator" vs "member"
+    const createdWithRelationship = createdChannels.map((c) => ({
+      ...c,
+      relationship: "creator",
+    }));
+
+    const joinedWithRelationship = joinedChannels.map((c) => ({
+      ...c,
+      relationship: "member",
+    }));
+
+    // Combined list, sorted by most recent activity
+    const allPublicChannels = [
+      ...createdWithRelationship,
+      ...joinedWithRelationship,
+    ].sort((a, b) => {
+      const dateA = new Date(a.lastActivityAt || a.createdAt).getTime();
+      const dateB = new Date(b.lastActivityAt || b.createdAt).getTime();
+      return dateB - dateA;
+    });
+
+    res.status(200).json({
+      channels: allPublicChannels,
+      created: createdWithRelationship,
+      joined: joinedWithRelationship,
+      totalCount: allPublicChannels.length,
+      createdCount: createdWithRelationship.length,
+      joinedCount: joinedWithRelationship.length,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * GET /channels/:slugOrId
  * Fetch single channel details with membership and request status
  */

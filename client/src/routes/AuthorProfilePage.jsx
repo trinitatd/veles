@@ -21,10 +21,18 @@ const fetchAuthorPosts = async (username) => {
   return res.data;
 };
 
+const fetchAuthorChannels = async (username) => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_API_URL}/channels/author/${encodeURIComponent(username)}`
+  );
+  return res.data;
+};
+
 const AuthorProfilePage = () => {
   const { username } = useParams();
   const { user: currentUser } = useUser();
   const [copied, setCopied] = useState(false);
+  const [channelFilter, setChannelFilter] = useState("all"); // "all" | "created" | "joined"
 
   // 1. Fetch Author Profile
   const {
@@ -47,6 +55,24 @@ const AuthorProfilePage = () => {
     queryFn: () => fetchAuthorPosts(username),
     enabled: !!author,
   });
+
+  // 3. Fetch Author's Public Channels
+  const {
+    data: channelsData,
+    isPending: isChannelsPending,
+    error: channelsError,
+  } = useQuery({
+    queryKey: ["authorChannels", username],
+    queryFn: () => fetchAuthorChannels(username),
+    enabled: !!author,
+  });
+
+  const displayedChannels =
+    channelFilter === "created"
+      ? channelsData?.created || []
+      : channelFilter === "joined"
+      ? channelsData?.joined || []
+      : channelsData?.channels || [];
 
   const handleShare = () => {
     if (navigator?.clipboard) {
@@ -289,12 +315,171 @@ const AuthorProfilePage = () => {
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-green-800 hover:bg-green-900 text-white shadow-sm transition-colors"
                 >
                   <span>Edit in Dashboard</span>
-                  <span>⚙️</span>
+                  <span></span>
                 </Link>
               )}
             </div>
           </div>
         </div>
+      </section>
+
+      {/* CHANNELS SECTION */}
+      <section className="flex flex-col gap-6">
+        <div className="flex items-center justify-between border-b border-[#2f4b3a]/15 pb-4">
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 font-[Philosopher] flex items-center gap-2">
+              <span>Community Channels</span>
+            </h2>
+            {channelsData?.totalCount !== undefined && (
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                {channelsData.totalCount}
+              </span>
+            )}
+          </div>
+          <Link
+            to="/channels"
+            className="text-xs sm:text-sm font-medium text-green-800 hover:underline"
+          >
+            Explore All Channels
+          </Link>
+        </div>
+
+        {/* Loading channels state */}
+        {isChannelsPending && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 animate-pulse">
+            {[1, 2, 3].map((n) => (
+              <div
+                key={n}
+                className="bg-white rounded-2xl h-44 border border-slate-100 p-5 flex flex-col justify-between shadow-xs"
+              >
+                <div className="flex flex-col gap-2.5">
+                  <div className="h-5 bg-slate-200 rounded w-2/3"></div>
+                  <div className="h-4 bg-slate-100 rounded w-full"></div>
+                  <div className="h-4 bg-slate-100 rounded w-4/5"></div>
+                </div>
+                <div className="h-4 bg-slate-100 rounded w-1/3"></div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Error fetching channels state */}
+        {channelsError && (
+          <div className="py-6 text-center text-red-500 bg-red-50/60 rounded-2xl border border-red-100 text-xs">
+            Failed to load channels for this author.
+          </div>
+        )}
+
+        {/* Empty state: Author has no eligible public channels */}
+        {!isChannelsPending && (!channelsData?.channels || channelsData.channels.length === 0) && (
+          <div className="bg-white/70 rounded-2xl border border-dashed border-[#2f4b3a]/25 p-7 text-center flex flex-col items-center justify-center gap-2 shadow-2xs">
+            <span className="text-2xl">💬</span>
+            <p className="text-xs text-gray-600 font-medium">
+              @{author.username} hasn&apos;t created or joined any public channels yet.
+            </p>
+            <Link
+              to="/channels"
+              className="text-xs text-green-800 hover:underline font-semibold mt-0.5"
+            >
+              Browse technical communities on Veles →
+            </Link>
+          </div>
+        )}
+
+        {/* Channels Grid */}
+        {!isChannelsPending && channelsData?.channels && channelsData.channels.length > 0 && (
+          <div className="flex flex-col gap-4">
+            {/* Filter pills when author has both created and joined channels */}
+            {channelsData.createdCount > 0 && channelsData.joinedCount > 0 && (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setChannelFilter("all")}
+                  className={`px-3 py-1 rounded-xl text-xs font-semibold transition-colors ${
+                    channelFilter === "all"
+                      ? "bg-green-800 text-white shadow-2xs"
+                      : "bg-white hover:bg-gray-100 text-gray-600 border border-gray-200"
+                  }`}
+                >
+                  All ({channelsData.totalCount})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setChannelFilter("created")}
+                  className={`px-3 py-1 rounded-xl text-xs font-semibold transition-colors ${
+                    channelFilter === "created"
+                      ? "bg-green-800 text-white shadow-2xs"
+                      : "bg-white hover:bg-gray-100 text-gray-600 border border-gray-200"
+                  }`}
+                >
+                  Created ({channelsData.createdCount})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setChannelFilter("joined")}
+                  className={`px-3 py-1 rounded-xl text-xs font-semibold transition-colors ${
+                    channelFilter === "joined"
+                      ? "bg-green-800 text-white shadow-2xs"
+                      : "bg-white hover:bg-gray-100 text-gray-600 border border-gray-200"
+                  }`}
+                >
+                  Joined ({channelsData.joinedCount})
+                </button>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {displayedChannels.map((channel) => (
+                <Link
+                  key={channel._id}
+                  to={`/channels/${channel.slug}`}
+                  className="group flex flex-col justify-between p-5 rounded-2xl bg-white border border-[#2f4b3a]/15 shadow-2xs hover:shadow-md hover:border-green-800/40 hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <div className="flex flex-col gap-2.5">
+                    {/* Header: Name + Relationship Pill */}
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <span className="text-green-800/70 font-bold text-base">#</span>
+                        <h3 className="font-bold text-gray-800 text-sm sm:text-base truncate group-hover:text-green-800 transition-colors">
+                          {channel.name}
+                        </h3>
+                      </div>
+                      {channel.relationship === "creator" ? (
+                        <span className="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/60 flex items-center gap-1">
+                          <span></span>
+                          <span>Creator</span>
+                        </span>
+                      ) : (
+                        <span className="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-teal-50 text-teal-800 border border-teal-200/60 flex items-center gap-1">
+                          <span></span>
+                          <span>Member</span>
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed min-h-[2rem]">
+                      {channel.description || "Topic-based technical community."}
+                    </p>
+                  </div>
+
+                  {/* Footer: Member count & Action hint */}
+                  <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                    <span className="text-gray-500 font-medium flex items-center gap-1.5">
+                      <span className="text-gray-400">👥</span>
+                      <span>{channel.memberCount || 1} {channel.memberCount === 1 ? "member" : "members"}</span>
+                    </span>
+
+                    <span className="font-semibold text-green-800 group-hover:translate-x-0.5 transition-transform flex items-center gap-1 text-[11px]">
+                      <span>Open</span>
+                      <span>→</span>
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* PUBLISHED ARTICLES SECTION */}

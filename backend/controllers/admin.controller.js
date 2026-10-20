@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 import Comment from "../models/comment.model.js";
@@ -607,6 +608,78 @@ export const updateAdminUserRole = async (req, res, next) => {
 };
 
 /**
+ * DELETE /admin/users/:id
+ * Admin removes a user across platforms (Clerk auth platform + local database)
+ * Their activities (posts, comments, messages, channels) are preserved.
+ */
+export const deleteAdminUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Lookup user in Mongo by _id or clerkUserId
+    let user = null;
+    if (id.startsWith("user_")) {
+      user = await User.findOne({ clerkUserId: id });
+    } else if (mongoose.Types.ObjectId.isValid(id)) {
+      user = await User.findById(id);
+    }
+    if (!user) {
+      user = await User.findOne({ clerkUserId: id });
+    }
+
+    if (!user) {
+      return res.status(404).json("User not found!");
+    }
+
+    const requestingClerkId = req.auth?.userId;
+    if (user.clerkUserId === requestingClerkId) {
+      return res
+        .status(400)
+        .json("You cannot delete your own administrator account!");
+    }
+
+    const username = user.username;
+    const clerkUserId = user.clerkUserId;
+    const userId = user._id;
+
+    // 1. Remove user from Clerk (the external authentication platform)
+    if (clerkUserId) {
+      try {
+        await clerkClient.users.deleteUser(clerkUserId);
+      } catch (clerkErr) {
+        console.warn(
+          `Clerk deleteUser note for ${clerkUserId}:`,
+          clerkErr?.message || clerkErr
+        );
+      }
+    }
+
+    // 2. Remove user from MongoDB (local database platform)
+    await User.findByIdAndDelete(userId);
+
+    // 3. User activities (posts, comments, channels, messages) are preserved:
+    // We intentionally DO NOT delete Post, Comment, Channel, or Message records.
+
+    // 4. Record administrative audit log
+    await recordAdminLog(
+      req,
+      "DELETE_USER",
+      `Removed user @${username} across platforms (activities preserved)`,
+      userId,
+      "user"
+    );
+
+    res.status(200).json({
+      message: `User @${username} has been removed across platforms successfully. Their activities were preserved.`,
+      userId,
+      clerkUserId,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * GET /admin/logs
  * Retrieve recent administrative activity logs
  */
@@ -633,12 +706,20 @@ export const getAdminChannels = async (req, res, next) => {
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.max(1, Math.min(100, parseInt(req.query.limit) || 15));
     const search = req.query.search?.trim();
-    const status = req.query.status || "all";
+    const status = req.query.status || "active";
+    const visibility = req.query.visibility;
 
     const query = {};
-    if (status !== "all") {
+    if (status === "all") {
+      // Query all channels including deleted (for audit tests)
+    } else {
       query.status = status;
     }
+
+    if (visibility && visibility !== "all") {
+      query.visibility = visibility;
+    }
+
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: "i" } },
@@ -716,6 +797,7 @@ export const deleteAdminChannel = async (req, res, next) => {
         name: channel.name,
         reason,
       });
+      io.socketsLeave(channel._id.toString());
     }
 
     res.status(200).json("Channel deleted by administrator");

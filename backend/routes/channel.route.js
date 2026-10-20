@@ -2,6 +2,7 @@ import express from "express";
 import {
   getChannels,
   getUserChannels,
+  getAuthorChannels,
   getChannel,
   createChannel,
   updateChannel,
@@ -31,6 +32,7 @@ const router = express.Router();
 // Channel discovery & user channels
 router.get("/", getChannels);
 router.get("/user", getUserChannels);
+router.get("/author/:username", getAuthorChannels);
 
 // Channel creation & management
 router.post("/", channelCreationRateLimit, createChannel);

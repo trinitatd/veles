@@ -660,7 +660,7 @@ const ChannelsPage = () => {
             className="text-xl md:text-2xl font-bold text-gray-800 hover:text-green-800 transition-colors flex items-center gap-2"
           >
             <span className="p-1.5 rounded-lg bg-green-50 text-green-800 border border-green-200/60 text-lg">
-              💬
+              
             </span>
             <span>Veles Channels</span>
           </Link>
@@ -675,7 +675,7 @@ const ChannelsPage = () => {
             onClick={() => setSidebarOpen((prev) => !prev)}
             className="md:hidden px-3 py-1.5 rounded-xl border border-gray-200 text-xs font-semibold text-gray-700 hover:bg-gray-50 flex items-center gap-1.5"
           >
-            <span>📋</span>
+            <span></span>
             <span>{sidebarOpen ? "Hide Channels" : "Channels"}</span>
           </button>
 
@@ -710,7 +710,7 @@ const ChannelsPage = () => {
           <div className="p-3.5 border-b border-gray-200/60">
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">
-                🔍
+                
               </span>
               <input
                 type="text"
@@ -891,14 +891,14 @@ const ChannelsPage = () => {
                     </h2>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200/60">
                       {activeChannel.visibility === "private"
-                        ? "🔒 Private"
-                        : "🌐 Public"}
+                        ? "Private"
+                        : "Public"}
                     </span>
                     <button
                       onClick={handleOpenMembers}
                       className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/60 hover:bg-emerald-100 transition-colors"
                     >
-                      👥 {activeChannel.memberCount || 1} members
+                      {activeChannel.memberCount || 1} members
                     </button>
                   </div>
 
@@ -968,7 +968,7 @@ const ChannelsPage = () => {
                           disabled={requestActionLoading}
                           className="px-4 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors disabled:opacity-50 flex items-center gap-1.5 shadow-sm"
                         >
-                          <span>🔒</span>
+                          <span></span>
                           <span>{requestActionLoading ? "Submitting..." : "Request to Join"}</span>
                         </button>
                       )
@@ -989,7 +989,7 @@ const ChannelsPage = () => {
                           className="relative px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold border border-emerald-200/60 transition-colors flex items-center gap-1.5"
                           title="Manage Join Requests"
                         >
-                          <span>📬</span>
+                          <span></span>
                           <span>Requests</span>
                           {activeChannel.pendingRequestCount > 0 && (
                             <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-white text-[10px] font-bold">
@@ -1042,7 +1042,7 @@ const ChannelsPage = () => {
                   activeChannel.visibility === "private" ? (
                     <div className="flex-1 flex flex-col items-center justify-center p-8 text-center gap-4 max-w-lg mx-auto">
                       <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-3xl shadow-2xs">
-                        🔒
+                        
                       </div>
                       <div className="flex flex-col gap-1.5">
                         <div className="flex items-center justify-center gap-2">
@@ -1090,7 +1090,7 @@ const ChannelsPage = () => {
                     </div>
                   ) : (
                     <div className="flex-1 flex flex-col items-center justify-center p-8 text-center gap-3">
-                      <span className="text-4xl">👋</span>
+                      <span className="text-4xl"></span>
                       <h3 className="text-lg font-bold text-gray-800">
                         Join #{activeChannel.name}
                       </h3>
@@ -1131,7 +1131,7 @@ const ChannelsPage = () => {
                     {/* Empty Messages State */}
                     {messages.length === 0 ? (
                       <div className="flex-1 flex flex-col items-center justify-center p-8 text-center gap-2">
-                        <span className="text-3xl">💬</span>
+                        <span className="text-3xl"></span>
                         <h4 className="text-sm font-bold text-gray-700">
                           Welcome to #{activeChannel.name}!
                         </h4>
@@ -1253,15 +1253,7 @@ const ChannelsPage = () => {
                                     🗑️
                                   </button>
                                 )}
-                                {!isOwn && isSignedIn && (
-                                  <button
-                                    onClick={() => setReportingMessage(msg)}
-                                    title="Report Message"
-                                    className="p-1 hover:bg-amber-50 rounded text-gray-400 hover:text-amber-600 text-[11px]"
-                                  >
-                                    🚩
-                                  </button>
-                                )}
+                                
                               </div>
                             )}
                           </div>

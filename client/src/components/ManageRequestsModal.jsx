@@ -155,7 +155,7 @@ const ManageRequestsModal = ({
             </div>
           ) : requests.length === 0 ? (
             <div className="py-12 flex flex-col items-center justify-center text-center gap-2">
-              <span className="text-3xl">✨</span>
+           
               <p className="text-xs font-semibold text-gray-700">
                 {filter === "pending"
                   ? "No pending join requests"

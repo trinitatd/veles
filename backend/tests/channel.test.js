@@ -36,6 +36,7 @@ import {
   getChannelJoinRequests,
   acceptJoinRequest,
   declineJoinRequest,
+  getAuthorChannels,
 } from "../controllers/channel.controller.js";
 
 import {
@@ -179,10 +180,17 @@ describe("Veles Channel & Community System Tests", () => {
           "user_test_member_456",
           "user_test_admin_789",
           "user_test_other_999",
+          "user_test_empty_author_000",
         ],
       },
     });
+    await User.deleteMany({
+      clerkUserId: {
+        $in: ["user_test_empty_author_000"],
+      },
+    });
     await mongoose.connection.close();
+    setTimeout(() => process.exit(0), 500).unref();
   });
 
   // 1. Channel Creation & Validation Tests
@@ -556,6 +564,26 @@ describe("Veles Channel & Community System Tests", () => {
     assert.ok(res.body.channels.some((c) => c._id.toString() === createdChannelId));
   });
 
+  test("7.1b Platform Admin channels query excludes deleted channels by default", async () => {
+    const { req, res, next } = createMockReqRes({
+      auth: {
+        userId: "user_test_admin_789",
+        sessionClaims: { metadata: { role: "admin" } },
+      },
+      query: {},
+    });
+    await getAdminChannels(req, res, next);
+    assert.strictEqual(res.statusCode, 200);
+    const hasDeletedChannel = res.body.channels.some(
+      (c) => c._id.toString() === createdChannelId
+    );
+    assert.strictEqual(
+      hasDeletedChannel,
+      false,
+      "Deleted channels must not be shown by default in admin channels query"
+    );
+  });
+
   test("7.2 Platform Admin can review reports and action resolution", async () => {
     const { req, res, next } = createMockReqRes({
       auth: {
@@ -812,6 +840,153 @@ describe("Veles Channel & Community System Tests", () => {
       typeof errMsg === "string" &&
         errMsg.includes("already an active member")
     );
+  });
+
+  // 9. Public Author Profile Channel Integration Tests (getAuthorChannels)
+  let authorPublicChannelId;
+  let authorPublicChannelSlug;
+
+  test("9.1 Non-existent author username returns 404", async () => {
+    const { req, res, next } = createMockReqRes({
+      params: { username: "non_existent_author_xyz_999" },
+    });
+    await getAuthorChannels(req, res, next);
+    assert.strictEqual(res.statusCode, 404);
+    assert.strictEqual(res.body.message, "Author not found");
+  });
+
+  test("9.2 Missing or empty username parameter returns 400", async () => {
+    const { req, res, next } = createMockReqRes({
+      params: { username: "" },
+    });
+    await getAuthorChannels(req, res, next);
+    assert.strictEqual(res.statusCode, 400);
+    assert.strictEqual(res.body.message, "Username is required");
+  });
+
+  test("9.3 Author with public created channels returns channels with relationship 'creator'", async () => {
+    // Create an active public channel for test_creator
+    const { req: reqCreate, res: resCreate, next: nextCreate } = createMockReqRes({
+      auth: { userId: "user_test_creator_123" },
+      body: {
+        name: `Test Author Public Community ${Date.now()}`,
+        description: "Official public discussion channel for author profile",
+        visibility: "public",
+      },
+    });
+    await createChannel(reqCreate, resCreate, nextCreate);
+    assert.strictEqual(resCreate.statusCode, 201);
+    authorPublicChannelId = resCreate.body._id.toString();
+    authorPublicChannelSlug = resCreate.body.slug;
+
+    const { req, res, next } = createMockReqRes({
+      params: { username: "test_creator" },
+    });
+    await getAuthorChannels(req, res, next);
+    assert.strictEqual(res.statusCode, 200);
+    assert.ok(Array.isArray(res.body.channels));
+    assert.ok(Array.isArray(res.body.created));
+    assert.ok(res.body.createdCount >= 1);
+    const createdChan = res.body.created.find(
+      (c) => c._id.toString() === authorPublicChannelId
+    );
+    assert.ok(createdChan, "Public channel created by author must be in created array");
+    assert.strictEqual(createdChan.relationship, "creator");
+    assert.ok(createdChan.name);
+    assert.ok(createdChan.slug);
+    assert.ok(createdChan.memberCount >= 1);
+  });
+
+  test("9.4 Author who joined a public channel returns that channel with relationship 'member'", async () => {
+    // Have test_member join the active authorPublicChannel
+    const { req: reqJoin, res: resJoin, next: nextJoin } = createMockReqRes({
+      auth: { userId: "user_test_member_456" },
+      params: { slugOrId: authorPublicChannelSlug },
+    });
+    await joinChannel(reqJoin, resJoin, nextJoin);
+    assert.strictEqual(resJoin.statusCode, 200);
+
+    const { req, res, next } = createMockReqRes({
+      params: { username: "test_member" },
+    });
+    await getAuthorChannels(req, res, next);
+    assert.strictEqual(res.statusCode, 200);
+    assert.ok(Array.isArray(res.body.joined));
+    const joinedChan = res.body.joined.find(
+      (c) => c._id.toString() === authorPublicChannelId
+    );
+    assert.ok(joinedChan, "Public channel joined by author must be in joined array");
+    assert.strictEqual(joinedChan.relationship, "member");
+  });
+
+  test("9.5 Strict privacy enforcement: private channels created or joined by author are NEVER returned", async () => {
+    // 1. Check author who created private channel
+    const { req: reqCreator, res: resCreator, next: nextCreator } = createMockReqRes({
+      params: { username: "test_creator" },
+    });
+    await getAuthorChannels(reqCreator, resCreator, nextCreator);
+    assert.strictEqual(resCreator.statusCode, 200);
+
+    const hasPrivateInCreated = resCreator.body.channels.some(
+      (c) => c._id.toString() === privateChannelId
+    );
+    assert.strictEqual(
+      hasPrivateInCreated,
+      false,
+      "Private channels created by author must NEVER be exposed in public profile"
+    );
+
+    // 2. Check author who joined private channel
+    const { req: reqOther, res: resOther, next: nextOther } = createMockReqRes({
+      params: { username: "test_other" },
+    });
+    await getAuthorChannels(reqOther, resOther, nextOther);
+    assert.strictEqual(resOther.statusCode, 200);
+
+    const hasPrivateInJoined = resOther.body.channels.some(
+      (c) => c._id.toString() === privateChannelId
+    );
+    assert.strictEqual(
+      hasPrivateInJoined,
+      false,
+      "Private channel memberships must NEVER be exposed in public profile"
+    );
+  });
+
+  test("9.6 Soft-deleted channels are excluded from public author profile", async () => {
+    const { req, res, next } = createMockReqRes({
+      params: { username: "test_creator" },
+    });
+    await getAuthorChannels(req, res, next);
+    assert.strictEqual(res.statusCode, 200);
+    const hasDeleted = res.body.channels.some((c) => c.status === "deleted");
+    assert.strictEqual(hasDeleted, false, "Soft-deleted channels must not appear on public profile");
+  });
+
+  test("9.7 Author with no public channels returns empty lists and zero counts", async () => {
+    const emptyUser = await User.findOneAndUpdate(
+      { clerkUserId: "user_test_empty_author_000" },
+      {
+        username: "test_empty_author",
+        email: "empty@test.com",
+        img: "https://example.com/empty.png",
+      },
+      { upsert: true, new: true }
+    );
+
+    const { req, res, next } = createMockReqRes({
+      params: { username: "test_empty_author" },
+    });
+    await getAuthorChannels(req, res, next);
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(res.body.totalCount, 0);
+    assert.strictEqual(res.body.createdCount, 0);
+    assert.strictEqual(res.body.joinedCount, 0);
+    assert.deepStrictEqual(res.body.channels, []);
+    assert.deepStrictEqual(res.body.created, []);
+    assert.deepStrictEqual(res.body.joined, []);
+
+    await User.deleteOne({ _id: emptyUser._id });
   });
 });
 

@@ -13,21 +13,26 @@ const AdminChannels = () => {
 
   const [activeSubTab, setActiveSubTab] = useState("channels"); // "channels" | "reports"
   const [searchTerm, setSearchTerm] = useState("");
-  const [channelStatus, setChannelStatus] = useState("all");
+  const [visibilityFilter, setVisibilityFilter] = useState("all"); // "all" | "public" | "private"
   const [reportStatus, setReportStatus] = useState("all");
   const [channelToDelete, setChannelToDelete] = useState(null);
   const [deleteReason, setDeleteReason] = useState("");
   const [actioningReport, setActioningReport] = useState(null); // { report, action: 'DELETE_MESSAGE' | 'DISMISS' }
 
-  // Query Channels
+  // Query Channels: by default, only active channels are retrieved
   const { data: channelsData, isPending: isChannelsLoading } = useQuery({
-    queryKey: ["adminChannels", searchTerm, channelStatus],
+    queryKey: ["adminChannels", searchTerm, visibilityFilter],
     queryFn: async () => {
       const token = await getToken();
+      const params = new URLSearchParams({
+        status: "active",
+        limit: "50",
+      });
+      if (searchTerm) params.append("search", searchTerm);
+      if (visibilityFilter !== "all") params.append("visibility", visibilityFilter);
+
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/admin/channels?search=${encodeURIComponent(
-          searchTerm
-        )}&status=${channelStatus}&limit=50`,
+        `${import.meta.env.VITE_API_URL}/admin/channels?${params.toString()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -63,16 +68,33 @@ const AdminChannels = () => {
         }
       );
     },
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
       toast.success("Channel deleted by administrator");
       setChannelToDelete(null);
       setDeleteReason("");
+      // Optimistically remove the deleted channel immediately from cache
+      queryClient.setQueriesData(
+        { queryKey: ["adminChannels"] },
+        (old) => {
+          if (!old || !old.channels) return old;
+          return {
+            ...old,
+            channels: old.channels.filter((c) => c._id !== variables.channelId),
+            totalChannels: Math.max(0, (old.totalChannels || 1) - 1),
+          };
+        }
+      );
       queryClient.invalidateQueries({ queryKey: ["adminChannels"] });
     },
     onError: (err) => {
       toast.error(err.response?.data || "Failed to delete channel");
     },
   });
+
+  // Never show deleted channels in the admin channels list
+  const displayedChannels = (channelsData?.channels || []).filter(
+    (ch) => ch.status !== "deleted"
+  );
 
   // Resolve/Dismiss Report Mutation
   const resolveReportMutation = useMutation({
@@ -119,7 +141,7 @@ const AdminChannels = () => {
                 : "text-gray-600 hover:text-gray-900"
             }`}
           >
-            All Channels ({channelsData?.totalChannels || 0})
+            Channels ({channelsData?.totalChannels ?? displayedChannels.length})
           </button>
           <button
             onClick={() => setActiveSubTab("reports")}
@@ -153,15 +175,15 @@ const AdminChannels = () => {
             />
 
             <div className="flex items-center gap-2 self-end sm:self-auto">
-              <span className="text-xs text-gray-400">Status:</span>
+              <span className="text-xs text-gray-400">Visibility:</span>
               <select
-                value={channelStatus}
-                onChange={(e) => setChannelStatus(e.target.value)}
+                value={visibilityFilter}
+                onChange={(e) => setVisibilityFilter(e.target.value)}
                 className="px-3 py-1.5 rounded-xl border border-gray-200 text-xs bg-white text-gray-700 focus:outline-none"
               >
-                <option value="all">All</option>
-                <option value="active">Active Only</option>
-                <option value="deleted">Deleted Only</option>
+                <option value="all">All Channels</option>
+                <option value="public">Public</option>
+                <option value="private">Private</option>
               </select>
             </div>
           </div>
@@ -171,7 +193,7 @@ const AdminChannels = () => {
             <div className="py-12 text-center text-xs text-gray-400">
               Loading channels...
             </div>
-          ) : channelsData?.channels?.length === 0 ? (
+          ) : displayedChannels.length === 0 ? (
             <div className="p-8 text-center text-xs text-gray-400 bg-white rounded-2xl border border-gray-100">
               No channels match the criteria.
             </div>
@@ -190,7 +212,7 @@ const AdminChannels = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {channelsData.channels.map((ch) => (
+                  {displayedChannels.map((ch) => (
                     <tr key={ch._id} className="hover:bg-gray-50/60 transition-colors">
                       <td className="py-3.5 px-4 font-semibold text-gray-900">
                         <Link
@@ -210,7 +232,15 @@ const AdminChannels = () => {
                       </td>
 
                       <td className="py-3.5 px-4 capitalize text-gray-600">
-                        {ch.visibility}
+                        <span
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                            ch.visibility === "public"
+                              ? "bg-emerald-50 text-emerald-700 border border-emerald-200/50"
+                              : "bg-amber-50 text-amber-700 border border-amber-200/50"
+                          }`}
+                        >
+                          {ch.visibility}
+                        </span>
                       </td>
 
                       <td className="py-3.5 px-4 font-semibold text-gray-700">
@@ -218,13 +248,7 @@ const AdminChannels = () => {
                       </td>
 
                       <td className="py-3.5 px-4">
-                        <span
-                          className={`px-2 py-0.5 rounded-full text-[10px] font-semibold capitalize ${
-                            ch.status === "active"
-                              ? "bg-green-50 text-green-700 border border-green-200/50"
-                              : "bg-red-50 text-red-600 border border-red-200/50"
-                          }`}
-                        >
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold capitalize bg-green-50 text-green-700 border border-green-200/50">
                           {ch.status}
                         </span>
                       </td>
@@ -241,14 +265,12 @@ const AdminChannels = () => {
                           >
                             View
                           </Link>
-                          {ch.status === "active" && (
-                            <button
-                              onClick={() => setChannelToDelete(ch)}
-                              className="px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 text-xs font-medium"
-                            >
-                              Delete
-                            </button>
-                          )}
+                          <button
+                            onClick={() => setChannelToDelete(ch)}
+                            className="px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 text-xs font-medium transition-colors"
+                          >
+                            Delete
+                          </button>
                         </div>
                       </td>
                     </tr>

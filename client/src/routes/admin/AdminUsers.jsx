@@ -14,6 +14,7 @@ const AdminUsers = () => {
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [userToModifyRole, setUserToModifyRole] = useState(null);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   // Fetch users with article/comment counts and Clerk roles
   const { data, isPending, error } = useQuery({
@@ -62,6 +63,36 @@ const AdminUsers = () => {
     onError: (err) => {
       toast.error(err.response?.data?.message || err.response?.data || "Failed to update user role");
       setUserToModifyRole(null);
+    },
+  });
+
+  // Remove user across platforms mutation
+  const deleteUserMutation = useMutation({
+    mutationFn: async (userId) => {
+      const token = await getToken();
+      return axios.delete(
+        `${import.meta.env.VITE_API_URL}/admin/users/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    },
+    onSuccess: (res) => {
+      toast.success(res.data?.message || "User successfully removed across platforms");
+      setUserToDelete(null);
+      queryClient.invalidateQueries({ queryKey: ["adminUsers"] });
+      queryClient.invalidateQueries({ queryKey: ["adminStats"] });
+      queryClient.invalidateQueries({ queryKey: ["adminLogs"] });
+    },
+    onError: (err) => {
+      toast.error(
+        err.response?.data?.message ||
+          err.response?.data ||
+          "Failed to remove user across platforms"
+      );
+      setUserToDelete(null);
     },
   });
 
@@ -171,7 +202,7 @@ const AdminUsers = () => {
                   <th className="py-3 px-3">Comments</th>
                   <th className="py-3 px-3">Joined Date</th>
                   <th className="py-3 px-3">Role</th>
-                  <th className="py-3 px-4 text-right">Role Actions</th>
+                  <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 text-sm">
@@ -242,21 +273,44 @@ const AdminUsers = () => {
                         {isCurrentAdminSelf ? (
                           <span className="text-xs text-gray-400 italic">Current Session</span>
                         ) : (
-                          <button
-                            onClick={() =>
-                              setUserToModifyRole({
-                                ...targetUser,
-                                nextRole: isUserAdmin ? "user" : "admin",
-                              })
-                            }
-                            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors border ${
-                              isUserAdmin
-                                ? "bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100"
-                                : "bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100"
-                            }`}
-                          >
-                            {isUserAdmin ? "Demote to User" : "Promote to Admin"}
-                          </button>
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              onClick={() =>
+                                setUserToModifyRole({
+                                  ...targetUser,
+                                  nextRole: isUserAdmin ? "user" : "admin",
+                                })
+                              }
+                              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors border ${
+                                isUserAdmin
+                                  ? "bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100"
+                                  : "bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100"
+                              }`}
+                            >
+                              {isUserAdmin ? "Demote to User" : "Promote to Admin"}
+                            </button>
+                            <button
+                              onClick={() => setUserToDelete(targetUser)}
+                              className="px-3 py-1.5 rounded-xl text-xs font-semibold text-red-700 bg-red-50 border border-red-200 hover:bg-red-100 transition-colors flex items-center gap-1.5"
+                              title="Remove user across platforms"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-3.5 h-3.5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                />
+                              </svg>
+                              <span>Remove</span>
+                            </button>
+                          </div>
                         )}
                       </td>
                     </tr>
@@ -361,6 +415,48 @@ const AdminUsers = () => {
                   : userToModifyRole.nextRole === "admin"
                   ? "Confirm Promotion"
                   : "Confirm Demotion"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* USER REMOVAL CONFIRMATION MODAL */}
+      {userToDelete && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl shrink-0 bg-red-100 text-red-700">
+              🗑️
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">
+                Remove User Across Platforms
+              </h3>
+              <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                Are you sure you want to remove{" "}
+                <strong className="text-gray-900">@{userToDelete.username}</strong> ({userToDelete.email}) across all platforms?
+              </p>
+              <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 leading-relaxed">
+                <strong>Activity Preservation Notice:</strong> The user account will be permanently removed from Clerk authentication and the user registry. Their activities—including articles ({userToDelete.articlesCount || 0}), comments ({userToDelete.commentsCount || 0}), messages, and community channels—will <strong>not</strong> be removed.
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 mt-4">
+              <button
+                type="button"
+                onClick={() => setUserToDelete(null)}
+                disabled={deleteUserMutation.isPending}
+                className="px-4 py-2 text-xs font-semibold text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => deleteUserMutation.mutate(userToDelete._id)}
+                disabled={deleteUserMutation.isPending}
+                className="px-4 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors disabled:opacity-50"
+              >
+                {deleteUserMutation.isPending ? "Removing User..." : "Confirm Removal"}
               </button>
             </div>
           </div>
