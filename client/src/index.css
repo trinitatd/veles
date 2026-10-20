@@ -6,25 +6,86 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-primary: #e5f3f1;
+  --bg-secondary: #ffffff;
+  --bg-surface: #ffffff;
+  --border-color: #e5e7eb;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --accent-green: #15803d;
+  color-scheme: light;
+}
+
+.dark,
+[data-theme="dark"] {
+  --bg-primary: #111713;
+  --bg-secondary: #1B241E;
+  --bg-surface: #222D25;
+  --border-color: #35443A;
+  --text-primary: #E5E9E4;
+  --text-secondary: #A5B0A7;
+  --text-muted: #738276;
+  --accent-green: #7BC98C;
+  color-scheme: dark;
+}
+
+html {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html.dark,
+html[data-theme="dark"] {
+  background-color: #111713;
+  color: #E5E9E4;
+}
 
 body {
-  background-color: #e5f3f1;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   width: 100vw;
   overflow-x: hidden;
   font-family: "Montserrat", sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.animatedButton{
+html.dark body,
+[data-theme="dark"] body {
+  background-color: #111713;
+  color: #E5E9E4;
+}
+
+/* Global Dark Mode Overrides for Hardcoded Backgrounds */
+.dark .bg-\[\#e5f3f1\],
+[data-theme="dark"] .bg-\[\#e5f3f1\] {
+  background-color: #111713 !important;
+}
+
+.dark .bg-\[\#d9e6df\],
+[data-theme="dark"] .bg-\[\#d9e6df\] {
+  background-color: #111713 !important;
+}
+
+.dark .bg-\[\#dee3e0\],
+[data-theme="dark"] .bg-\[\#dee3e0\] {
+  background-color: #1B241E !important;
+}
+
+.animatedButton {
   animation-duration: 10000ms;
 }
 
-.ql-container{
+/* Quill Editor Base */
+.ql-container {
   border: none !important;
 }
-.ql-toolbar{
+.ql-toolbar {
   border: none !important;
 }
-.ql-editor{
+.ql-editor {
   border: none !important;
 }
 
@@ -43,7 +104,7 @@ body {
   aspect-ratio: 16 / 9;
 }
 
-/* Post content typography */
+/* Post content typography - Light Mode */
 .post-content {
   color: #374151;
   font-size: 1.125rem;
@@ -132,4 +193,181 @@ body {
 .post-content a {
   color: #166534;
   text-decoration: underline;
+}
+
+.post-content code {
+  background-color: #f3f4f6;
+  color: #166534;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.375rem;
+  font-size: 0.9em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.post-content pre {
+  background-color: #1f2937;
+  color: #f9fafb;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.post-content pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Post content typography - Dark Mode */
+.dark .post-content,
+[data-theme="dark"] .post-content {
+  color: #E5E9E4;
+}
+
+.dark .post-content p,
+[data-theme="dark"] .post-content p {
+  color: #D1D5DB;
+}
+
+.dark .post-content h1,
+.dark .post-content h2,
+.dark .post-content h3,
+.dark .post-content strong,
+.dark .post-content b,
+[data-theme="dark"] .post-content h1,
+[data-theme="dark"] .post-content h2,
+[data-theme="dark"] .post-content h3,
+[data-theme="dark"] .post-content strong,
+[data-theme="dark"] .post-content b {
+  color: #E5E9E4;
+}
+
+.dark .post-content blockquote,
+[data-theme="dark"] .post-content blockquote {
+  border-left: 4px solid #7BC98C;
+  color: #A5B0A7;
+  background-color: #1B241E;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.dark .post-content a,
+[data-theme="dark"] .post-content a {
+  color: #7BC98C;
+}
+
+.dark .post-content a:hover,
+[data-theme="dark"] .post-content a:hover {
+  color: #9fe2ad;
+}
+
+.dark .post-content code,
+[data-theme="dark"] .post-content code {
+  background-color: #1B241E;
+  color: #7BC98C;
+  border: 1px solid #35443A;
+}
+
+.dark .post-content pre,
+[data-theme="dark"] .post-content pre {
+  background-color: #1B241E;
+  color: #E5E9E4;
+  border: 1px solid #35443A;
+}
+
+/* Quill Editor Styling - Dark Mode */
+.dark .ql-toolbar,
+[data-theme="dark"] .ql-toolbar {
+  background-color: #1B241E !important;
+  border-color: #35443A !important;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+
+.dark .ql-container,
+[data-theme="dark"] .ql-container {
+  background-color: #1B241E !important;
+  border-color: #35443A !important;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  color: #E5E9E4 !important;
+}
+
+.dark .ql-editor,
+[data-theme="dark"] .ql-editor {
+  color: #E5E9E4 !important;
+}
+
+.dark .ql-editor.ql-blank::before,
+[data-theme="dark"] .ql-editor.ql-blank::before {
+  color: #A5B0A7 !important;
+}
+
+.dark .ql-snow .ql-stroke,
+[data-theme="dark"] .ql-snow .ql-stroke {
+  stroke: #A5B0A7 !important;
+}
+
+.dark .ql-snow .ql-fill,
+[data-theme="dark"] .ql-snow .ql-fill {
+  fill: #A5B0A7 !important;
+}
+
+.dark .ql-snow .ql-picker,
+[data-theme="dark"] .ql-snow .ql-picker {
+  color: #E5E9E4 !important;
+}
+
+.dark .ql-snow .ql-picker-options,
+[data-theme="dark"] .ql-snow .ql-picker-options {
+  background-color: #222D25 !important;
+  border-color: #35443A !important;
+}
+
+.dark .ql-snow .ql-picker-item,
+[data-theme="dark"] .ql-snow .ql-picker-item {
+  color: #E5E9E4 !important;
+}
+
+.dark .ql-snow.ql-toolbar button:hover .ql-stroke,
+.dark .ql-snow.ql-toolbar button:focus .ql-stroke,
+.dark .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.dark .ql-snow .ql-picker-label:hover .ql-stroke,
+[data-theme="dark"] .ql-snow.ql-toolbar button:hover .ql-stroke,
+[data-theme="dark"] .ql-snow.ql-toolbar button:focus .ql-stroke,
+[data-theme="dark"] .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+[data-theme="dark"] .ql-snow .ql-picker-label:hover .ql-stroke {
+  stroke: #7BC98C !important;
+}
+
+.dark .ql-snow.ql-toolbar button:hover .ql-fill,
+.dark .ql-snow.ql-toolbar button:focus .ql-fill,
+.dark .ql-snow.ql-toolbar button.ql-active .ql-fill,
+[data-theme="dark"] .ql-snow.ql-toolbar button:hover .ql-fill,
+[data-theme="dark"] .ql-snow.ql-toolbar button:focus .ql-fill,
+[data-theme="dark"] .ql-snow.ql-toolbar button.ql-active .ql-fill {
+  fill: #7BC98C !important;
+}
+
+/* Custom Scrollbars */
+.dark ::-webkit-scrollbar,
+[data-theme="dark"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.dark ::-webkit-scrollbar-track,
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #111713;
+}
+.dark ::-webkit-scrollbar-thumb,
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #35443A;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #465b4e;
 }

@@ -10,6 +10,7 @@ import CreateChannelModal from "../components/CreateChannelModal";
 import EditChannelModal from "../components/EditChannelModal";
 import ConfirmModal from "../components/ConfirmModal";
 import ManageRequestsModal from "../components/ManageRequestsModal";
+import ThemeToggle from "../components/ThemeToggle";
 
 const Dashboard = () => {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -420,26 +421,31 @@ const Dashboard = () => {
   if (!isLoaded) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-gray-500 text-lg">Loading dashboard...</div>
+        <div className="text-gray-500 dark:text-[#A5B0A7] text-lg">Loading dashboard...</div>
       </div>
     );
   }
 
   if (isLoaded && !isSignedIn) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <h2 className="text-2xl font-semibold text-gray-800">
-          Access Restricted
-        </h2>
-        <p className="text-gray-600">
-          Please log in to view and manage your dashboard.
-        </p>
-        <Link
-          to="/login"
-          className="py-2.5 px-6 rounded-3xl bg-green-800 text-white font-medium hover:bg-green-900 transition-colors"
-        >
-          Login
-        </Link>
+      <div className="flex flex-col gap-6 max-w-7xl mx-auto w-full pt-4">
+        <div className="flex justify-end">
+          <ThemeToggle />
+        </div>
+        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4">
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-[#E5E9E4]">
+            Access Restricted
+          </h2>
+          <p className="text-gray-600 dark:text-[#A5B0A7]">
+            Please log in to view and manage your dashboard.
+          </p>
+          <Link
+            to="/login"
+            className="py-2.5 px-6 rounded-3xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white font-medium transition-colors"
+          >
+            Login
+          </Link>
+        </div>
       </div>
     );
   }
@@ -455,7 +461,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col gap-8 pb-12 max-w-7xl mx-auto w-full">
       {/* HEADER SECTION */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-200">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-200 dark:border-[#35443A]">
         <div className="flex items-center gap-4">
           <img
             src={user?.imageUrl || "/userImg.jpeg"}
@@ -463,10 +469,10 @@ const Dashboard = () => {
             className="w-16 h-16 rounded-full object-cover border-2 border-green-800 shadow-sm"
           />
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-[#E5E9E4]">
               Welcome, {user?.firstName || user?.fullName || "Author"}!
             </h1>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-[#A5B0A7]">
               {profile?.username ? `@${profile.username} • ` : ""}{user?.primaryEmailAddress?.emailAddress} • Dashboard
             </p>
           </div>
@@ -482,12 +488,13 @@ const Dashboard = () => {
               <span>Admin Panel</span>
             </Link>
           )}
+          <ThemeToggle />
           <Link
             to="/write"
-            className="inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-green-800 text-white font-medium hover:bg-green-900 transition-colors shadow-sm"
+            className="inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] dark:border dark:border-[#35443A] text-white font-medium transition-colors shadow-sm"
           >
             <span>Create New Post</span>
-            <span></span>
+           
           </Link>
         </div>
       </div>
@@ -497,82 +504,82 @@ const Dashboard = () => {
         {/* 1. MY ARTICLES */}
         <div
           onClick={() => setActiveTab("myPosts")}
-          className="p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-1 bg-white border-gray-100 shadow-sm hover:border-green-800 hover:shadow-md"
+          className="p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-1 bg-white dark:bg-[#1B241E] border-gray-100 dark:border-[#35443A] shadow-sm hover:border-green-800 dark:hover:border-[#7BC98C] hover:shadow-md"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7]">
               My Articles
             </span>
             <span className="text-base"></span>
           </div>
-          <span className="text-3xl font-bold text-gray-800">{postCount}</span>
-          <span className="text-[11px] text-gray-400">Published posts</span>
+          <span className="text-3xl font-bold text-gray-800 dark:text-[#E5E9E4]">{postCount}</span>
+          <span className="text-[11px] text-gray-400 dark:text-[#A5B0A7]">Published posts</span>
         </div>
 
         {/* 2. TOTAL VIEWS */}
         <div
           onClick={() => setActiveTab("myPosts")}
-          className="p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-1 bg-white border-gray-100 shadow-sm hover:border-blue-400 hover:shadow-md"
+          className="p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-1 bg-white dark:bg-[#1B241E] border-gray-100 dark:border-[#35443A] shadow-sm hover:border-blue-400 hover:shadow-md"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7]">
               Total Views
             </span>
             <span className="text-base"></span>
           </div>
-          <span className="text-3xl font-bold text-blue-800">
+          <span className="text-3xl font-bold text-blue-800 dark:text-blue-400">
             {totalViews.toLocaleString()}
           </span>
-          <span className="text-[11px] text-gray-400">Across all posts</span>
+          <span className="text-[11px] text-gray-400 dark:text-[#A5B0A7]">Across all posts</span>
         </div>
 
         {/* 3. TOTAL LIKES */}
         <div
           onClick={() => setActiveTab("myPosts")}
-          className="p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-1 bg-white border-gray-100 shadow-sm hover:border-red-400 hover:shadow-md"
+          className="p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-1 bg-white dark:bg-[#1B241E] border-gray-100 dark:border-[#35443A] shadow-sm hover:border-red-400 hover:shadow-md"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7]">
               Total Likes
             </span>
             <span className="text-base"></span>
           </div>
-          <span className="text-3xl font-bold text-red-600">
+          <span className="text-3xl font-bold text-red-600 dark:text-red-400">
             {totalLikes.toLocaleString()}
           </span>
-          <span className="text-[11px] text-gray-400">Across all posts</span>
+          <span className="text-[11px] text-gray-400 dark:text-[#A5B0A7]">Across all posts</span>
         </div>
 
         {/* 4. TOTAL COMMENTS */}
         <div
           onClick={() => setActiveTab("myPosts")}
-          className="p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-1 bg-white border-gray-100 shadow-sm hover:border-amber-400 hover:shadow-md"
+          className="p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-1 bg-white dark:bg-[#1B241E] border-gray-100 dark:border-[#35443A] shadow-sm hover:border-amber-400 hover:shadow-md"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7]">
               Total Comments
             </span>
             <span className="text-base"></span>
           </div>
-          <span className="text-3xl font-bold text-amber-700">
+          <span className="text-3xl font-bold text-amber-700 dark:text-amber-400">
             {totalComments.toLocaleString()}
           </span>
-          <span className="text-[11px] text-gray-400">Across all posts</span>
+          <span className="text-[11px] text-gray-400 dark:text-[#A5B0A7]">Across all posts</span>
         </div>
       </div>
 
       {/* AUTHOR PROFILE SETTINGS (USERNAME & BIO) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* AUTHOR USERNAME CARD */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col justify-between gap-4">
+        <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-sm p-6 flex flex-col justify-between gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <span className="text-xl"></span>
               <div>
-                <h2 className="text-lg font-bold text-gray-800">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-[#E5E9E4]">
                   Author Username
                 </h2>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-400 dark:text-[#A5B0A7]">
                   Your unique handle across the platform.
                 </p>
               </div>
@@ -584,7 +591,7 @@ const Dashboard = () => {
                   setUsernameError("");
                   setIsEditingUsername(true);
                 }}
-                className="px-3.5 py-1.5 rounded-xl border border-gray-200 hover:border-green-800 text-xs font-semibold text-gray-700 hover:text-green-800 transition-colors"
+                className="px-3.5 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] hover:border-green-800 dark:hover:border-[#7BC98C] text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] hover:text-green-800 dark:hover:text-[#7BC98C] transition-colors"
               >
                 Change Username
               </button>
@@ -595,7 +602,7 @@ const Dashboard = () => {
             <form onSubmit={handleSaveUsername} className="flex flex-col gap-3 mt-1">
               <div className="flex flex-col gap-1.5">
                 <div className="relative flex items-center">
-                  <span className="absolute left-3.5 text-gray-400 font-semibold text-sm select-none">
+                  <span className="absolute left-3.5 text-gray-400 dark:text-gray-500 font-semibold text-sm select-none">
                     @
                   </span>
                   <input
@@ -607,15 +614,15 @@ const Dashboard = () => {
                     }}
                     placeholder="username"
                     maxLength={25}
-                    className="w-full pl-8 pr-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all text-gray-700"
+                    className="w-full pl-8 pr-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#111713] text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 dark:focus:border-[#7BC98C] transition-all text-gray-700 dark:text-[#E5E9E4] dark:placeholder-gray-500"
                   />
                 </div>
-                <div className="flex items-center justify-between text-xs text-gray-400 px-1">
+                <div className="flex items-center justify-between text-xs text-gray-400 dark:text-[#A5B0A7] px-1">
                   <span>3-25 characters. Letters, numbers, underscores only.</span>
                   <span>{usernameText.length}/25</span>
                 </div>
                 {usernameError && (
-                  <p className="text-xs text-red-500 font-medium px-1">
+                  <p className="text-xs text-red-500 dark:text-red-400 font-medium px-1">
                     {usernameError}
                   </p>
                 )}
@@ -624,7 +631,7 @@ const Dashboard = () => {
                 <button
                   type="submit"
                   disabled={updateUsernameMutation.isPending}
-                  className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors disabled:opacity-50"
+                  className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold transition-colors disabled:opacity-50"
                 >
                   {updateUsernameMutation.isPending ? "Saving..." : "Save Username"}
                 </button>
@@ -635,17 +642,17 @@ const Dashboard = () => {
                     setUsernameError("");
                     setIsEditingUsername(false);
                   }}
-                  className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold transition-colors"
+                  className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-[#222D25] dark:hover:bg-[#2e3f34] text-gray-700 dark:text-[#E5E9E4] text-xs font-semibold transition-colors"
                 >
                   Cancel
                 </button>
               </div>
             </form>
           ) : (
-            <div className="bg-gray-50/80 p-4 rounded-xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-h-[58px]">
+            <div className="bg-gray-50/80 dark:bg-[#111713] p-4 rounded-xl border border-gray-100 dark:border-[#35443A] flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-h-[58px]">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-gray-500">Handle:</span>
-                <span className="text-sm font-bold text-green-800 bg-green-50 px-3 py-1 rounded-lg border border-green-200/50">
+                <span className="text-sm font-medium text-gray-500 dark:text-[#A5B0A7]">Handle:</span>
+                <span className="text-sm font-bold text-green-800 dark:text-[#7BC98C] bg-green-50 dark:bg-[#222D25] px-3 py-1 rounded-lg border border-green-200/50 dark:border-[#35443A]">
                   @{profile?.username || "Not set"}
                 </span>
               </div>
@@ -655,15 +662,15 @@ const Dashboard = () => {
         </div>
 
         {/* AUTHOR BIO / ABOUT SECTION */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col justify-between gap-4">
+        <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-sm p-6 flex flex-col justify-between gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <span className="text-xl"></span>
               <div>
-                <h2 className="text-lg font-bold text-gray-800">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-[#E5E9E4]">
                   Author Bio
                 </h2>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-400 dark:text-[#A5B0A7]">
                   Displayed beside your articles in the author sidebar.
                 </p>
               </div>
@@ -671,7 +678,7 @@ const Dashboard = () => {
             {!isEditingAbout && (
               <button
                 onClick={() => setIsEditingAbout(true)}
-                className="px-3.5 py-1.5 rounded-xl border border-gray-200 hover:border-green-800 text-xs font-semibold text-gray-700 hover:text-green-800 transition-colors"
+                className="px-3.5 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] hover:border-green-800 dark:hover:border-[#7BC98C] text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] hover:text-green-800 dark:hover:text-[#7BC98C] transition-colors"
               >
                 {profile?.about?.trim() ? "Edit About" : "Add About"}
               </button>
@@ -685,13 +692,13 @@ const Dashboard = () => {
                 onChange={(e) => setAboutText(e.target.value)}
                 placeholder="Tell readers a bit about yourself, your background, or what you write about..."
                 rows={3}
-                className="w-full p-3.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all text-gray-700 leading-relaxed"
+                className="w-full p-3.5 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#111713] text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 dark:focus:border-[#7BC98C] transition-all text-gray-700 dark:text-[#E5E9E4] dark:placeholder-gray-500 leading-relaxed"
               />
               <div className="flex items-center gap-3">
                 <button
                   type="submit"
                   disabled={updateProfileMutation.isPending}
-                  className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors disabled:opacity-50"
+                  className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold transition-colors disabled:opacity-50"
                 >
                   {updateProfileMutation.isPending ? "Saving..." : "Save Bio"}
                 </button>
@@ -701,20 +708,20 @@ const Dashboard = () => {
                     setAboutText(profile?.about || "");
                     setIsEditingAbout(false);
                   }}
-                  className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold transition-colors"
+                  className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-[#222D25] dark:hover:bg-[#2e3f34] text-gray-700 dark:text-[#E5E9E4] text-xs font-semibold transition-colors"
                 >
                   Cancel
                 </button>
               </div>
             </form>
           ) : (
-            <div className="bg-gray-50/80 p-4 rounded-xl border border-gray-100 min-h-[58px] flex items-center">
+            <div className="bg-gray-50/80 dark:bg-[#111713] p-4 rounded-xl border border-gray-100 dark:border-[#35443A] min-h-[58px] flex items-center">
               {profile?.about?.trim() ? (
-                <p className="text-sm text-slate-700 leading-relaxed line-clamp-3">
+                <p className="text-sm text-slate-700 dark:text-[#E5E9E4] leading-relaxed line-clamp-3">
                   {profile.about}
                 </p>
               ) : (
-                <p className="text-sm text-gray-400 italic">
+                <p className="text-sm text-gray-400 dark:text-[#A5B0A7] italic">
                   No bio added yet. Click 'Add About' to share a brief description about yourself.
                 </p>
               )}
@@ -724,19 +731,19 @@ const Dashboard = () => {
       </div>
 
       {/* POSTS TABS & LIST SECTION */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-6">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-sm p-6 flex flex-col gap-6">
         {/* TABS HEADER */}
-        <div className="flex items-center gap-2 md:gap-4 border-b border-gray-100 pb-3 overflow-x-auto">
+        <div className="flex items-center gap-2 md:gap-4 border-b border-gray-100 dark:border-[#35443A] pb-3 overflow-x-auto">
           <button
             onClick={() => setActiveTab("myPosts")}
             className={`flex items-center gap-2 pb-2 px-3 text-sm font-semibold transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "myPosts"
-                ? "border-green-800 text-green-800"
-                : "border-transparent text-gray-500 hover:text-gray-800"
+                ? "border-green-800 text-green-800 dark:border-[#7BC98C] dark:text-[#7BC98C]"
+                : "border-transparent text-gray-500 hover:text-gray-800 dark:text-[#A5B0A7] dark:hover:text-[#E5E9E4]"
             }`}
           >
             <span>My Articles</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 dark:bg-[#222D25] dark:text-[#A5B0A7]">
               {posts?.length || 0}
             </span>
           </button>
@@ -745,12 +752,12 @@ const Dashboard = () => {
             onClick={() => setActiveTab("saved")}
             className={`flex items-center gap-2 pb-2 px-3 text-sm font-semibold transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "saved"
-                ? "border-blue-800 text-blue-800"
-                : "border-transparent text-gray-500 hover:text-gray-800"
+                ? "border-blue-800 text-blue-800 dark:border-blue-400 dark:text-blue-400"
+                : "border-transparent text-gray-500 hover:text-gray-800 dark:text-[#A5B0A7] dark:hover:text-[#E5E9E4]"
             }`}
           >
             <span>Saved Posts</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
               {savedPosts?.length || 0}
             </span>
           </button>
@@ -759,12 +766,12 @@ const Dashboard = () => {
             onClick={() => setActiveTab("channels")}
             className={`flex items-center gap-2 pb-2 px-3 text-sm font-semibold transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "channels"
-                ? "border-emerald-800 text-emerald-800"
-                : "border-transparent text-gray-500 hover:text-gray-800"
+                ? "border-emerald-800 text-emerald-800 dark:border-[#7BC98C] dark:text-[#7BC98C]"
+                : "border-transparent text-gray-500 hover:text-gray-800 dark:text-[#A5B0A7] dark:hover:text-[#E5E9E4]"
             }`}
           >
             <span>My Channels</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
               {(userChannels?.owned?.length || 0) + (userChannels?.joined?.length || 0)}
             </span>
           </button>
@@ -773,12 +780,12 @@ const Dashboard = () => {
             onClick={() => setActiveTab("readlist")}
             className={`flex items-center gap-2 pb-2 px-3 text-sm font-semibold transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "readlist"
-                ? "border-teal-800 text-teal-800"
-                : "border-transparent text-gray-500 hover:text-gray-800"
+                ? "border-teal-800 text-teal-800 dark:border-teal-400 dark:text-teal-400"
+                : "border-transparent text-gray-500 hover:text-gray-800 dark:text-[#A5B0A7] dark:hover:text-[#E5E9E4]"
             }`}
           >
             <span>Readlist</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-teal-50 text-teal-700">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300">
               {readlistPosts?.length || 0}
             </span>
           </button>
@@ -787,12 +794,12 @@ const Dashboard = () => {
             onClick={() => setActiveTab("liked")}
             className={`flex items-center gap-2 pb-2 px-3 text-sm font-semibold transition-colors border-b-2 whitespace-nowrap ${
               activeTab === "liked"
-                ? "border-red-600 text-red-600"
-                : "border-transparent text-gray-500 hover:text-gray-800"
+                ? "border-red-600 text-red-600 dark:border-red-400 dark:text-red-400"
+                : "border-transparent text-gray-500 hover:text-gray-800 dark:text-[#A5B0A7] dark:hover:text-[#E5E9E4]"
             }`}
           >
             <span>Liked Posts</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-600">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-300">
               {likedPosts?.length || 0}
             </span>
           </button>
@@ -811,18 +818,18 @@ const Dashboard = () => {
               </div>
             ) : posts?.length === 0 ? (
               <div className="py-16 flex flex-col items-center justify-center gap-4 text-center">
-                <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center text-2xl">
+                <div className="w-16 h-16 rounded-full bg-green-50 dark:bg-[#222D25] flex items-center justify-center text-2xl">
                   📝
                 </div>
-                <h3 className="text-lg font-semibold text-gray-700">
+                <h3 className="text-lg font-semibold text-gray-700 dark:text-[#E5E9E4]">
                   You haven't written any posts yet
                 </h3>
-                <p className="text-sm text-gray-500 max-w-md">
+                <p className="text-sm text-gray-500 dark:text-[#A5B0A7] max-w-md">
                   Share your insights, tutorials, or stories with the community.
                 </p>
                 <Link
                   to="/write"
-                  className="mt-2 py-2 px-5 rounded-xl bg-green-800 text-white text-sm font-medium hover:bg-green-900 transition-colors"
+                  className="mt-2 py-2 px-5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-sm font-medium transition-colors"
                 >
                   Write your first post
                 </Link>
@@ -831,7 +838,7 @@ const Dashboard = () => {
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-gray-200 text-xs font-semibold uppercase text-gray-400 tracking-wider">
+                    <tr className="border-b border-gray-200 dark:border-[#35443A] text-xs font-semibold uppercase text-gray-400 dark:text-[#A5B0A7] tracking-wider">
                       <th className="pb-3 pr-4">Post</th>
                       <th className="pb-3 px-4">Category</th>
                       <th className="pb-3 px-4">Published</th>
@@ -839,16 +846,16 @@ const Dashboard = () => {
                       <th className="pb-3 pl-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100 text-sm">
+                  <tbody className="divide-y divide-gray-100 dark:divide-[#35443A] text-sm">
                     {posts.map((post) => (
                       <tr
                         key={post._id}
-                        className="hover:bg-gray-50/60 transition-colors group"
+                        className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors group"
                       >
                         <td className="py-4 pr-4">
                           <div className="flex items-center gap-3">
                             {post.img ? (
-                              <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100">
+                              <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100 dark:bg-[#222D25]">
                                 <Image
                                   src={post.img}
                                   w="64"
@@ -857,39 +864,39 @@ const Dashboard = () => {
                                 />
                               </div>
                             ) : (
-                              <div className="w-12 h-12 rounded-lg bg-emerald-50 text-emerald-700 font-bold flex items-center justify-center shrink-0 text-sm">
+                              <div className="w-12 h-12 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-[#7BC98C] font-bold flex items-center justify-center shrink-0 text-sm">
                                 {post.category?.slice(0, 2).toUpperCase() || "PO"}
                               </div>
                             )}
                             <div className="flex flex-col">
                               <Link
                                 to={`/${post.slug}`}
-                                className="font-semibold text-gray-800 group-hover:text-green-800 transition-colors line-clamp-1"
+                                className="font-semibold text-gray-800 dark:text-[#E5E9E4] group-hover:text-green-800 dark:group-hover:text-[#7BC98C] transition-colors line-clamp-1"
                               >
                                 {post.title}
                               </Link>
-                              <span className="text-xs text-gray-400 line-clamp-1">
+                              <span className="text-xs text-gray-400 dark:text-[#A5B0A7] line-clamp-1">
                                 {post.desc || "No description"}
                               </span>
                             </div>
                           </div>
                         </td>
                         <td className="py-4 px-4 whitespace-nowrap">
-                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 capitalize">
+                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-[#222D25] text-gray-700 dark:text-[#A5B0A7] capitalize">
                             {post.category || "General"}
                           </span>
                         </td>
-                        <td className="py-4 px-4 whitespace-nowrap text-gray-500 text-xs">
+                        <td className="py-4 px-4 whitespace-nowrap text-gray-500 dark:text-[#A5B0A7] text-xs">
                           {format(post.createdAt)}
                         </td>
-                        <td className="py-4 px-4 whitespace-nowrap text-gray-700 font-medium">
+                        <td className="py-4 px-4 whitespace-nowrap text-gray-700 dark:text-[#E5E9E4] font-medium">
                           {post.visit || 0}
                         </td>
                         <td className="py-4 pl-4 text-right whitespace-nowrap">
                           <div className="flex items-center justify-end gap-2">
                             <Link
                               to={`/${post.slug}`}
-                              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+                              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-[#E5E9E4] hover:bg-gray-100 dark:hover:bg-[#222D25] transition-colors"
                               title="View Article"
                             >
                               <svg
@@ -915,7 +922,7 @@ const Dashboard = () => {
 
                             <Link
                               to={`/edit/${post._id}`}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-medium transition-colors"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900/60 text-blue-700 dark:text-blue-300 text-xs font-medium transition-colors"
                               title="Edit Post"
                             >
                               <svg
@@ -937,7 +944,7 @@ const Dashboard = () => {
 
                             <button
                               onClick={() => setPostToDelete(post)}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 text-xs font-medium transition-colors"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 dark:bg-red-950/60 dark:hover:bg-red-900/60 text-red-600 dark:text-red-300 text-xs font-medium transition-colors"
                               title="Delete Post"
                             >
                               <svg
@@ -971,27 +978,27 @@ const Dashboard = () => {
         {activeTab === "saved" && (
           <div>
             {isSavedPending ? (
-              <div className="py-12 text-center text-gray-500">
+              <div className="py-12 text-center text-gray-500 dark:text-[#A5B0A7]">
                 Loading saved posts...
               </div>
             ) : savedError ? (
-              <div className="py-12 text-center text-red-500">
+              <div className="py-12 text-center text-red-500 dark:text-red-400">
                 Failed to load saved posts. Please try again.
               </div>
             ) : savedPosts?.length === 0 ? (
               <div className="py-16 flex flex-col items-center justify-center gap-4 text-center">
-                <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-2xl">
+                <div className="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-2xl">
                   🔖
                 </div>
-                <h3 className="text-lg font-semibold text-gray-700">
+                <h3 className="text-lg font-semibold text-gray-700 dark:text-[#E5E9E4]">
                   No saved posts yet
                 </h3>
-                <p className="text-sm text-gray-500 max-w-md">
+                <p className="text-sm text-gray-500 dark:text-[#A5B0A7] max-w-md">
                   Click "Save this Post" on any article to bookmark it and find it here anytime.
                 </p>
                 <Link
                   to="/posts"
-                  className="mt-2 py-2 px-5 rounded-xl bg-green-800 text-white text-sm font-medium hover:bg-green-900 transition-colors"
+                  className="mt-2 py-2 px-5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-sm font-medium transition-colors"
                 >
                   Explore Articles
                 </Link>
@@ -1000,7 +1007,7 @@ const Dashboard = () => {
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-gray-200 text-xs font-semibold uppercase text-gray-400 tracking-wider">
+                    <tr className="border-b border-gray-200 dark:border-[#35443A] text-xs font-semibold uppercase text-gray-400 dark:text-[#A5B0A7] tracking-wider">
                       <th className="pb-3 pr-4">Article</th>
                       <th className="pb-3 px-4">Author</th>
                       <th className="pb-3 px-4">Category</th>
@@ -1008,16 +1015,16 @@ const Dashboard = () => {
                       <th className="pb-3 pl-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100 text-sm">
+                  <tbody className="divide-y divide-gray-100 dark:divide-[#35443A] text-sm">
                     {savedPosts.map((post) => (
                       <tr
                         key={post._id}
-                        className="hover:bg-gray-50/60 transition-colors group"
+                        className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors group"
                       >
                         <td className="py-4 pr-4">
                           <div className="flex items-center gap-3">
                             {post.img ? (
-                              <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100">
+                              <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100 dark:bg-[#222D25]">
                                 <Image
                                   src={post.img}
                                   w="64"
@@ -1026,39 +1033,39 @@ const Dashboard = () => {
                                 />
                               </div>
                             ) : (
-                              <div className="w-12 h-12 rounded-lg bg-blue-50 text-blue-700 font-bold flex items-center justify-center shrink-0 text-sm">
+                              <div className="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-bold flex items-center justify-center shrink-0 text-sm">
                                 {post.category?.slice(0, 2).toUpperCase() || "PO"}
                               </div>
                             )}
                             <div className="flex flex-col">
                               <Link
                                 to={`/${post.slug}`}
-                                className="font-semibold text-gray-800 group-hover:text-blue-700 transition-colors line-clamp-1"
+                                className="font-semibold text-gray-800 dark:text-[#E5E9E4] group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors line-clamp-1"
                               >
                                 {post.title}
                               </Link>
-                              <span className="text-xs text-gray-400 line-clamp-1">
+                              <span className="text-xs text-gray-400 dark:text-[#A5B0A7] line-clamp-1">
                                 {post.desc || "No description"}
                               </span>
                             </div>
                           </div>
                         </td>
-                        <td className="py-4 px-4 whitespace-nowrap text-gray-600 text-xs font-medium">
+                        <td className="py-4 px-4 whitespace-nowrap text-gray-600 dark:text-[#A5B0A7] text-xs font-medium">
                           {post.user?.username || "Unknown"}
                         </td>
                         <td className="py-4 px-4 whitespace-nowrap">
-                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 capitalize">
+                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-[#222D25] text-gray-700 dark:text-[#A5B0A7] capitalize">
                             {post.category || "General"}
                           </span>
                         </td>
-                        <td className="py-4 px-4 whitespace-nowrap text-gray-500 text-xs">
+                        <td className="py-4 px-4 whitespace-nowrap text-gray-500 dark:text-[#A5B0A7] text-xs">
                           {format(post.createdAt)}
                         </td>
                         <td className="py-4 pl-4 text-right whitespace-nowrap">
                           <div className="flex items-center justify-end gap-2">
                             <Link
                               to={`/${post.slug}`}
-                              className="px-3 py-1.5 rounded-lg bg-green-50 text-green-800 hover:bg-green-100 text-xs font-medium transition-colors"
+                              className="px-3 py-1.5 rounded-lg bg-green-50 hover:bg-green-100 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-green-800 dark:text-[#7BC98C] text-xs font-medium transition-colors"
                             >
                               Read
                             </Link>
@@ -1066,7 +1073,7 @@ const Dashboard = () => {
                             <button
                               onClick={() => unsaveMutation.mutate(post._id)}
                               disabled={unsaveMutation.isPending}
-                              className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-red-50 text-gray-600 hover:text-red-600 text-xs font-medium transition-colors disabled:opacity-50"
+                              className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-red-50 dark:bg-[#222D25] dark:hover:bg-red-950/60 text-gray-600 dark:text-[#A5B0A7] hover:text-red-600 dark:hover:text-red-300 text-xs font-medium transition-colors disabled:opacity-50"
                               title="Remove from saved"
                             >
                               Remove
@@ -1086,12 +1093,12 @@ const Dashboard = () => {
         {activeTab === "channels" && (
           <div className="flex flex-col gap-8">
             {/* TOP BAR / ACTION HEADER */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-gray-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-gray-100 dark:border-[#35443A]">
               <div>
-                <h3 className="text-lg font-bold text-gray-800">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-[#E5E9E4]">
                   Channel & Community Management
                 </h3>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 dark:text-[#A5B0A7]">
                   Manage channels you created and participate in real-time discussions.
                 </p>
               </div>
@@ -1099,13 +1106,13 @@ const Dashboard = () => {
               <div className="flex items-center gap-3">
                 <Link
                   to="/channels"
-                  className="px-4 py-2 rounded-xl border border-gray-200 hover:border-gray-300 text-xs font-semibold text-gray-700 transition-colors"
+                  className="px-4 py-2 rounded-xl border border-gray-200 dark:border-[#35443A] hover:border-gray-300 dark:hover:border-gray-600 text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] transition-colors"
                 >
                   Browse Channels  
                 </Link>
                 <button
                   onClick={() => setIsCreateChannelOpen(true)}
-                  className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
+                  className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
                 >
                   <span>+</span>
                   <span>Create Channel</span>
@@ -1114,11 +1121,11 @@ const Dashboard = () => {
             </div>
 
             {isChannelsPending ? (
-              <div className="py-12 text-center text-gray-400 text-xs">
+              <div className="py-12 text-center text-gray-400 dark:text-[#A5B0A7] text-xs">
                 Loading your channels...
               </div>
             ) : channelsError ? (
-              <div className="py-12 text-center text-red-500 text-xs">
+              <div className="py-12 text-center text-red-500 dark:text-red-400 text-xs">
                 Failed to load channels. Please refresh.
               </div>
             ) : (
@@ -1126,27 +1133,27 @@ const Dashboard = () => {
                 {/* 1. OWNED CHANNELS GROUP */}
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                    <h4 className="text-sm font-bold text-gray-900 dark:text-[#E5E9E4] flex items-center gap-2">
                       <span>👑</span>
                       <span>Owned Channels</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200/50">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/50">
                         {userChannels?.owned?.length || 0}
                       </span>
                     </h4>
                   </div>
 
                   {userChannels?.owned?.length === 0 ? (
-                    <div className="p-8 rounded-2xl border border-dashed border-gray-200 text-center flex flex-col items-center justify-center gap-2 bg-gray-50/50">
+                    <div className="p-8 rounded-2xl border border-dashed border-gray-200 dark:border-[#35443A] text-center flex flex-col items-center justify-center gap-2 bg-gray-50/50 dark:bg-[#111713]/50">
                       <span className="text-2xl">🌱</span>
-                      <p className="text-xs font-semibold text-gray-700">
+                      <p className="text-xs font-semibold text-gray-700 dark:text-[#E5E9E4]">
                         You haven't created any channels yet
                       </p>
-                      <p className="text-[11px] text-gray-400 max-w-sm">
+                      <p className="text-[11px] text-gray-400 dark:text-[#A5B0A7] max-w-sm">
                         Create topic-based community channels where readers and fellow engineers can discuss articles and technology.
                       </p>
                       <button
                         onClick={() => setIsCreateChannelOpen(true)}
-                        className="mt-2 px-4 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-medium transition-colors"
+                        className="mt-2 px-4 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-medium transition-colors"
                       >
                         Create your first channel
                       </button>
@@ -1155,7 +1162,7 @@ const Dashboard = () => {
                     <div className="overflow-x-auto">
                       <table className="w-full text-left border-collapse">
                         <thead>
-                          <tr className="border-b border-gray-200 text-xs font-semibold uppercase text-gray-400 tracking-wider">
+                          <tr className="border-b border-gray-200 dark:border-[#35443A] text-xs font-semibold uppercase text-gray-400 dark:text-[#A5B0A7] tracking-wider">
                             <th className="pb-3 pr-4">Channel</th>
                             <th className="pb-3 px-4">Visibility</th>
                             <th className="pb-3 px-4">Members</th>
@@ -1163,38 +1170,38 @@ const Dashboard = () => {
                             <th className="pb-3 pl-4 text-right">Actions</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100 text-sm">
+                        <tbody className="divide-y divide-gray-100 dark:divide-[#35443A] text-sm">
                           {userChannels.owned.map((ch) => (
                             <tr
                               key={ch._id}
-                              className="hover:bg-gray-50/60 transition-colors group"
+                              className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors group"
                             >
                               <td className="py-4 pr-4">
                                 <div className="flex flex-col">
                                   <Link
                                     to={`/channels/${ch.slug}`}
-                                    className="font-bold text-gray-900 group-hover:text-green-800 transition-colors flex items-center gap-1.5"
+                                    className="font-bold text-gray-900 dark:text-[#E5E9E4] group-hover:text-green-800 dark:group-hover:text-[#7BC98C] transition-colors flex items-center gap-1.5"
                                   >
                                     <span>#</span>
                                     <span>{ch.name}</span>
                                   </Link>
-                                  <span className="text-xs text-gray-500 line-clamp-1">
+                                  <span className="text-xs text-gray-500 dark:text-[#A5B0A7] line-clamp-1">
                                     {ch.description || "No description"}
                                   </span>
                                 </div>
                               </td>
 
                               <td className="py-4 px-4 whitespace-nowrap">
-                                <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 capitalize">
+                                <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-[#222D25] text-gray-700 dark:text-[#A5B0A7] capitalize">
                                   {ch.visibility === "private" ? "🔒 Private" : "🌐 Public"}
                                 </span>
                               </td>
 
-                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-700 font-semibold">
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-700 dark:text-[#E5E9E4] font-semibold">
                                 {ch.memberCount || 1} members
                               </td>
 
-                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-500">
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-500 dark:text-[#A5B0A7]">
                                 {format(ch.lastActivityAt || ch.createdAt)}
                               </td>
 
@@ -1203,7 +1210,7 @@ const Dashboard = () => {
                                   {ch.visibility === "private" && (
                                     <button
                                       onClick={() => setChannelForRequests(ch)}
-                                      className="relative px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 text-xs font-semibold transition-colors flex items-center gap-1.5 border border-emerald-200/60"
+                                      className="relative px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-900/60 text-xs font-semibold transition-colors flex items-center gap-1.5 border border-emerald-200/60 dark:border-emerald-800/60"
                                       title="Manage Join Requests"
                                     >
                                       <span>📬 Requests</span>
@@ -1216,19 +1223,19 @@ const Dashboard = () => {
                                   )}
                                   <Link
                                     to={`/channels/${ch.slug}`}
-                                    className="px-3 py-1.5 rounded-lg bg-green-50 text-green-800 hover:bg-green-100 text-xs font-semibold transition-colors"
+                                    className="px-3 py-1.5 rounded-lg bg-green-50 hover:bg-green-100 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-green-800 dark:text-[#7BC98C] text-xs font-semibold transition-colors"
                                   >
                                     Open
                                   </Link>
                                   <button
                                     onClick={() => setChannelToEdit(ch)}
-                                    className="px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 text-gray-700 text-xs font-semibold transition-colors"
+                                    className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-[#35443A] hover:bg-gray-100 dark:hover:bg-[#222D25] text-gray-700 dark:text-[#E5E9E4] text-xs font-semibold transition-colors"
                                   >
                                     Edit
                                   </button>
                                   <button
                                     onClick={() => setChannelToDelete(ch)}
-                                    className="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 text-xs font-semibold transition-colors"
+                                    className="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 dark:bg-red-950/60 dark:hover:bg-red-900/60 text-red-600 dark:text-red-300 text-xs font-semibold transition-colors"
                                   >
                                     Delete
                                   </button>
@@ -1245,27 +1252,27 @@ const Dashboard = () => {
                 {/* 2. JOINED CHANNELS GROUP */}
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                    <h4 className="text-sm font-bold text-gray-900 dark:text-[#E5E9E4] flex items-center gap-2">
                       <span>💬</span>
                       <span>Joined Channels</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-800 border border-blue-200/50">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 border border-blue-200/50 dark:border-blue-800/50">
                         {userChannels?.joined?.length || 0}
                       </span>
                     </h4>
                   </div>
 
                   {userChannels?.joined?.length === 0 ? (
-                    <div className="p-8 rounded-2xl border border-dashed border-gray-200 text-center flex flex-col items-center justify-center gap-2 bg-gray-50/50">
+                    <div className="p-8 rounded-2xl border border-dashed border-gray-200 dark:border-[#35443A] text-center flex flex-col items-center justify-center gap-2 bg-gray-50/50 dark:bg-[#111713]/50">
                       <span className="text-2xl">🔍</span>
-                      <p className="text-xs font-semibold text-gray-700">
+                      <p className="text-xs font-semibold text-gray-700 dark:text-[#E5E9E4]">
                         You haven't joined any other channels yet
                       </p>
-                      <p className="text-[11px] text-gray-400 max-w-sm">
+                      <p className="text-[11px] text-gray-400 dark:text-[#A5B0A7] max-w-sm">
                         Explore channels hosted by other authors and engineers to join relevant technical communities.
                       </p>
                       <Link
                         to="/channels"
-                        className="mt-2 px-4 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-medium transition-colors"
+                        className="mt-2 px-4 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-[#222D25] dark:hover:bg-[#2e3f34] text-gray-800 dark:text-[#E5E9E4] text-xs font-medium transition-colors"
                       >
                         Explore Public Channels
                       </Link>
@@ -1274,7 +1281,7 @@ const Dashboard = () => {
                     <div className="overflow-x-auto">
                       <table className="w-full text-left border-collapse">
                         <thead>
-                          <tr className="border-b border-gray-200 text-xs font-semibold uppercase text-gray-400 tracking-wider">
+                          <tr className="border-b border-gray-200 dark:border-[#35443A] text-xs font-semibold uppercase text-gray-400 dark:text-[#A5B0A7] tracking-wider">
                             <th className="pb-3 pr-4">Channel</th>
                             <th className="pb-3 px-4">Creator</th>
                             <th className="pb-3 px-4">Members</th>
@@ -1282,36 +1289,36 @@ const Dashboard = () => {
                             <th className="pb-3 pl-4 text-right">Actions</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100 text-sm">
+                        <tbody className="divide-y divide-gray-100 dark:divide-[#35443A] text-sm">
                           {userChannels.joined.map((ch) => (
                             <tr
                               key={ch._id}
-                              className="hover:bg-gray-50/60 transition-colors group"
+                              className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors group"
                             >
                               <td className="py-4 pr-4">
                                 <div className="flex flex-col">
                                   <Link
                                     to={`/channels/${ch.slug}`}
-                                    className="font-bold text-gray-900 group-hover:text-green-800 transition-colors flex items-center gap-1.5"
+                                    className="font-bold text-gray-900 dark:text-[#E5E9E4] group-hover:text-green-800 dark:group-hover:text-[#7BC98C] transition-colors flex items-center gap-1.5"
                                   >
                                     <span>#</span>
                                     <span>{ch.name}</span>
                                   </Link>
-                                  <span className="text-xs text-gray-500 line-clamp-1">
+                                  <span className="text-xs text-gray-500 dark:text-[#A5B0A7] line-clamp-1">
                                     {ch.description || "No description"}
                                   </span>
                                 </div>
                               </td>
 
-                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-600 font-medium">
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-600 dark:text-[#A5B0A7] font-medium">
                                 @{ch.creator?.username || "Author"}
                               </td>
 
-                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-700 font-semibold">
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-700 dark:text-[#E5E9E4] font-semibold">
                                 {ch.memberCount || 1} members
                               </td>
 
-                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-500">
+                              <td className="py-4 px-4 whitespace-nowrap text-xs text-gray-500 dark:text-[#A5B0A7]">
                                 {format(ch.lastActivityAt || ch.createdAt)}
                               </td>
 
@@ -1319,13 +1326,13 @@ const Dashboard = () => {
                                 <div className="flex items-center justify-end gap-2">
                                   <Link
                                     to={`/channels/${ch.slug}`}
-                                    className="px-3 py-1.5 rounded-lg bg-green-50 text-green-800 hover:bg-green-100 text-xs font-semibold transition-colors"
+                                    className="px-3 py-1.5 rounded-lg bg-green-50 hover:bg-green-100 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-green-800 dark:text-[#7BC98C] text-xs font-semibold transition-colors"
                                   >
                                     Open
                                   </Link>
                                   <button
                                     onClick={() => setChannelToLeave(ch)}
-                                    className="px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-red-50 text-gray-600 hover:text-red-600 text-xs font-semibold transition-colors"
+                                    className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-[#35443A] hover:bg-red-50 dark:hover:bg-red-950/60 text-gray-600 dark:text-[#A5B0A7] hover:text-red-600 dark:hover:text-red-300 text-xs font-semibold transition-colors"
                                   >
                                     Leave
                                   </button>
@@ -1347,27 +1354,27 @@ const Dashboard = () => {
         {activeTab === "readlist" && (
           <div>
             {isReadlistPending ? (
-              <div className="py-12 text-center text-gray-500">
+              <div className="py-12 text-center text-gray-500 dark:text-[#A5B0A7]">
                 Loading reading list...
               </div>
             ) : readlistError ? (
-              <div className="py-12 text-center text-red-500">
+              <div className="py-12 text-center text-red-500 dark:text-red-400">
                 Failed to load readlist. Please try again.
               </div>
             ) : readlistPosts?.length === 0 ? (
               <div className="py-16 flex flex-col items-center justify-center gap-4 text-center">
-                <div className="w-16 h-16 rounded-full bg-teal-50 text-teal-600 flex items-center justify-center text-2xl">
+                <div className="w-16 h-16 rounded-full bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center text-2xl">
                   📚
                 </div>
-                <h3 className="text-lg font-semibold text-gray-700">
+                <h3 className="text-lg font-semibold text-gray-700 dark:text-[#E5E9E4]">
                   Your reading list is empty
                 </h3>
-                <p className="text-sm text-gray-500 max-w-md">
+                <p className="text-sm text-gray-500 dark:text-[#A5B0A7] max-w-md">
                   Add articles you'd like to read later by clicking "Add to Readlist" on any article page.
                 </p>
                 <Link
                   to="/posts"
-                  className="mt-2 py-2 px-5 rounded-xl bg-green-800 text-white text-sm font-medium hover:bg-green-900 transition-colors"
+                  className="mt-2 py-2 px-5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-sm font-medium transition-colors"
                 >
                   Discover Posts
                 </Link>
@@ -1376,7 +1383,7 @@ const Dashboard = () => {
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-gray-200 text-xs font-semibold uppercase text-gray-400 tracking-wider">
+                    <tr className="border-b border-gray-200 dark:border-[#35443A] text-xs font-semibold uppercase text-gray-400 dark:text-[#A5B0A7] tracking-wider">
                       <th className="pb-3 pr-4">Article</th>
                       <th className="pb-3 px-4">Author</th>
                       <th className="pb-3 px-4">Category</th>
@@ -1384,16 +1391,16 @@ const Dashboard = () => {
                       <th className="pb-3 pl-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100 text-sm">
+                  <tbody className="divide-y divide-gray-100 dark:divide-[#35443A] text-sm">
                     {readlistPosts.map((post) => (
                       <tr
                         key={post._id}
-                        className="hover:bg-gray-50/60 transition-colors group"
+                        className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors group"
                       >
                         <td className="py-4 pr-4">
                           <div className="flex items-center gap-3">
                             {post.img ? (
-                              <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100">
+                              <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100 dark:bg-[#222D25]">
                                 <Image
                                   src={post.img}
                                   w="64"
@@ -1402,39 +1409,39 @@ const Dashboard = () => {
                                 />
                               </div>
                             ) : (
-                              <div className="w-12 h-12 rounded-lg bg-teal-50 text-teal-700 font-bold flex items-center justify-center shrink-0 text-sm">
+                              <div className="w-12 h-12 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 font-bold flex items-center justify-center shrink-0 text-sm">
                                 {post.category?.slice(0, 2).toUpperCase() || "PO"}
                               </div>
                             )}
                             <div className="flex flex-col">
                               <Link
                                 to={`/${post.slug}`}
-                                className="font-semibold text-gray-800 group-hover:text-teal-700 transition-colors line-clamp-1"
+                                className="font-semibold text-gray-800 dark:text-[#E5E9E4] group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors line-clamp-1"
                               >
                                 {post.title}
                               </Link>
-                              <span className="text-xs text-gray-400 line-clamp-1">
+                              <span className="text-xs text-gray-400 dark:text-[#A5B0A7] line-clamp-1">
                                 {post.desc || "No description"}
                               </span>
                             </div>
                           </div>
                         </td>
-                        <td className="py-4 px-4 whitespace-nowrap text-gray-600 text-xs font-medium">
+                        <td className="py-4 px-4 whitespace-nowrap text-gray-600 dark:text-[#A5B0A7] text-xs font-medium">
                           {post.user?.username || "Unknown"}
                         </td>
                         <td className="py-4 px-4 whitespace-nowrap">
-                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 capitalize">
+                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-[#222D25] text-gray-700 dark:text-[#A5B0A7] capitalize">
                             {post.category || "General"}
                           </span>
                         </td>
-                        <td className="py-4 px-4 whitespace-nowrap text-gray-500 text-xs">
+                        <td className="py-4 px-4 whitespace-nowrap text-gray-500 dark:text-[#A5B0A7] text-xs">
                           {format(post.createdAt)}
                         </td>
                         <td className="py-4 pl-4 text-right whitespace-nowrap">
                           <div className="flex items-center justify-end gap-2">
                             <Link
                               to={`/${post.slug}`}
-                              className="px-3 py-1.5 rounded-lg bg-teal-50 text-teal-800 hover:bg-teal-100 text-xs font-medium transition-colors"
+                              className="px-3 py-1.5 rounded-lg bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/60 dark:hover:bg-teal-900/60 text-teal-800 dark:text-teal-300 text-xs font-medium transition-colors"
                             >
                               Read
                             </Link>
@@ -1442,7 +1449,7 @@ const Dashboard = () => {
                             <button
                               onClick={() => removeReadlistMutation.mutate(post._id)}
                               disabled={removeReadlistMutation.isPending}
-                              className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-red-50 text-gray-600 hover:text-red-600 text-xs font-medium transition-colors disabled:opacity-50"
+                              className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-red-50 dark:bg-[#222D25] dark:hover:bg-red-950/60 text-gray-600 dark:text-[#A5B0A7] hover:text-red-600 dark:hover:text-red-300 text-xs font-medium transition-colors disabled:opacity-50"
                               title="Remove from readlist"
                             >
                               Remove
@@ -1462,27 +1469,27 @@ const Dashboard = () => {
         {activeTab === "liked" && (
           <div>
             {isLikedPending ? (
-              <div className="py-12 text-center text-gray-500">
+              <div className="py-12 text-center text-gray-500 dark:text-[#A5B0A7]">
                 Loading liked posts...
               </div>
             ) : likedError ? (
-              <div className="py-12 text-center text-red-500">
+              <div className="py-12 text-center text-red-500 dark:text-red-400">
                 Failed to load liked posts. Please try again.
               </div>
             ) : likedPosts?.length === 0 ? (
               <div className="py-16 flex flex-col items-center justify-center gap-4 text-center">
-                <div className="w-16 h-16 rounded-full bg-red-50 text-red-600 flex items-center justify-center text-2xl">
+                <div className="w-16 h-16 rounded-full bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center text-2xl">
                   ❤️
                 </div>
-                <h3 className="text-lg font-semibold text-gray-700">
+                <h3 className="text-lg font-semibold text-gray-700 dark:text-[#E5E9E4]">
                   No liked posts yet
                 </h3>
-                <p className="text-sm text-gray-500 max-w-md">
+                <p className="text-sm text-gray-500 dark:text-[#A5B0A7] max-w-md">
                   When you like articles by clicking the heart icon, they will be organized right here for you.
                 </p>
                 <Link
                   to="/posts"
-                  className="mt-2 py-2 px-5 rounded-xl bg-green-800 text-white text-sm font-medium hover:bg-green-900 transition-colors"
+                  className="mt-2 py-2 px-5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-sm font-medium transition-colors"
                 >
                   Explore Articles
                 </Link>
@@ -1491,7 +1498,7 @@ const Dashboard = () => {
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-gray-200 text-xs font-semibold uppercase text-gray-400 tracking-wider">
+                    <tr className="border-b border-gray-200 dark:border-[#35443A] text-xs font-semibold uppercase text-gray-400 dark:text-[#A5B0A7] tracking-wider">
                       <th className="pb-3 pr-4">Article</th>
                       <th className="pb-3 px-4">Author</th>
                       <th className="pb-3 px-4">Category</th>
@@ -1499,16 +1506,16 @@ const Dashboard = () => {
                       <th className="pb-3 pl-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100 text-sm">
+                  <tbody className="divide-y divide-gray-100 dark:divide-[#35443A] text-sm">
                     {likedPosts.map((post) => (
                       <tr
                         key={post._id}
-                        className="hover:bg-gray-50/60 transition-colors group"
+                        className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors group"
                       >
                         <td className="py-4 pr-4">
                           <div className="flex items-center gap-3">
                             {post.img ? (
-                              <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100">
+                              <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100 dark:bg-[#222D25]">
                                 <Image
                                   src={post.img}
                                   w="64"
@@ -1517,33 +1524,33 @@ const Dashboard = () => {
                                 />
                               </div>
                             ) : (
-                              <div className="w-12 h-12 rounded-lg bg-red-50 text-red-700 font-bold flex items-center justify-center shrink-0 text-sm">
+                              <div className="w-12 h-12 rounded-lg bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 font-bold flex items-center justify-center shrink-0 text-sm">
                                 {post.category?.slice(0, 2).toUpperCase() || "PO"}
                               </div>
                             )}
                             <div className="flex flex-col">
                               <Link
                                 to={`/${post.slug}`}
-                                className="font-semibold text-gray-800 group-hover:text-red-700 transition-colors line-clamp-1"
+                                className="font-semibold text-gray-800 dark:text-[#E5E9E4] group-hover:text-red-700 dark:group-hover:text-red-400 transition-colors line-clamp-1"
                               >
                                 {post.title}
                               </Link>
-                              <span className="text-xs text-gray-400 line-clamp-1">
+                              <span className="text-xs text-gray-400 dark:text-[#A5B0A7] line-clamp-1">
                                 {post.desc || "No description"}
                               </span>
                             </div>
                           </div>
                         </td>
-                        <td className="py-4 px-4 whitespace-nowrap text-gray-600 text-xs font-medium">
+                        <td className="py-4 px-4 whitespace-nowrap text-gray-600 dark:text-[#A5B0A7] text-xs font-medium">
                           {post.user?.username || "Unknown"}
                         </td>
                         <td className="py-4 px-4 whitespace-nowrap">
-                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 capitalize">
+                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-[#222D25] text-gray-700 dark:text-[#A5B0A7] capitalize">
                             {post.category || "General"}
                           </span>
                         </td>
                         <td className="py-4 px-4 whitespace-nowrap">
-                          <span className="inline-flex items-center gap-1 text-red-600 text-xs font-semibold">
+                          <span className="inline-flex items-center gap-1 text-red-600 dark:text-red-400 text-xs font-semibold">
                             <span>❤️</span>
                             <span>{post.likes?.length || 0}</span>
                           </span>
@@ -1552,7 +1559,7 @@ const Dashboard = () => {
                           <div className="flex items-center justify-end gap-2">
                             <Link
                               to={`/${post.slug}`}
-                              className="px-3 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 text-xs font-medium transition-colors"
+                              className="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 dark:bg-red-950/60 dark:hover:bg-red-900/60 text-red-700 dark:text-red-300 text-xs font-medium transition-colors"
                             >
                               Read
                             </Link>
@@ -1560,7 +1567,7 @@ const Dashboard = () => {
                             <button
                               onClick={() => unlikeMutation.mutate(post._id)}
                               disabled={unlikeMutation.isPending}
-                              className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-red-50 text-gray-600 hover:text-red-600 text-xs font-medium transition-colors disabled:opacity-50"
+                              className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-red-50 dark:bg-[#222D25] dark:hover:bg-red-950/60 text-gray-600 dark:text-[#A5B0A7] hover:text-red-600 dark:hover:text-red-300 text-xs font-medium transition-colors disabled:opacity-50"
                               title="Unlike post"
                             >
                               Unlike
@@ -1579,18 +1586,18 @@ const Dashboard = () => {
 
       {/* DELETE CONFIRMATION MODAL */}
       {postToDelete && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl shrink-0">
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#1B241E] border border-transparent dark:border-[#35443A] rounded-2xl max-w-md w-full p-6 shadow-xl flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center text-xl shrink-0">
               ⚠️
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-900">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">
                 Delete Post
               </h3>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 dark:text-[#A5B0A7] mt-1">
                 Are you sure you want to delete{" "}
-                <span className="font-semibold text-gray-700">
+                <span className="font-semibold text-gray-700 dark:text-[#E5E9E4]">
                   "{postToDelete.title}"
                 </span>
                 ? This action cannot be undone.
@@ -1602,7 +1609,7 @@ const Dashboard = () => {
                 type="button"
                 onClick={() => setPostToDelete(null)}
                 disabled={deleteMutation.isPending}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] rounded-xl hover:bg-gray-200 dark:hover:bg-[#2e3f34] transition-colors"
               >
                 Cancel
               </button>

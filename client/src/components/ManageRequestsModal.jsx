@@ -100,24 +100,24 @@ const ManageRequestsModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-gray-100 flex flex-col gap-4 max-h-[85vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-lg w-full p-6 shadow-xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-4 max-h-[85vh] text-gray-800 dark:text-[#E5E9E4]">
         {/* MODAL HEADER */}
-        <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+        <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-[#35443A]">
           <div>
-            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4] flex items-center gap-2">
               <span>Manage Join Requests</span>
-              <span className="text-xs font-normal text-gray-500">
+              <span className="text-xs font-normal text-gray-500 dark:text-[#A5B0A7]">
                 (#{channel.name})
               </span>
             </h3>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <p className="text-xs text-gray-500 dark:text-[#A5B0A7] mt-0.5">
               Review and approve member requests to access this private channel.
             </p>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+            className="text-gray-400 dark:text-[#A5B0A7] hover:text-gray-600 dark:hover:text-white p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#222D25] transition-colors"
           >
             ✕
           </button>
@@ -129,8 +129,8 @@ const ManageRequestsModal = ({
             onClick={() => setFilter("pending")}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
               filter === "pending"
-                ? "bg-green-800 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                ? "bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white dark:text-[#E5E9E4]"
+                : "bg-gray-100 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7] hover:bg-gray-200 dark:hover:bg-[#2e3f34]"
             }`}
           >
             Pending Requests
@@ -139,8 +139,8 @@ const ManageRequestsModal = ({
             onClick={() => setFilter("all")}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
               filter === "all"
-                ? "bg-green-800 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                ? "bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white dark:text-[#E5E9E4]"
+                : "bg-gray-100 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7] hover:bg-gray-200 dark:hover:bg-[#2e3f34]"
             }`}
           >
             All Requests History
@@ -148,20 +148,20 @@ const ManageRequestsModal = ({
         </div>
 
         {/* REQUESTS LIST */}
-        <div className="flex flex-col gap-3 overflow-y-auto max-h-96 pr-1 divide-y divide-gray-50">
+        <div className="flex flex-col gap-3 overflow-y-auto max-h-96 pr-1 divide-y divide-gray-50 dark:divide-[#35443A]">
           {loading ? (
-            <div className="py-12 text-center text-xs text-gray-400">
+            <div className="py-12 text-center text-xs text-gray-400 dark:text-[#A5B0A7]">
               Loading requests...
             </div>
           ) : requests.length === 0 ? (
             <div className="py-12 flex flex-col items-center justify-center text-center gap-2">
            
-              <p className="text-xs font-semibold text-gray-700">
+              <p className="text-xs font-semibold text-gray-700 dark:text-[#E5E9E4]">
                 {filter === "pending"
                   ? "No pending join requests"
                   : "No join requests recorded"}
               </p>
-              <p className="text-[11px] text-gray-400 max-w-xs">
+              <p className="text-[11px] text-gray-400 dark:text-[#A5B0A7] max-w-xs">
                 When users request to join #{channel.name}, they will appear
                 here for your review.
               </p>
@@ -181,34 +181,34 @@ const ManageRequestsModal = ({
                     <img
                       src={avatar}
                       alt={username}
-                      className="w-10 h-10 rounded-full object-cover border border-gray-100 flex-shrink-0"
+                      className="w-10 h-10 rounded-full object-cover border border-gray-100 dark:border-[#35443A] flex-shrink-0"
                     />
                     <div className="flex flex-col min-w-0">
                       <div className="flex items-center gap-2">
                         <Link
                           to={`/author/${username}`}
                           onClick={onClose}
-                          className="text-xs font-bold text-gray-900 hover:text-green-800 transition-colors truncate"
+                          className="text-xs font-bold text-gray-900 dark:text-[#E5E9E4] hover:text-green-800 dark:hover:text-[#7BC98C] transition-colors truncate"
                         >
                           @{username}
                         </Link>
                         <span
                           className={`px-2 py-0.2 rounded-full text-[10px] font-semibold capitalize ${
                             req.status === "pending"
-                              ? "bg-amber-50 text-amber-700 border border-amber-200/50"
+                              ? "bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/50"
                               : req.status === "accepted"
-                              ? "bg-green-50 text-green-700 border border-green-200/50"
-                              : "bg-gray-100 text-gray-600"
+                              ? "bg-green-50 dark:bg-green-950/60 text-green-700 dark:text-[#7BC98C] border border-green-200/50 dark:border-green-800/50"
+                              : "bg-gray-100 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7]"
                           }`}
                         >
                           {req.status}
                         </span>
                       </div>
-                      <span className="text-[11px] text-gray-400">
+                      <span className="text-[11px] text-gray-400 dark:text-[#A5B0A7]">
                         Requested {format(req.createdAt)}
                       </span>
                       {req.note && (
-                        <p className="text-[11px] text-gray-600 italic mt-0.5">
+                        <p className="text-[11px] text-gray-600 dark:text-[#A5B0A7] italic mt-0.5">
                           "{req.note}"
                         </p>
                       )}
@@ -221,14 +221,14 @@ const ManageRequestsModal = ({
                       <button
                         onClick={() => handleDecline(req._id)}
                         disabled={isActioning}
-                        className="px-3 py-1.5 rounded-xl border border-gray-200 hover:bg-gray-100 text-gray-700 text-xs font-semibold transition-colors disabled:opacity-50"
+                        className="px-3 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] hover:bg-gray-100 dark:hover:bg-[#222D25] text-gray-700 dark:text-[#E5E9E4] text-xs font-semibold transition-colors disabled:opacity-50"
                       >
                         Decline
                       </button>
                       <button
                         onClick={() => handleAccept(req._id)}
                         disabled={isActioning}
-                        className="px-3.5 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors disabled:opacity-50 flex items-center gap-1.5"
+                        className="px-3.5 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold transition-colors disabled:opacity-50 flex items-center gap-1.5"
                       >
                         {isActioning && (
                           <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -243,10 +243,10 @@ const ManageRequestsModal = ({
           )}
         </div>
 
-        <div className="pt-3 border-t border-gray-100 flex justify-end">
+        <div className="pt-3 border-t border-gray-100 dark:border-[#35443A] flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 rounded-xl text-xs font-medium text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] hover:bg-gray-200 dark:hover:bg-[#2e3f34] transition-colors"
           >
             Close
           </button>

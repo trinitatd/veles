@@ -37,8 +37,7 @@ export const aboutContent = {
       name: "Trinita T D",
       role: "Lead Full-Stack Developer",
       bio: "Spearheads the end-to-end application architecture, core API design, and real-time features. Passionate about performant web standards and clean code design.",
-      avatar:
-        "meme\client\public\logo.png",
+      avatar: "/logo.png",
       skills: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
       github: "https://github.com",
       linkedin: "https://linkedin.com",
@@ -48,8 +47,7 @@ export const aboutContent = {
       name: "Gauri Smiju",
       role: "Frontend Engineer & UI/UX Designer",
       bio: "Crafts delightful user interfaces, responsive design layouts, and accessible interaction patterns. Sarah designed the visual aesthetic and theme of the blog.",
-      avatar:
-        "meme\client\public\logo.png",
+      avatar: "/logo.png",
       skills: ["React", "Tailwind CSS", "UI/UX", "Figma", "Accessibility"],
       github: "https://github.com",
       linkedin: "https://linkedin.com",
@@ -59,8 +57,7 @@ export const aboutContent = {
       name: "Yasina Thasneem M",
       role: "Backend Architect & Database Engineer",
       bio: "Architects scalable database schemas, query optimizations, and secure authentication flows. David ensures seamless data reliability and server resilience.",
-      avatar:
-        "meme\client\public\logo.png",
+      avatar: "/logo.png",
       skills: ["Node.js", "MongoDB", "Mongoose", "REST APIs", "Clerk Auth"],
       github: "https://github.com",
       linkedin: "https://linkedin.com",
@@ -70,8 +67,7 @@ export const aboutContent = {
       name: "Vivek R",
       role: "DevOps & Cloud Infrastructure Engineer",
       bio: "Automates continuous deployment pipelines, environment configurations, asset delivery, and cloud monitoring to maintain 99.9% platform uptime.",
-      avatar:
-        "meme\client\public\logo.png",
+      avatar: "/logo.png",
       skills: ["Docker", "CI/CD", "Cloud Architecture", "Vite", "ImageKit"],
       github: "https://github.com",
       linkedin: "https://linkedin.com",
@@ -83,26 +79,26 @@ const AboutPage = () => {
   return (
     <div className="mt-4 flex flex-col gap-12 pb-20">
       {/* BREADCRUMB */}
-      <div className="flex gap-4 text-[#2f4b3a] text-sm md:text-base font-medium">
+      <div className="flex gap-4 text-[#2f4b3a] dark:text-[#7BC98C] text-sm md:text-base font-medium">
         <Link to="/" className="hover:underline">
           Home
         </Link>
         <span>•</span>
-        <span className="text-green-800 font-semibold">About Us</span>
+        <span className="text-green-800 dark:text-[#7BC98C] font-semibold">About Us</span>
       </div>
 
       {/* HERO / INTRO SECTION */}
-      <section className="relative overflow-hidden rounded-3xl border border-[#2f4b3a]/15 bg-gradient-to-br from-[#d9e6df] via-[#e5f3f1] to-[#d6ece4] p-8 md:p-14 shadow-sm">
+      <section className="relative overflow-hidden rounded-3xl border border-[#2f4b3a]/15 dark:border-[#35443A] bg-gradient-to-br from-[#d9e6df] via-[#e5f3f1] to-[#d6ece4] dark:from-[#1B241E] dark:via-[#162019] dark:to-[#111713] p-8 md:p-14 shadow-sm">
         {/* Subtle decorative background circles */}
        
         <div className="relative max-w-4xl">
-          <span className="inline-block rounded-full bg-emerald-800/10 px-4 py-1.5 text-xs md:text-sm font-semibold text-emerald-900 border border-emerald-700/20 mb-4">
+          <span className="inline-block rounded-full bg-emerald-800/10 dark:bg-[#25382B] px-4 py-1.5 text-xs md:text-sm font-semibold text-emerald-900 dark:text-[#7BC98C] border border-emerald-700/20 dark:border-[#35443A] mb-4">
             {aboutContent.badge}
           </span>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold font-[Philosopher] text-[#153252] leading-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold font-[Philosopher] text-[#153252] dark:text-[#E5E9E4] leading-tight">
             {aboutContent.title}
           </h1>
-          <p className="mt-6 text-base md:text-xl font-['Della_Respira'] text-gray-700 leading-relaxed">
+          <p className="mt-6 text-base md:text-xl font-['Della_Respira'] text-gray-700 dark:text-[#A5B0A7] leading-relaxed">
             {aboutContent.paragraph}
           </p>
 
@@ -115,13 +111,13 @@ const AboutPage = () => {
         {aboutContent.highlights.map((item, idx) => (
           <div
             key={idx}
-            className="group rounded-2xl border border-gray-200/80 bg-white/80 backdrop-blur-sm p-6 shadow-sm hover:shadow-md hover:border-emerald-600/30 transition-all duration-300"
+            className="group rounded-2xl border border-gray-200/80 dark:border-[#35443A] bg-white/80 dark:bg-[#1B241E] backdrop-blur-sm p-6 shadow-sm hover:shadow-md hover:border-emerald-600/30 dark:hover:border-[#7BC98C]/50 transition-all duration-300"
           >
             <div className="text-3xl mb-3">{item.icon}</div>
-            <h2 className="text-xl font-bold text-gray-800 font-[Philosopher] mb-2">
+            <h2 className="text-xl font-bold text-gray-800 dark:text-[#E5E9E4] font-[Philosopher] mb-2">
               {item.title}
             </h2>
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-gray-600 dark:text-[#A5B0A7] leading-relaxed">
               {item.description}
             </p>
           </div>
@@ -132,7 +128,7 @@ const AboutPage = () => {
       <section className="flex flex-col gap-8">
         <div className="flex flex-col gap-2">
          
-          <h2 className="text-3xl md:text-4xl font-bold font-[Philosopher] text-[#153252]">
+          <h2 className="text-3xl md:text-4xl font-bold font-[Philosopher] text-[#153252] dark:text-[#E5E9E4]">
             Meet the Developers
           </h2>
           
@@ -143,7 +139,7 @@ const AboutPage = () => {
           {aboutContent.developers.map((dev) => (
             <div
               key={dev.id}
-              className="group flex flex-col justify-between rounded-2xl border border-gray-200/80 bg-white/90 backdrop-blur-sm p-6 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300"
+              className="group flex flex-col justify-between rounded-2xl border border-gray-200/80 dark:border-[#35443A] bg-white/90 dark:bg-[#1B241E] backdrop-blur-sm p-6 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300"
             >
               <div>
                 {/* Avatar with gradient ring */}
@@ -151,7 +147,7 @@ const AboutPage = () => {
                   <img
                     src={dev.avatar}
                     alt={dev.name}
-                    className="h-full w-full rounded-full object-cover bg-gray-100"
+                    className="h-full w-full rounded-full object-cover bg-gray-100 dark:bg-[#222D25]"
                     onError={(e) => {
                       // Fallback image if external URL fails
                       e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
@@ -163,16 +159,16 @@ const AboutPage = () => {
 
                 {/* Name & Role */}
                 <div className="text-center">
-                  <h3 className="text-xl font-bold text-gray-900 font-[Philosopher]">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-[#E5E9E4] font-[Philosopher]">
                     {dev.name}
                   </h3>
-                  <span className="mt-1 inline-block rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200/70">
+                  <span className="mt-1 inline-block rounded-full bg-emerald-50 dark:bg-[#25382B] px-3 py-1 text-xs font-semibold text-emerald-800 dark:text-[#7BC98C] border border-emerald-200/70 dark:border-[#35443A]">
                     {dev.role}
                   </span>
                 </div>
 
                 {/* Bio */}
-                <p className="mt-4 text-xs md:text-sm text-gray-600 leading-relaxed text-center">
+                <p className="mt-4 text-xs md:text-sm text-gray-600 dark:text-[#A5B0A7] leading-relaxed text-center">
                   {dev.bio}
                 </p>
 
@@ -181,7 +177,7 @@ const AboutPage = () => {
                   {dev.skills.map((skill, sIdx) => (
                     <span
                       key={sIdx}
-                      className="rounded-md bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+                      className="rounded-md bg-gray-100 dark:bg-[#222D25] px-2 py-0.5 text-[11px] font-medium text-gray-700 dark:text-[#A5B0A7] hover:bg-emerald-50 dark:hover:bg-[#25382B] hover:text-emerald-700 dark:hover:text-[#7BC98C] transition-colors"
                     >
                       {skill}
                     </span>
@@ -190,14 +186,14 @@ const AboutPage = () => {
               </div>
 
               {/* Social / Contact Links */}
-              <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-center gap-4 text-gray-500">
+              <div className="mt-6 pt-4 border-t border-gray-100 dark:border-[#35443A] flex items-center justify-center gap-4 text-gray-500 dark:text-[#A5B0A7]">
                 {/* GitHub */}
                 {dev.github && (
                   <a
                     href={dev.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-full hover:bg-gray-100 hover:text-black transition-colors"
+                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#222D25] hover:text-black dark:hover:text-[#E5E9E4] transition-colors"
                     title="GitHub"
                     aria-label={`${dev.name}'s GitHub`}
                   >
@@ -216,7 +212,7 @@ const AboutPage = () => {
                     href={dev.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-full hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                    className="p-2 rounded-full hover:bg-blue-50 dark:hover:bg-[#222D25] hover:text-blue-600 dark:hover:text-[#7BC98C] transition-colors"
                     title="LinkedIn"
                     aria-label={`${dev.name}'s LinkedIn`}
                   >

@@ -8,7 +8,7 @@ const Navbar = () => {
   const isAdmin = user?.publicMetadata?.role === "admin";
 
   return (
-    <nav className="w-full max-w-7xl mx-auto h-16 md:h-20 flex items-center justify-between text-black gap-2 md:gap-4">
+    <nav className="w-full max-w-7xl mx-auto h-16 md:h-20 flex items-center justify-between text-black dark:text-[#E5E9E4] gap-2 md:gap-4 transition-colors">
       {/* LOGO */}
       <Link
         to="/"
@@ -21,7 +21,7 @@ const Navbar = () => {
           height={32}
           className="w-8 h-8 rounded-full object-cover shrink-0"
         />
-        <span className="font-[Cinzel] text-2xl sm:text-2xl lg:text-3xl font-bold text-black shrink-0">
+        <span className="font-[Cinzel] text-2xl sm:text-2xl lg:text-3xl font-bold text-black dark:text-[#E5E9E4] shrink-0">
           Veles
         </span>
       </Link>
@@ -38,17 +38,17 @@ const Navbar = () => {
         >
           <div className="flex flex-col gap-[5.4px]">
             <div
-              className={`h-[3px] rounded-md w-6 bg-gray-900 origin-left transition-all ease-in-out ${
+              className={`h-[3px] rounded-md w-6 bg-gray-900 dark:bg-[#E5E9E4] origin-left transition-all ease-in-out ${
                 open && "rotate-45"
               }`}
             ></div>
             <div
-              className={`h-[3px] rounded-md w-6 bg-gray-900 transition-all ease-in-out ${
+              className={`h-[3px] rounded-md w-6 bg-gray-900 dark:bg-[#E5E9E4] transition-all ease-in-out ${
                 open && "opacity-0"
               }`}
             ></div>
             <div
-              className={`h-[3px] rounded-md w-6 bg-gray-900 origin-left transition-all ease-in-out ${
+              className={`h-[3px] rounded-md w-6 bg-gray-900 dark:bg-[#E5E9E4] origin-left transition-all ease-in-out ${
                 open && "-rotate-45"
               }`}
             ></div>
@@ -77,12 +77,12 @@ const Navbar = () => {
             About
           </Link>
           <Link to="/write" onClick={() => setOpen(false)} className="hover:text-emerald-300 transition-colors">
-            Write 
+            Write ✍️
           </Link>
           <SignedOut>
             <Link to="/login" onClick={() => setOpen(false)}>
-              <button className="py-2 px-6 rounded-3xl bg-green-700 hover:bg-green-600 text-white transition-colors">
-                Login 
+              <button className="py-2 px-6 rounded-3xl bg-green-700 hover:bg-green-600 dark:bg-[#25382B] dark:border dark:border-[#35443A] text-white transition-colors">
+                Login 👋
               </button>
             </Link>
           </SignedOut>
@@ -92,7 +92,7 @@ const Navbar = () => {
               onClick={() => setOpen(false)}
               className="hover:text-emerald-300 transition-colors"
             >
-              Dashboard 
+              Dashboard 👤
             </Link>
             {isAdmin && (
               <Link
@@ -132,25 +132,25 @@ const Navbar = () => {
       </div>
 
       {/* DESKTOP MENU */}
-      <div className="hidden md:flex items-center justify-end flex-1 min-w-0 gap-2 md:gap-2.5 lg:gap-4 xl:gap-6 font-medium text-black/90 text-xs md:text-[13px] lg:text-sm xl:text-base">
+      <div className="hidden md:flex items-center justify-end flex-1 min-w-0 gap-2 md:gap-2.5 lg:gap-4 xl:gap-6 font-medium text-gray-800 dark:text-[#E5E9E4] text-xs md:text-[13px] lg:text-sm xl:text-base">
         <div className="flex items-center gap-1 md:gap-1.5 lg:gap-3 xl:gap-5 min-w-0">
-          <Link to="/" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 hover:text-black transition-colors shrink-0">Home</Link>
-          <Link to="/posts?sort=trending" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 hover:text-black transition-colors shrink-0">Trending</Link>
-          <Link to="/posts?sort=popular" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 hover:text-black transition-colors shrink-0">Most Popular</Link>
-          <Link to="/channels" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 hover:text-black transition-colors shrink-0">Channels</Link>
-          <Link to="/about" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 hover:text-black transition-colors shrink-0">About</Link>
+          <Link to="/" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 text-gray-800 dark:text-[#E5E9E4] hover:text-black dark:hover:text-[#7BC98C] transition-colors shrink-0">Home</Link>
+          <Link to="/posts?sort=trending" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 text-gray-800 dark:text-[#E5E9E4] hover:text-black dark:hover:text-[#7BC98C] transition-colors shrink-0">Trending</Link>
+          <Link to="/posts?sort=popular" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 text-gray-800 dark:text-[#E5E9E4] hover:text-black dark:hover:text-[#7BC98C] transition-colors shrink-0">Most Popular</Link>
+          <Link to="/channels" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 text-gray-800 dark:text-[#E5E9E4] hover:text-black dark:hover:text-[#7BC98C] transition-colors shrink-0">Channels</Link>
+          <Link to="/about" className="whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 text-gray-800 dark:text-[#E5E9E4] hover:text-black dark:hover:text-[#7BC98C] transition-colors shrink-0">About</Link>
           
           <SignedIn>
             <Link
               to="/dashboard"
-              className="flex items-center gap-1 whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 text-black/90 hover:text-black transition-colors shrink-0"
+              className="flex items-center gap-1 whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 text-gray-800 dark:text-[#E5E9E4] hover:text-black dark:hover:text-[#7BC98C] transition-colors shrink-0"
             >
               <span>Dashboard</span>
             </Link>
             {isAdmin && (
               <Link
                 to="/admin"
-                className="flex items-center gap-1 whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 text-black/90 hover:text-black transition-colors shrink-0"
+                className="flex items-center gap-1 whitespace-nowrap px-1 md:px-1.5 lg:px-2 py-1 text-gray-800 dark:text-[#E5E9E4] hover:text-black dark:hover:text-[#7BC98C] transition-colors shrink-0"
               >
                 <span>Admin Panel</span>
               </Link>
@@ -162,8 +162,8 @@ const Navbar = () => {
         <div className="shrink-0 flex items-center pl-1 sm:pl-2">
           <SignedOut>
             <Link to="/login">
-              <button className="py-1.5 px-3.5 md:px-4 lg:px-5 rounded-3xl bg-green-700 hover:bg-green-600 text-white text-xs md:text-sm font-medium shadow-sm transition-colors whitespace-nowrap">
-                Login 
+              <button className="py-1.5 px-3.5 md:px-4 lg:px-5 rounded-3xl bg-green-700 hover:bg-green-600 dark:bg-[#25382B] dark:border dark:border-[#35443A] dark:hover:bg-[#2e4736] text-white text-xs md:text-sm font-medium shadow-sm transition-colors whitespace-nowrap">
+                Login 👋
               </button>
             </Link>
           </SignedOut>

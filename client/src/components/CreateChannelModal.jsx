@@ -72,25 +72,25 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-gray-100 flex flex-col gap-5">
-        <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-lg w-full p-6 shadow-xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-5 text-gray-800 dark:text-[#E5E9E4]">
+        <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-[#35443A]">
           <div>
-            <h3 className="text-xl font-bold text-gray-900">Create a Channel</h3>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-[#E5E9E4]">Create a Channel</h3>
+            <p className="text-xs text-gray-500 dark:text-[#A5B0A7] mt-0.5">
               Channels are where your community communicates and shares knowledge.
             </p>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+            className="text-gray-400 dark:text-[#A5B0A7] hover:text-gray-600 dark:hover:text-white p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#222D25] transition-colors"
           >
             ✕
           </button>
         </div>
 
         {error && (
-          <div className="p-3 text-xs bg-red-50 text-red-700 rounded-xl border border-red-100">
+          <div className="p-3 text-xs bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 rounded-xl border border-red-100 dark:border-red-800/60">
             {error}
           </div>
         )}
@@ -98,11 +98,11 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Channel Name */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">
+            <label className="text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] uppercase tracking-wider">
               Channel Name *
             </label>
             <div className="relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-bold">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#A5B0A7] font-bold">
                 #
               </span>
               <input
@@ -112,11 +112,11 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. system-design, cloud-architecture"
                 maxLength={60}
-                className="w-full pl-8 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all text-gray-800"
+                className="w-full pl-8 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#111713] text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 dark:focus:border-[#7BC98C] transition-all text-gray-800 dark:text-[#E5E9E4] dark:placeholder-[#A5B0A7]"
               />
             </div>
             {previewSlug && (
-              <p className="text-[11px] text-gray-400 font-mono">
+              <p className="text-[11px] text-gray-400 dark:text-[#A5B0A7] font-mono">
                 URL slug: /channels/{previewSlug}
               </p>
             )}
@@ -124,7 +124,7 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
 
           {/* Description */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">
+            <label className="text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] uppercase tracking-wider">
               Topic / Description
             </label>
             <textarea
@@ -133,16 +133,16 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
               placeholder="What is this channel about? Outline the purpose and expectations..."
               rows={3}
               maxLength={500}
-              className="w-full p-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all text-gray-800"
+              className="w-full p-3 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#111713] text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 dark:focus:border-[#7BC98C] transition-all text-gray-800 dark:text-[#E5E9E4] dark:placeholder-[#A5B0A7]"
             />
-            <span className="text-[10px] text-gray-400 self-end">
+            <span className="text-[10px] text-gray-400 dark:text-[#A5B0A7] self-end">
               {description.length}/500
             </span>
           </div>
 
           {/* Visibility */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">
+            <label className="text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] uppercase tracking-wider">
               Visibility Setting
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -150,17 +150,17 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
                 onClick={() => setVisibility("public")}
                 className={`p-3.5 rounded-xl border cursor-pointer transition-all flex flex-col gap-1 ${
                   visibility === "public"
-                    ? "border-green-800 bg-green-50/50 shadow-sm"
-                    : "border-gray-200 hover:border-gray-300"
+                    ? "border-green-800 dark:border-[#7BC98C] bg-green-50/50 dark:bg-[#25382B]/60 shadow-sm"
+                    : "border-gray-200 dark:border-[#35443A] hover:border-gray-300 dark:hover:border-gray-600"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-gray-900">
+                  <span className="text-xs font-bold text-gray-900 dark:text-[#E5E9E4]">
                     Public
                   </span>
                   <span className="text-xs"></span>
                 </div>
-                <p className="text-[11px] text-gray-500">
+                <p className="text-[11px] text-gray-500 dark:text-[#A5B0A7]">
                   Anyone can discover and join this channel.
                 </p>
               </div>
@@ -169,17 +169,17 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
                 onClick={() => setVisibility("private")}
                 className={`p-3.5 rounded-xl border cursor-pointer transition-all flex flex-col gap-1 ${
                   visibility === "private"
-                    ? "border-green-800 bg-green-50/50 shadow-sm"
-                    : "border-gray-200 hover:border-gray-300"
+                    ? "border-green-800 dark:border-[#7BC98C] bg-green-50/50 dark:bg-[#25382B]/60 shadow-sm"
+                    : "border-gray-200 dark:border-[#35443A] hover:border-gray-300 dark:hover:border-gray-600"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-gray-900">
+                  <span className="text-xs font-bold text-gray-900 dark:text-[#E5E9E4]">
                     Private
                   </span>
                   <span className="text-xs"></span>
                 </div>
-                <p className="text-[11px] text-gray-500">
+                <p className="text-[11px] text-gray-500 dark:text-[#A5B0A7]">
                   Visible only to invited or authorized members.
                 </p>
               </div>
@@ -187,19 +187,19 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
           </div>
 
           {/* Buttons */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-100 mt-2">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-100 dark:border-[#35443A] mt-2">
             <button
               type="button"
               disabled={isSubmitting}
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] hover:bg-gray-200 dark:hover:bg-[#2e3f34] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 rounded-xl text-sm font-medium text-white bg-green-800 hover:bg-green-900 transition-colors disabled:opacity-50 flex items-center gap-2"
+              className="px-5 py-2 rounded-xl text-sm font-medium text-white bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] dark:text-[#E5E9E4] transition-colors disabled:opacity-50 flex items-center gap-2 shadow-sm"
             >
               {isSubmitting && (
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

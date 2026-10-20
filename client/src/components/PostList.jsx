@@ -35,12 +35,12 @@ const PostList = () => {
   });
 
   if (isFetching && !data) {
-    return <div className="py-8 text-center text-gray-500">Loading posts...</div>;
+    return <div className="py-8 text-center text-gray-500 dark:text-[#A5B0A7]">Loading posts...</div>;
   }
 
   if (error) {
     return (
-      <div className="py-8 text-center text-red-500">
+      <div className="py-8 text-center text-red-500 dark:text-red-400">
         Something went wrong loading posts! Please refresh the page.
       </div>
     );
@@ -50,7 +50,7 @@ const PostList = () => {
 
   if (allPosts.length === 0 && !isFetching) {
     return (
-      <div className="py-12 text-center text-gray-500">
+      <div className="py-12 text-center text-gray-500 dark:text-[#A5B0A7]">
         No posts found for this category or search filter.
       </div>
     );
@@ -61,9 +61,9 @@ const PostList = () => {
       dataLength={allPosts.length}
       next={fetchNextPage}
       hasMore={!!hasNextPage}
-      loader={<h4>Loading more posts...</h4>}
+      loader={<h4 className="py-4 text-center text-xs text-gray-500 dark:text-[#A5B0A7]">Loading more posts...</h4>}
       endMessage={
-        <p>
+        <p className="py-4 text-center text-xs text-gray-500 dark:text-[#A5B0A7]">
           <b>All posts loaded!</b>
         </p>
       }

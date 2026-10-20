@@ -212,8 +212,8 @@ const PostMenuActions = ({ post }) => {
   };
 
   return (
-    <div className="">
-      <h1 className="mt-8 mb-4 text-sm font-medium">Actions</h1>
+    <div className="text-gray-800 dark:text-[#E5E9E4]">
+      <h1 className="mt-8 mb-4 text-sm font-medium text-gray-900 dark:text-[#E5E9E4]">Actions</h1>
 
       {/* LIKE ACTION */}
       <div
@@ -243,11 +243,11 @@ const PostMenuActions = ({ post }) => {
             d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
           />
         </svg>
-        <span className={isLiked ? "text-red-600 font-medium" : ""}>
+        <span className={isLiked ? "text-red-600 dark:text-red-400 font-medium" : ""}>
           {isLiked ? "Liked" : "Like"} ({likesCount})
         </span>
         {likeMutation.isPending && (
-          <span className="text-xs text-gray-400">(...)</span>
+          <span className="text-xs text-gray-400 dark:text-gray-500">(...)</span>
         )}
       </div>
 
@@ -261,25 +261,26 @@ const PostMenuActions = ({ post }) => {
           viewBox="0 0 48 48"
           width="20px"
           height="20px"
+          className="text-gray-700 dark:text-[#E5E9E4]"
         >
           <path
             d="M12 4C10.3 4 9 5.3 9 7v34l15-9 15 9V7c0-1.7-1.3-3-3-3H12z"
-            stroke="black"
+            stroke="currentColor"
             strokeWidth="2"
             fill={
               saveMutation.isPending
                 ? isSaved
                   ? "none"
-                  : "black"
+                  : "currentColor"
                 : isSaved
-                ? "black"
+                ? "currentColor"
                 : "none"
             }
           />
         </svg>
         <span>{isSaved ? "Saved" : "Save this Post"}</span>
         {saveMutation.isPending && (
-          <span className="text-xs text-gray-500">(in progress)</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">(in progress)</span>
         )}
       </div>
 
@@ -293,9 +294,10 @@ const PostMenuActions = ({ post }) => {
           viewBox="0 0 24 24"
           width="20px"
           height="20px"
-          fill={isInReadlist ? "#0f766e" : "none"}
-          stroke={isInReadlist ? "#0f766e" : "currentColor"}
+          fill={isInReadlist ? "currentColor" : "none"}
+          stroke="currentColor"
           strokeWidth="2"
+          className={isInReadlist ? "text-teal-700 dark:text-[#7BC98C]" : "text-gray-700 dark:text-[#E5E9E4]"}
         >
           <path
             strokeLinecap="round"
@@ -303,16 +305,16 @@ const PostMenuActions = ({ post }) => {
             d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
           />
         </svg>
-        <span className={isInReadlist ? "text-teal-700 font-medium" : ""}>
+        <span className={isInReadlist ? "text-teal-700 dark:text-[#7BC98C] font-medium" : ""}>
           {isInReadlist ? "In Readlist" : "Add to Readlist"}
         </span>
         {readlistMutation.isPending && (
-          <span className="text-xs text-gray-400">(...)</span>
+          <span className="text-xs text-gray-400 dark:text-gray-500">(...)</span>
         )}
       </div>
       {isAdmin && (
         <div
-          className="flex items-center gap-2 py-2 text-sm cursor-pointer"
+          className="flex items-center gap-2 py-2 text-sm cursor-pointer hover:opacity-80 transition-opacity"
           onClick={handleFeature}
         >
           <svg
@@ -320,25 +322,26 @@ const PostMenuActions = ({ post }) => {
             viewBox="0 0 48 48"
             width="20px"
             height="20px"
+            className="text-gray-700 dark:text-[#E5E9E4]"
           >
             <path
               d="M24 2L29.39 16.26L44 18.18L33 29.24L35.82 44L24 37L12.18 44L15 29.24L4 18.18L18.61 16.26L24 2Z"
-              stroke="black"
+              stroke="currentColor"
               strokeWidth="2"
               fill={
                 featureMutation.isPending
                   ? post.isFeatured
                     ? "none"
-                    : "black"
+                    : "currentColor"
                   : post.isFeatured
-                  ? "black"
+                  ? "currentColor"
                   : "none"
               }
             />
           </svg>
           <span>Feature</span>
           {featureMutation.isPending && (
-            <span className="text-xs">(in progress)</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">(in progress)</span>
           )}
         </div>
       )}
@@ -346,7 +349,7 @@ const PostMenuActions = ({ post }) => {
         <div className="flex flex-col gap-2">
           <Link
             to={`/edit/${post._id}`}
-            className="flex items-center gap-2 py-2 text-sm text-blue-700 hover:text-blue-900 transition-colors"
+            className="flex items-center gap-2 py-2 text-sm text-blue-700 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -366,7 +369,7 @@ const PostMenuActions = ({ post }) => {
           </Link>
 
           <div
-            className="flex items-center gap-2 py-2 text-sm cursor-pointer text-red-600 hover:text-red-800 transition-colors"
+            className="flex items-center gap-2 py-2 text-sm cursor-pointer text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors"
             onClick={handleDelete}
           >
             <svg
@@ -380,7 +383,7 @@ const PostMenuActions = ({ post }) => {
             </svg>
             <span>Delete this Post</span>
             {deleteMutation.isPending && (
-              <span className="text-xs">(in progress)</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">(in progress)</span>
             )}
           </div>
         </div>

@@ -20,6 +20,7 @@ import AdminComments from "./routes/admin/AdminComments.jsx";
 import AdminUsers from "./routes/admin/AdminUsers.jsx";
 import AdminChannels from "./routes/admin/AdminChannels.jsx";
 import ChannelsPage from "./routes/ChannelsPage.jsx";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
@@ -119,8 +120,10 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <ToastContainer position="bottom-right" />
+        <ThemeProvider>
+          <RouterProvider router={router} />
+          <ToastContainer position="bottom-right" />
+        </ThemeProvider>
       </QueryClientProvider>
     </ClerkProvider>
   </StrictMode>

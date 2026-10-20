@@ -651,20 +651,20 @@ const ChannelsPage = () => {
     activeChannel && user?.id === activeChannel.creatorClerkId;
 
   return (
-    <div className="flex flex-col gap-4 max-w-7xl mx-auto w-full pb-8">
+    <div className="flex flex-col gap-4 max-w-7xl mx-auto w-full pb-8 text-gray-800 dark:text-[#E5E9E4]">
       {/* HEADER / BREADCRUMB */}
-      <div className="flex items-center justify-between pb-3 border-b border-gray-200/80">
+      <div className="flex items-center justify-between pb-3 border-b border-gray-200/80 dark:border-[#35443A]">
         <div className="flex items-center gap-2">
           <Link
             to="/channels"
-            className="text-xl md:text-2xl font-bold text-gray-800 hover:text-green-800 transition-colors flex items-center gap-2"
+            className="text-xl md:text-2xl font-bold text-gray-800 dark:text-[#E5E9E4] hover:text-green-800 dark:hover:text-[#7BC98C] transition-colors flex items-center gap-2"
           >
-            <span className="p-1.5 rounded-lg bg-green-50 text-green-800 border border-green-200/60 text-lg">
+            <span className="p-1.5 rounded-lg bg-green-50 dark:bg-[#222D25] text-green-800 dark:text-[#7BC98C] border border-green-200/60 dark:border-[#35443A] text-lg">
               
             </span>
             <span>Veles Channels</span>
           </Link>
-          <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200/60 hidden sm:inline-block">
+          <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-[#222D25] text-emerald-800 dark:text-[#7BC98C] font-semibold border border-emerald-200/60 dark:border-[#35443A] hidden sm:inline-block">
             Communities
           </span>
         </div>
@@ -673,7 +673,7 @@ const ChannelsPage = () => {
           {/* Mobile Sidebar Toggle */}
           <button
             onClick={() => setSidebarOpen((prev) => !prev)}
-            className="md:hidden px-3 py-1.5 rounded-xl border border-gray-200 text-xs font-semibold text-gray-700 hover:bg-gray-50 flex items-center gap-1.5"
+            className="md:hidden px-3 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] hover:bg-gray-50 dark:hover:bg-[#222D25] flex items-center gap-1.5 transition-colors"
           >
             <span></span>
             <span>{sidebarOpen ? "Hide Channels" : "Channels"}</span>
@@ -682,7 +682,7 @@ const ChannelsPage = () => {
           {isSignedIn ? (
             <button
               onClick={() => setIsCreateOpen(true)}
-              className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs md:text-sm font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
+              className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white dark:text-[#E5E9E4] text-xs md:text-sm font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
             >
               <span>+</span>
               <span>New Channel</span>
@@ -690,7 +690,7 @@ const ChannelsPage = () => {
           ) : (
             <Link
               to="/login"
-              className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs md:text-sm font-semibold transition-colors"
+              className="px-4 py-2 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white dark:text-[#E5E9E4] text-xs md:text-sm font-semibold transition-colors"
             >
               Login to Join
             </Link>
@@ -699,17 +699,17 @@ const ChannelsPage = () => {
       </div>
 
       {/* WORKSPACE LAYOUT (SIDEBAR + MAIN CHAT) */}
-      <div className="flex bg-white rounded-2xl border border-gray-200/80 shadow-sm overflow-hidden min-h-[640px] h-[calc(100vh-14rem)]">
+      <div className="flex bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-200/80 dark:border-[#35443A] shadow-sm overflow-hidden min-h-[640px] h-[calc(100vh-14rem)]">
         {/* LEFT CHANNEL SIDEBAR */}
         <div
           className={`${
             sidebarOpen ? "flex" : "hidden"
-          } md:flex flex-col w-full md:w-72 lg:w-80 border-r border-gray-200/80 bg-slate-50/70 flex-shrink-0 transition-all z-20`}
+          } md:flex flex-col w-full md:w-72 lg:w-80 border-r border-gray-200/80 dark:border-[#35443A] bg-slate-50/70 dark:bg-[#111713]/80 flex-shrink-0 transition-all z-20`}
         >
           {/* SEARCH BOX */}
-          <div className="p-3.5 border-b border-gray-200/60">
+          <div className="p-3.5 border-b border-gray-200/60 dark:border-[#35443A]">
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#A5B0A7] text-xs">
                 
               </span>
               <input
@@ -717,7 +717,7 @@ const ChannelsPage = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search channels..."
-                className="w-full pl-8 pr-3 py-2 rounded-xl bg-white border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all text-gray-700"
+                className="w-full pl-8 pr-3 py-2 rounded-xl bg-white dark:bg-[#1B241E] border border-gray-200 dark:border-[#35443A] text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 dark:focus:border-[#7BC98C] transition-all text-gray-700 dark:text-[#E5E9E4] dark:placeholder-[#A5B0A7]"
               />
             </div>
           </div>
@@ -727,7 +727,7 @@ const ChannelsPage = () => {
             {/* JOINED CHANNELS SECTION */}
             {isSignedIn && userChannels.joined.length > 0 && (
               <div className="flex flex-col gap-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 px-2 py-1">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7] px-2 py-1">
                   Joined Channels ({userChannels.joined.length})
                 </span>
                 {userChannels.joined.map((ch) => {
@@ -741,16 +741,16 @@ const ChannelsPage = () => {
                       }}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs font-semibold transition-all ${
                         isActive
-                          ? "bg-green-800 text-white shadow-sm"
-                          : "text-gray-700 hover:bg-gray-100"
+                          ? "bg-green-800 dark:bg-[#25382B] text-white dark:text-[#E5E9E4] shadow-sm border border-transparent dark:border-[#7BC98C]/30"
+                          : "text-gray-700 dark:text-[#E5E9E4] hover:bg-gray-100 dark:hover:bg-[#222D25]"
                       }`}
                     >
                       <span className="truncate"># {ch.name}</span>
                       <span
                         className={`text-[10px] px-1.5 py-0.5 rounded-full ${
                           isActive
-                            ? "bg-green-900/60 text-green-100"
-                            : "bg-gray-200/60 text-gray-600"
+                            ? "bg-green-900/60 dark:bg-[#1B241E] text-green-100 dark:text-[#7BC98C]"
+                            : "bg-gray-200/60 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7]"
                         }`}
                       >
                         {ch.memberCount}
@@ -764,7 +764,7 @@ const ChannelsPage = () => {
             {/* OWNED CHANNELS SECTION */}
             {isSignedIn && userChannels.owned.length > 0 && (
               <div className="flex flex-col gap-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 px-2 py-1">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7] px-2 py-1">
                   My Channels ({userChannels.owned.length})
                 </span>
                 {userChannels.owned.map((ch) => {
@@ -778,8 +778,8 @@ const ChannelsPage = () => {
                       }}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs font-semibold transition-all ${
                         isActive
-                          ? "bg-green-800 text-white shadow-sm"
-                          : "text-gray-700 hover:bg-gray-100"
+                          ? "bg-green-800 dark:bg-[#25382B] text-white dark:text-[#E5E9E4] shadow-sm border border-transparent dark:border-[#7BC98C]/30"
+                          : "text-gray-700 dark:text-[#E5E9E4] hover:bg-gray-100 dark:hover:bg-[#222D25]"
                       }`}
                     >
                       <div className="flex items-center gap-1.5 truncate">
@@ -797,8 +797,8 @@ const ChannelsPage = () => {
                       <span
                         className={`text-[10px] px-1.5 py-0.5 rounded-full ${
                           isActive
-                            ? "bg-green-900/60 text-green-100"
-                            : "bg-amber-100 text-amber-800"
+                            ? "bg-green-900/60 dark:bg-[#1B241E] text-green-100 dark:text-[#7BC98C]"
+                            : "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
                         }`}
                       >
                         {ch.memberCount}
@@ -811,15 +811,15 @@ const ChannelsPage = () => {
 
             {/* DISCOVER ALL CHANNELS */}
             <div className="flex flex-col gap-1">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 px-2 py-1">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7] px-2 py-1">
                 Discover Channels ({filteredChannels.length})
               </span>
               {loadingChannels ? (
-                <div className="p-4 text-center text-xs text-gray-400">
+                <div className="p-4 text-center text-xs text-gray-400 dark:text-[#A5B0A7]">
                   Loading channels...
                 </div>
               ) : filteredChannels.length === 0 ? (
-                <div className="p-4 text-center text-xs text-gray-400">
+                <div className="p-4 text-center text-xs text-gray-400 dark:text-[#A5B0A7]">
                   No channels found
                 </div>
               ) : (
@@ -834,19 +834,19 @@ const ChannelsPage = () => {
                       }}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs font-semibold transition-all ${
                         isActive
-                          ? "bg-green-800 text-white shadow-sm"
-                          : "text-gray-700 hover:bg-gray-100"
+                          ? "bg-green-800 dark:bg-[#25382B] text-white dark:text-[#E5E9E4] shadow-sm border border-transparent dark:border-[#7BC98C]/30"
+                          : "text-gray-700 dark:text-[#E5E9E4] hover:bg-gray-100 dark:hover:bg-[#222D25]"
                       }`}
                     >
                       <div className="flex items-center gap-1.5 truncate">
-                        <span className="text-gray-400">
+                        <span className="text-gray-400 dark:text-[#A5B0A7]">
                           {ch.visibility === "private" ? "🔒" : "#"}
                         </span>
                         <span className="truncate">{ch.name}</span>
                         {ch.joinRequestStatus === "pending" && (
                           <span
                             title="Join request pending approval"
-                            className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-800 font-semibold"
+                            className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-semibold"
                           >
                             Pending
                           </span>
@@ -863,8 +863,8 @@ const ChannelsPage = () => {
                       <span
                         className={`text-[10px] px-1.5 py-0.5 rounded-full ${
                           isActive
-                            ? "bg-green-900/60 text-green-100"
-                            : "bg-gray-200/60 text-gray-600"
+                            ? "bg-green-900/60 dark:bg-[#1B241E] text-green-100 dark:text-[#7BC98C]"
+                            : "bg-gray-200/60 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7]"
                         }`}
                       >
                         {ch.memberCount}
@@ -878,32 +878,32 @@ const ChannelsPage = () => {
         </div>
 
         {/* MAIN WORKSPACE AREA */}
-        <div className="flex-1 flex flex-col bg-white min-w-0 h-full">
+        <div className="flex-1 flex flex-col bg-white dark:bg-[#1B241E] min-w-0 h-full">
           {activeChannel ? (
             <>
               {/* CHANNEL TOP BAR */}
-              <div className="p-4 border-b border-gray-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white flex-shrink-0">
+              <div className="p-4 border-b border-gray-200/80 dark:border-[#35443A] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-[#1B241E] flex-shrink-0">
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h2 className="text-base md:text-lg font-bold text-gray-900 truncate flex items-center gap-1.5">
+                    <h2 className="text-base md:text-lg font-bold text-gray-900 dark:text-[#E5E9E4] truncate flex items-center gap-1.5">
                       <span>#</span>
                       <span>{activeChannel.name}</span>
                     </h2>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200/60">
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7] border border-gray-200/60 dark:border-[#35443A]">
                       {activeChannel.visibility === "private"
                         ? "Private"
                         : "Public"}
                     </span>
                     <button
                       onClick={handleOpenMembers}
-                      className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/60 hover:bg-emerald-100 transition-colors"
+                      className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition-colors"
                     >
                       {activeChannel.memberCount || 1} members
                     </button>
                   </div>
 
                   {activeChannel.description && (
-                    <p className="text-xs text-gray-500 truncate mt-0.5 max-w-xl">
+                    <p className="text-xs text-gray-500 dark:text-[#A5B0A7] truncate mt-0.5 max-w-xl">
                       {activeChannel.description}
                     </p>
                   )}
@@ -915,7 +915,7 @@ const ChannelsPage = () => {
                   {activeChannel.isMember && (
                     <div
                       title={`Socket status: ${connectionStatus}`}
-                      className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-gray-50 text-[11px] text-gray-500 border border-gray-100"
+                      className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-gray-50 dark:bg-[#222D25] text-[11px] text-gray-500 dark:text-[#A5B0A7] border border-gray-100 dark:border-[#35443A]"
                     >
                       <span
                         className={`w-2 h-2 rounded-full ${
@@ -937,27 +937,27 @@ const ChannelsPage = () => {
                     activeChannel.visibility === "private" ? (
                       activeChannel.joinRequestStatus === "pending" ? (
                         <div className="flex items-center gap-2">
-                          <span className="px-3.5 py-1.5 rounded-xl bg-amber-50 text-amber-800 text-xs font-semibold border border-amber-200/60 flex items-center gap-1.5 select-none">
+                          <span className="px-3.5 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-xs font-semibold border border-amber-200/60 dark:border-amber-800/60 flex items-center gap-1.5 select-none">
                             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                             <span>Request Pending</span>
                           </span>
                           <button
                             onClick={handleCancelRequest}
                             disabled={requestActionLoading}
-                            className="px-3 py-1.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-600 text-xs font-semibold transition-colors disabled:opacity-50"
+                            className="px-3 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] hover:bg-gray-50 dark:hover:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7] text-xs font-semibold transition-colors disabled:opacity-50"
                           >
                             Cancel
                           </button>
                         </div>
                       ) : activeChannel.joinRequestStatus === "declined" ? (
                         <div className="flex items-center gap-2">
-                          <span className="px-2.5 py-1 rounded-xl bg-red-50 text-red-700 text-xs font-semibold border border-red-200/60 select-none">
+                          <span className="px-2.5 py-1 rounded-xl bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 text-xs font-semibold border border-red-200/60 dark:border-red-800/60 select-none">
                             Request Declined
                           </span>
                           <button
                             onClick={() => handleRequestToJoin()}
                             disabled={requestActionLoading}
-                            className="px-3.5 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors disabled:opacity-50"
+                            className="px-3.5 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold transition-colors disabled:opacity-50"
                           >
                             {requestActionLoading ? "Submitting..." : "Request Again"}
                           </button>
@@ -966,7 +966,7 @@ const ChannelsPage = () => {
                         <button
                           onClick={() => handleRequestToJoin()}
                           disabled={requestActionLoading}
-                          className="px-4 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors disabled:opacity-50 flex items-center gap-1.5 shadow-sm"
+                          className="px-4 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold transition-colors disabled:opacity-50 flex items-center gap-1.5 shadow-sm"
                         >
                           <span></span>
                           <span>{requestActionLoading ? "Submitting..." : "Request to Join"}</span>
@@ -976,7 +976,7 @@ const ChannelsPage = () => {
                       <button
                         onClick={handleJoinChannel}
                         disabled={isActionLoading}
-                        className="px-4 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors disabled:opacity-50"
+                        className="px-4 py-1.5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold transition-colors disabled:opacity-50"
                       >
                         Join Channel
                       </button>
@@ -986,7 +986,7 @@ const ChannelsPage = () => {
                       {activeChannel.visibility === "private" && (
                         <button
                           onClick={() => setIsRequestsOpen(true)}
-                          className="relative px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold border border-emerald-200/60 transition-colors flex items-center gap-1.5"
+                          className="relative px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 text-xs font-semibold border border-emerald-200/60 dark:border-emerald-800/60 transition-colors flex items-center gap-1.5"
                           title="Manage Join Requests"
                         >
                           <span></span>
@@ -1000,13 +1000,13 @@ const ChannelsPage = () => {
                       )}
                       <button
                         onClick={() => setIsEditOpen(true)}
-                        className="px-3 py-1.5 rounded-xl border border-gray-200 hover:border-gray-300 text-xs font-semibold text-gray-700 transition-colors"
+                        className="px-3 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] hover:border-gray-300 dark:hover:border-gray-600 text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] transition-colors"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => setConfirmDeleteChannel(true)}
-                        className="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold transition-colors"
+                        className="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 dark:bg-red-950/60 dark:hover:bg-red-900/60 text-red-600 dark:text-red-300 text-xs font-semibold transition-colors"
                       >
                         Delete
                       </button>
@@ -1014,7 +1014,7 @@ const ChannelsPage = () => {
                   ) : (
                     <button
                       onClick={() => setConfirmLeaveChannel(true)}
-                      className="px-3 py-1.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-xs font-semibold text-gray-600 transition-colors"
+                      className="px-3 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] hover:bg-gray-50 dark:hover:bg-[#222D25] text-xs font-semibold text-gray-600 dark:text-[#A5B0A7] transition-colors"
                     >
                       Leave
                     </button>
@@ -1024,7 +1024,7 @@ const ChannelsPage = () => {
                   {isAdmin && !isCreatorOfActive && (
                     <button
                       onClick={() => setConfirmDeleteChannel(true)}
-                      className="px-2.5 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 text-xs font-semibold transition-colors border border-red-200/50"
+                      className="px-2.5 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 dark:bg-red-950/60 dark:hover:bg-red-900/60 text-red-700 dark:text-red-300 text-xs font-semibold transition-colors border border-red-200/50 dark:border-red-800/50"
                       title="Platform Admin: Delete channel"
                     >
                       Delete (Admin)
@@ -1036,53 +1036,53 @@ const ChannelsPage = () => {
               {/* MESSAGES STREAM */}
               <div
                 ref={chatScrollContainerRef}
-                className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 min-h-0 bg-slate-50/30"
+                className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 min-h-0 bg-slate-50/30 dark:bg-[#111713]/40"
               >
                 {!activeChannel.isMember ? (
                   activeChannel.visibility === "private" ? (
                     <div className="flex-1 flex flex-col items-center justify-center p-8 text-center gap-4 max-w-lg mx-auto">
-                      <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-3xl shadow-2xs">
+                      <div className="w-16 h-16 rounded-2xl bg-emerald-50 dark:bg-[#222D25] border border-emerald-100 dark:border-[#35443A] flex items-center justify-center text-3xl shadow-2xs">
                         
                       </div>
                       <div className="flex flex-col gap-1.5">
                         <div className="flex items-center justify-center gap-2">
-                          <h3 className="text-lg font-bold text-gray-900">
+                          <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">
                             #{activeChannel.name}
                           </h3>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700 border border-gray-200">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 dark:bg-[#222D25] text-gray-700 dark:text-[#A5B0A7] border border-gray-200 dark:border-[#35443A]">
                             Private Channel
                           </span>
                         </div>
-                        <p className="text-xs text-gray-500 leading-relaxed max-w-sm">
+                        <p className="text-xs text-gray-500 dark:text-[#A5B0A7] leading-relaxed max-w-sm">
                           This is a private community channel. Messages and discussion history are visible only to accepted members.
                         </p>
                       </div>
 
                       {activeChannel.joinRequestStatus === "pending" ? (
-                        <div className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-amber-50/80 border border-amber-200/70 w-full shadow-2xs">
-                          <div className="flex items-center gap-2 text-amber-800 text-xs font-semibold">
+                        <div className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200/70 dark:border-amber-800/60 w-full shadow-2xs">
+                          <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300 text-xs font-semibold">
                             <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
                             <span>Join Request Pending Approval</span>
                           </div>
-                          <p className="text-[11px] text-amber-700/90 text-center leading-relaxed">
+                          <p className="text-[11px] text-amber-700/90 dark:text-amber-400 text-center leading-relaxed">
                             Your request has been submitted to @{activeChannel.creator?.username || "the channel creator"}. You will gain access as soon as they review and accept your request.
                           </p>
                         </div>
                       ) : activeChannel.joinRequestStatus === "declined" ? (
-                        <div className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-red-50/80 border border-red-200/70 w-full shadow-2xs">
-                          <div className="flex items-center gap-2 text-red-800 text-xs font-semibold">
+                        <div className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-red-50/80 dark:bg-red-950/40 border border-red-200/70 dark:border-red-800/60 w-full shadow-2xs">
+                          <div className="flex items-center gap-2 text-red-800 dark:text-red-300 text-xs font-semibold">
                             <span>Request Declined</span>
                           </div>
-                          <p className="text-[11px] text-red-700/90 text-center leading-relaxed">
+                          <p className="text-[11px] text-red-700/90 dark:text-red-400 text-center leading-relaxed">
                             Your previous request to join this private channel was declined. You can submit a new request using the <strong>Request Again</strong> button in the header.
                           </p>
                         </div>
                       ) : (
-                        <div className="flex flex-col items-center gap-2 w-full p-4 rounded-2xl bg-slate-50 border border-slate-200/60 text-center">
-                          <p className="text-xs text-gray-600 leading-relaxed">
+                        <div className="flex flex-col items-center gap-2 w-full p-4 rounded-2xl bg-slate-50 dark:bg-[#111713] border border-slate-200/60 dark:border-[#35443A] text-center">
+                          <p className="text-xs text-gray-600 dark:text-[#A5B0A7] leading-relaxed">
                             Click the <strong>Request to Join</strong> button in the channel header above to request membership from the channel creator.
                           </p>
-                          <span className="text-[11px] text-gray-400">
+                          <span className="text-[11px] text-gray-400 dark:text-[#A5B0A7]">
                             Created by @{activeChannel.creator?.username || "creator"} • {activeChannel.memberCount || 1} members
                           </span>
                         </div>
@@ -1091,17 +1091,17 @@ const ChannelsPage = () => {
                   ) : (
                     <div className="flex-1 flex flex-col items-center justify-center p-8 text-center gap-3">
                       <span className="text-4xl"></span>
-                      <h3 className="text-lg font-bold text-gray-800">
+                      <h3 className="text-lg font-bold text-gray-800 dark:text-[#E5E9E4]">
                         Join #{activeChannel.name}
                       </h3>
-                      <p className="text-xs text-gray-500 max-w-md">
+                      <p className="text-xs text-gray-500 dark:text-[#A5B0A7] max-w-md">
                         You are previewing this channel. Join to participate in
                         real-time discussions, ask questions, and share insights
                         with other community members.
                       </p>
                       <button
                         onClick={handleJoinChannel}
-                        className="mt-2 px-6 py-2.5 rounded-xl bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors shadow-sm"
+                        className="mt-2 px-6 py-2.5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold transition-colors shadow-sm"
                       >
                         Join Channel Now
                       </button>
@@ -1121,7 +1121,7 @@ const ChannelsPage = () => {
                         <button
                           onClick={handleLoadOlder}
                           disabled={loadingMore}
-                          className="px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors disabled:opacity-50 shadow-2xs"
+                          className="px-3 py-1 rounded-full bg-white dark:bg-[#1B241E] border border-gray-200 dark:border-[#35443A] text-xs font-semibold text-gray-600 dark:text-[#E5E9E4] hover:bg-gray-50 dark:hover:bg-[#222D25] transition-colors disabled:opacity-50 shadow-2xs"
                         >
                           {loadingMore ? "Loading older..." : "↑ Load older messages"}
                         </button>
@@ -1132,10 +1132,10 @@ const ChannelsPage = () => {
                     {messages.length === 0 ? (
                       <div className="flex-1 flex flex-col items-center justify-center p-8 text-center gap-2">
                         <span className="text-3xl"></span>
-                        <h4 className="text-sm font-bold text-gray-700">
+                        <h4 className="text-sm font-bold text-gray-700 dark:text-[#E5E9E4]">
                           Welcome to #{activeChannel.name}!
                         </h4>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-gray-400 dark:text-[#A5B0A7]">
                           This is the beginning of the #{activeChannel.name}{" "}
                           channel. Start the conversation!
                         </p>
@@ -1155,32 +1155,32 @@ const ChannelsPage = () => {
                         return (
                           <div
                             key={msg._id}
-                            className={`group relative flex items-start gap-3 p-2 rounded-xl transition-colors hover:bg-white/80 ${
+                            className={`group relative flex items-start gap-3 p-2 rounded-xl transition-colors hover:bg-white/80 dark:hover:bg-[#222D25]/60 ${
                               msg.isDeleted ? "opacity-75" : ""
                             }`}
                           >
                             <img
                               src={avatar}
                               alt={username}
-                              className="w-8 h-8 rounded-full object-cover border border-gray-100 flex-shrink-0 mt-0.5"
+                              className="w-8 h-8 rounded-full object-cover border border-gray-100 dark:border-[#35443A] flex-shrink-0 mt-0.5"
                             />
 
                             <div className="flex-1 flex flex-col min-w-0">
                               <div className="flex items-center gap-2">
                                 <Link
                                   to={`/author/${username}`}
-                                  className="text-xs font-bold text-gray-800 hover:text-green-800 transition-colors"
+                                  className="text-xs font-bold text-gray-800 dark:text-[#E5E9E4] hover:text-green-800 dark:hover:text-[#7BC98C] transition-colors"
                                 >
                                   @{username}
                                 </Link>
                                 <span
-                                  className="text-[10px] text-gray-400"
+                                  className="text-[10px] text-gray-400 dark:text-[#A5B0A7]"
                                   title={new Date(msg.createdAt).toLocaleString()}
                                 >
                                   {format(msg.createdAt)}
                                 </span>
                                 {msg.isEdited && !msg.isDeleted && (
-                                  <span className="text-[10px] text-gray-400 italic">
+                                  <span className="text-[10px] text-gray-400 dark:text-[#A5B0A7] italic">
                                     (edited)
                                   </span>
                                 )}
@@ -1196,12 +1196,12 @@ const ChannelsPage = () => {
                                     }
                                     rows={2}
                                     maxLength={2000}
-                                    className="w-full p-2.5 rounded-xl border border-gray-300 text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800"
+                                    className="w-full p-2.5 rounded-xl border border-gray-300 dark:border-[#35443A] bg-white dark:bg-[#111713] text-gray-800 dark:text-[#E5E9E4] text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 dark:focus:border-[#7BC98C]"
                                   />
                                   <div className="flex items-center gap-2">
                                     <button
                                       onClick={() => handleSaveEdit(msg._id)}
-                                      className="px-3 py-1 rounded-lg bg-green-800 hover:bg-green-900 text-white text-xs font-semibold"
+                                      className="px-3 py-1 rounded-lg bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold"
                                     >
                                       Save
                                     </button>
@@ -1210,7 +1210,7 @@ const ChannelsPage = () => {
                                         setEditingMessageId(null);
                                         setEditInput("");
                                       }}
-                                      className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold"
+                                      className="px-3 py-1 rounded-lg bg-gray-100 dark:bg-[#222D25] text-gray-600 dark:text-[#E5E9E4] text-xs font-semibold"
                                     >
                                       Cancel
                                     </button>
@@ -1220,8 +1220,8 @@ const ChannelsPage = () => {
                                 <p
                                   className={`text-xs mt-0.5 break-words whitespace-pre-wrap leading-relaxed ${
                                     msg.isDeleted
-                                      ? "italic text-gray-400"
-                                      : "text-gray-800"
+                                      ? "italic text-gray-400 dark:text-[#A5B0A7]"
+                                      : "text-gray-800 dark:text-[#E5E9E4]"
                                   }`}
                                 >
                                   {msg.content}
@@ -1231,7 +1231,7 @@ const ChannelsPage = () => {
 
                             {/* Message hover actions toolbar */}
                             {!msg.isDeleted && editingMessageId !== msg._id && (
-                              <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 bg-white border border-gray-200 shadow-2xs rounded-lg p-1 absolute top-1 right-2">
+                              <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 bg-white dark:bg-[#222D25] border border-gray-200 dark:border-[#35443A] shadow-2xs rounded-lg p-1 absolute top-1 right-2">
                                 {canEdit && (
                                   <button
                                     onClick={() => {
@@ -1239,7 +1239,7 @@ const ChannelsPage = () => {
                                       setEditInput(msg.content);
                                     }}
                                     title="Edit Message"
-                                    className="p-1 hover:bg-gray-100 rounded text-gray-500 hover:text-gray-800 text-[11px]"
+                                    className="p-1 hover:bg-gray-100 dark:hover:bg-[#1B241E] rounded text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white text-[11px]"
                                   >
                                     ✏️
                                   </button>
@@ -1248,12 +1248,11 @@ const ChannelsPage = () => {
                                   <button
                                     onClick={() => setDeletingMessage(msg)}
                                     title="Delete Message"
-                                    className="p-1 hover:bg-red-50 rounded text-gray-400 hover:text-red-600 text-[11px]"
+                                    className="p-1 hover:bg-red-50 dark:hover:bg-red-950/60 rounded text-gray-400 hover:text-red-600 dark:hover:text-red-400 text-[11px]"
                                   >
                                     🗑️
                                   </button>
                                 )}
-                                
                               </div>
                             )}
                           </div>
@@ -1267,7 +1266,7 @@ const ChannelsPage = () => {
 
               {/* MESSAGE INPUT SECTION */}
               {activeChannel.isMember && (
-                <div className="p-3 border-t border-gray-200/80 bg-white flex-shrink-0">
+                <div className="p-3 border-t border-gray-200/80 dark:border-[#35443A] bg-white dark:bg-[#1B241E] flex-shrink-0">
                   <form
                     onSubmit={handleSendMessage}
                     className="flex flex-col gap-1.5"
@@ -1285,18 +1284,18 @@ const ChannelsPage = () => {
                         placeholder={`Message #${activeChannel.name}... (Press Enter to send, Shift+Enter for new line)`}
                         rows={2}
                         maxLength={2000}
-                        className="w-full pl-3.5 pr-20 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all text-gray-800 resize-none"
+                        className="w-full pl-3.5 pr-20 py-2.5 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#111713] text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 dark:focus:border-[#7BC98C] transition-all text-gray-800 dark:text-[#E5E9E4] dark:placeholder-[#A5B0A7] resize-none"
                       />
                       <button
                         type="submit"
                         disabled={!messageInput.trim() || isSending}
-                        className="absolute right-2.5 bottom-2.5 px-3 py-1.5 rounded-lg bg-green-800 hover:bg-green-900 text-white text-xs font-semibold transition-colors disabled:opacity-40 flex items-center gap-1"
+                        className="absolute right-2.5 bottom-2.5 px-3 py-1.5 rounded-lg bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white text-xs font-semibold transition-colors disabled:opacity-40 flex items-center gap-1"
                       >
                         {isSending ? "..." : "Send"}
                       </button>
                     </div>
 
-                    <div className="flex items-center justify-between text-[10px] text-gray-400 px-1">
+                    <div className="flex items-center justify-between text-[10px] text-gray-400 dark:text-[#A5B0A7] px-1">
                       <span>Shift + Enter for new lines</span>
                       <span>{messageInput.length}/2000</span>
                     </div>
@@ -1307,11 +1306,11 @@ const ChannelsPage = () => {
           ) : (
             /* DISCOVERY VIEW WHEN NO CHANNEL IS SELECTED */
             <div className="flex-1 flex flex-col p-6 overflow-y-auto">
-              <div className="flex flex-col gap-1 pb-4 border-b border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800">
+              <div className="flex flex-col gap-1 pb-4 border-b border-gray-100 dark:border-[#35443A]">
+                <h3 className="text-xl font-bold text-gray-800 dark:text-[#E5E9E4]">
                   Community Channels
                 </h3>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 dark:text-[#A5B0A7]">
                   Select a channel from the left sidebar or browse available
                   topics below to start engaging.
                 </p>
@@ -1319,7 +1318,7 @@ const ChannelsPage = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                 {filteredChannels.length === 0 ? (
-                  <div className="col-span-2 p-8 text-center text-gray-400 text-xs">
+                  <div className="col-span-2 p-8 text-center text-gray-400 dark:text-[#A5B0A7] text-xs">
                     No channels available right now. Click "+ New Channel" to
                     create the first one!
                   </div>
@@ -1327,32 +1326,32 @@ const ChannelsPage = () => {
                   filteredChannels.map((c) => (
                     <div
                       key={c._id}
-                      className="p-5 rounded-2xl border border-gray-100 shadow-2xs hover:shadow-md hover:border-green-800/40 transition-all bg-white flex flex-col justify-between gap-4"
+                      className="p-5 rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-2xs hover:shadow-md hover:border-green-800/40 dark:hover:border-[#7BC98C]/40 transition-all bg-white dark:bg-[#1B241E] flex flex-col justify-between gap-4"
                     >
                       <div className="flex flex-col gap-2">
                         <div className="flex items-center justify-between">
-                          <h4 className="text-base font-bold text-gray-900 flex items-center gap-1">
-                            <span className="text-gray-400">#</span>
+                          <h4 className="text-base font-bold text-gray-900 dark:text-[#E5E9E4] flex items-center gap-1">
+                            <span className="text-gray-400 dark:text-[#A5B0A7]">#</span>
                             <span>{c.name}</span>
                           </h4>
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 text-gray-600">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7]">
                             {c.visibility === "private" ? "🔒 Private" : "🌐 Public"}
                           </span>
                         </div>
 
-                        <p className="text-xs text-gray-600 line-clamp-2">
+                        <p className="text-xs text-gray-600 dark:text-[#A5B0A7] line-clamp-2">
                           {c.description || "No description provided."}
                         </p>
                       </div>
 
-                      <div className="flex items-center justify-between pt-3 border-t border-gray-50">
+                      <div className="flex items-center justify-between pt-3 border-t border-gray-50 dark:border-[#35443A]">
                         <div className="flex items-center gap-2">
                           <img
                             src={c.creator?.img || "/userImg.jpeg"}
                             alt={c.creator?.username || "Creator"}
                             className="w-6 h-6 rounded-full object-cover"
                           />
-                          <span className="text-[11px] text-gray-500">
+                          <span className="text-[11px] text-gray-500 dark:text-[#A5B0A7]">
                             @{c.creator?.username} • {c.memberCount || 1} members
                           </span>
                         </div>
@@ -1362,9 +1361,9 @@ const ChannelsPage = () => {
                           className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
                             c.visibility === "private" && !c.isMember
                               ? c.joinRequestStatus === "pending"
-                                ? "bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200/50"
-                                : "bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
-                              : "bg-green-50 hover:bg-green-100 text-green-800"
+                                ? "bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/60 border border-amber-200/50 dark:border-amber-800/50"
+                                : "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60"
+                              : "bg-green-50 hover:bg-green-100 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-green-800 dark:text-[#7BC98C]"
                           }`}
                         >
                           {c.visibility === "private" && !c.isMember

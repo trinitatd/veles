@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import Search from "./Search";
+import Search from "../components/Search";
 
 const categories = [
   { label: "All Posts", value: "all" },
@@ -25,7 +25,7 @@ const MainCategories = () => {
   };
 
   return (
-    <div className="w-full bg-[#dee3e0] border border-[#2f4b3a]/20 rounded-2xl p-4 shadow-lg flex items-center gap-8">
+    <div className="w-full bg-[#dee3e0] dark:bg-[#1B241E] border border-[#2f4b3a]/20 dark:border-[#35443A] rounded-2xl p-4 shadow-lg flex items-center gap-8 transition-colors">
       {/* Categories */}
       <div className="flex-1 grid grid-cols-6 items-center">
         {categories.map((c) => {
@@ -41,8 +41,8 @@ const MainCategories = () => {
               onClick={() => handleCategoryClick(c.value)}
               className={`${
                 isActive
-                  ? "bg-green-800 text-white shadow-sm"
-                  : "hover:bg-green-50 text-gray-800"
+                  ? "bg-green-800 dark:bg-[#25382B] dark:border dark:border-[#7BC98C]/50 text-white shadow-sm"
+                  : "hover:bg-green-50 dark:hover:bg-[#222D25] text-gray-800 dark:text-[#A5B0A7] dark:hover:text-[#E5E9E4]"
               } rounded-full px-4 py-2 text-center transition-colors font-medium cursor-pointer`}
             >
               {c.label}
@@ -52,7 +52,7 @@ const MainCategories = () => {
       </div>
 
       {/* Divider */}
-      <span className="text-xl font-medium">|</span>
+      <span className="text-xl font-medium text-gray-400 dark:text-[#35443A]">|</span>
 
       {/* Search */}
       <Search />

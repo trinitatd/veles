@@ -1,50 +1,42 @@
 import { format } from "timeago.js";
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Comment = ({ comment, postId, post }) => {
   const { user } = useUser();
   const { getToken } = useAuth();
   const queryClient = useQueryClient();
-
   const [isEditing, setIsEditing] = useState(false);
   const [editDesc, setEditDesc] = useState(comment.desc);
 
-  // 1. Comment Owner: Current user wrote this comment
-  const isCommentOwner = Boolean(
+  const role = user?.publicMetadata?.role;
+  const isAdmin = role === "admin";
+
+  // Check if current user is the comment author
+  const isCommentOwner =
     user &&
-      ((comment.user?.clerkUserId && comment.user.clerkUserId === user.id) ||
-        (comment.user?.username &&
-          user.username &&
-          comment.user.username.toLowerCase() === user.username.toLowerCase()))
-  );
+    ((comment.user?.clerkUserId && comment.user.clerkUserId === user.id) ||
+      (comment.user?.username &&
+        user.username &&
+        comment.user.username.toLowerCase() === user.username.toLowerCase()));
 
-  // 2. Post Author: Current user is the author of this post
-  const isPostAuthor = Boolean(
+  // Check if current user is the post author
+  const isPostAuthor =
     user &&
-      ((post?.user?.clerkUserId && post.user.clerkUserId === user.id) ||
-        (post?.user?.username &&
-          user.username &&
-          post.user.username.toLowerCase() === user.username.toLowerCase()))
-  );
+    ((post?.user?.clerkUserId && post.user.clerkUserId === user.id) ||
+      (post?.user?.username &&
+        user.username &&
+        post.user.username.toLowerCase() === user.username.toLowerCase()));
 
-  const isAdmin = user?.publicMetadata?.role === "admin";
-
-  // EDIT: ONLY the comment owner (or admin)
-  // - A user can ALWAYS edit their own comment (whether they are the post author or not)
-  // - The post author CANNOT edit other users' comments
+  // Permissions
+  const canDelete = isCommentOwner || isPostAuthor || isAdmin;
   const canEdit = isCommentOwner || isAdmin;
 
-  // DELETE: Comment owner OR post author (or admin)
-  // - A user can ALWAYS delete their own comment
-  // - The post author can delete other users' comments made on their post
-  const canDelete = isCommentOwner || isPostAuthor || isAdmin;
-
-  // Delete comment mutation
+  // Delete mutation
   const deleteMutation = useMutation({
     mutationFn: async () => {
       const token = await getToken();
@@ -66,7 +58,7 @@ const Comment = ({ comment, postId, post }) => {
     },
   });
 
-  // Edit comment mutation
+  // Edit mutation
   const editMutation = useMutation({
     mutationFn: async (updatedDesc) => {
       const token = await getToken();
@@ -81,9 +73,9 @@ const Comment = ({ comment, postId, post }) => {
       );
     },
     onSuccess: () => {
-      setIsEditing(false);
       queryClient.invalidateQueries({ queryKey: ["comments", postId] });
       toast.success("Comment updated successfully");
+      setIsEditing(false);
     },
     onError: (error) => {
       toast.error(error?.response?.data || "Failed to update comment");
@@ -110,7 +102,7 @@ const Comment = ({ comment, postId, post }) => {
     : "/userImg.jpeg";
 
   return (
-    <div className="p-4 bg-slate-50 border border-slate-100/80 rounded-xl mb-6 shadow-sm hover:border-slate-200 transition-colors">
+    <div className="p-4 bg-slate-50 dark:bg-[#1B241E] border border-slate-100/80 dark:border-[#35443A] rounded-xl mb-6 shadow-sm hover:border-slate-200 dark:hover:border-[#7BC98C]/40 transition-colors">
       <div className="flex items-center justify-between gap-4">
         {/* USER INFO */}
         <div className="flex items-center gap-3">
@@ -121,7 +113,7 @@ const Comment = ({ comment, postId, post }) => {
             <img
               src={avatarSrc}
               alt={comment.user?.username || "User"}
-              className="w-10 h-10 rounded-full object-cover border border-gray-100 shadow-sm group-hover:ring-2 group-hover:ring-green-800/40 transition-all"
+              className="w-10 h-10 rounded-full object-cover border border-gray-100 dark:border-[#35443A] shadow-sm group-hover:ring-2 group-hover:ring-green-800/40 dark:group-hover:ring-[#7BC98C]/40 transition-all"
               onError={(e) => {
                 e.currentTarget.src = "/userImg.jpeg";
               }}
@@ -130,9 +122,9 @@ const Comment = ({ comment, postId, post }) => {
           <div className="flex items-center gap-2 flex-wrap">
             <Link
               to={comment.user?.username ? `/author/${comment.user.username}` : "#"}
-              className="font-semibold text-gray-800 text-sm hover:text-green-800 hover:underline transition-colors"
+              className="font-semibold text-gray-800 dark:text-[#E5E9E4] text-sm hover:text-green-800 dark:hover:text-[#7BC98C] hover:underline transition-colors"
             >
-              {comment.user?.username || "User"}
+              @{comment.user?.username || "User"}
             </Link>
             {((post?.user?.clerkUserId &&
               comment.user?.clerkUserId &&
@@ -141,11 +133,11 @@ const Comment = ({ comment, postId, post }) => {
                 comment.user?.username &&
                 post.user.username.toLowerCase() ===
                   comment.user.username.toLowerCase())) && (
-              <span className="text-[11px] font-medium bg-green-100 text-green-800 px-2 py-0.5 rounded-full">
+              <span className="text-[11px] font-medium bg-green-100 dark:bg-[#25382B] text-green-800 dark:text-[#7BC98C] border dark:border-[#35443A] px-2 py-0.5 rounded-full">
                 Author
               </span>
             )}
-            <span className="text-xs text-gray-400">
+            <span className="text-xs text-gray-400 dark:text-[#A5B0A7]">
               {comment.createdAt ? format(comment.createdAt) : "Just now"}
             </span>
           </div>
@@ -154,14 +146,14 @@ const Comment = ({ comment, postId, post }) => {
         {/* ACTIONS FOR COMMENTER OR POST AUTHOR OR ADMIN */}
         {(canEdit || canDelete) && !isEditing && comment._id && (
           <div className="flex items-center gap-3 shrink-0">
-            {/* EDIT BUTTON (Only for commenter or admin) */}
+            {/* EDIT BUTTON */}
             {canEdit && (
               <button
                 onClick={() => {
                   setEditDesc(comment.desc);
                   setIsEditing(true);
                 }}
-                className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-green-800 transition-colors"
+                className="inline-flex items-center gap-1 text-xs text-gray-500 dark:text-[#A5B0A7] hover:text-green-800 dark:hover:text-[#7BC98C] transition-colors"
                 title="Edit comment"
               >
                 <svg
@@ -182,7 +174,7 @@ const Comment = ({ comment, postId, post }) => {
               </button>
             )}
 
-            {/* DELETE BUTTON (For commenter, post author, or admin) */}
+            {/* DELETE BUTTON */}
             {canDelete && (
               <button
                 onClick={handleDelete}
@@ -220,7 +212,7 @@ const Comment = ({ comment, postId, post }) => {
             <textarea
               value={editDesc}
               onChange={(e) => setEditDesc(e.target.value)}
-              className="w-full p-3 rounded-xl border border-gray-200 bg-white text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-green-800"
+              className="w-full p-3 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] text-sm text-gray-700 dark:text-[#E5E9E4] focus:outline-none focus:ring-1 focus:ring-green-800 dark:focus:ring-[#7BC98C]"
               rows={2}
               autoFocus
             />
@@ -228,7 +220,7 @@ const Comment = ({ comment, postId, post }) => {
               <button
                 type="submit"
                 disabled={editMutation.isPending || !editDesc.trim()}
-                className="px-3 py-1.5 rounded-lg bg-green-800 hover:bg-green-900 text-white text-xs font-medium transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 rounded-lg bg-green-800 dark:bg-[#25382B] dark:border dark:border-[#35443A] hover:bg-green-900 dark:hover:bg-[#2e4736] text-white text-xs font-medium transition-colors disabled:opacity-50"
               >
                 {editMutation.isPending ? "Saving..." : "Save"}
               </button>
@@ -238,14 +230,14 @@ const Comment = ({ comment, postId, post }) => {
                   setEditDesc(comment.desc);
                   setIsEditing(false);
                 }}
-                className="px-3 py-1.5 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-medium transition-colors"
+                className="px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-[#222D25] hover:bg-gray-300 dark:hover:bg-[#35443A] text-gray-700 dark:text-[#E5E9E4] text-xs font-medium transition-colors"
               >
                 Cancel
               </button>
             </div>
           </form>
         ) : (
-          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+          <p className="text-gray-700 dark:text-[#E5E9E4] leading-relaxed whitespace-pre-wrap">
             {comment.desc}
           </p>
         )}

@@ -34,20 +34,20 @@ const ChannelMembersModal = ({
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-        <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-100 flex flex-col gap-4 max-h-[85vh]">
-          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+        <div className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-4 max-h-[85vh] text-gray-800 dark:text-[#E5E9E4]">
+          <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-[#35443A]">
             <div>
-              <h3 className="text-lg font-bold text-gray-900">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">
                 Channel Members ({members.length})
               </h3>
-              <p className="text-xs text-gray-500 mt-0.5">
+              <p className="text-xs text-gray-500 dark:text-[#A5B0A7] mt-0.5">
                 People participating in this community.
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+              className="text-gray-400 dark:text-[#A5B0A7] hover:text-gray-600 dark:hover:text-white p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#222D25] transition-colors"
             >
               ✕
             </button>
@@ -60,14 +60,14 @@ const ChannelMembersModal = ({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search members..."
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all text-gray-800"
+              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#111713] text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 dark:focus:border-[#7BC98C] transition-all text-gray-800 dark:text-[#E5E9E4] dark:placeholder-[#A5B0A7]"
             />
           </div>
 
           {/* Members List */}
-          <div className="flex flex-col gap-2 overflow-y-auto max-h-80 pr-1 divide-y divide-gray-50">
+          <div className="flex flex-col gap-2 overflow-y-auto max-h-80 pr-1 divide-y divide-gray-50 dark:divide-[#35443A]">
             {filteredMembers.length === 0 ? (
-              <p className="text-xs text-gray-400 text-center py-6">
+              <p className="text-xs text-gray-400 dark:text-[#A5B0A7] text-center py-6">
                 No members found
               </p>
             ) : (
@@ -85,17 +85,17 @@ const ChannelMembersModal = ({
                       <img
                         src={img}
                         alt={username}
-                        className="w-9 h-9 rounded-full object-cover border border-gray-100 flex-shrink-0"
+                        className="w-9 h-9 rounded-full object-cover border border-gray-100 dark:border-[#35443A] flex-shrink-0"
                       />
                       <div className="flex flex-col min-w-0">
                         <Link
                           to={`/author/${username}`}
                           onClick={onClose}
-                          className="text-xs font-bold text-gray-800 hover:text-green-800 transition-colors truncate"
+                          className="text-xs font-bold text-gray-800 dark:text-[#E5E9E4] hover:text-green-800 dark:hover:text-[#7BC98C] transition-colors truncate"
                         >
                           @{username}
                         </Link>
-                        <span className="text-[10px] text-gray-400">
+                        <span className="text-[10px] text-gray-400 dark:text-[#A5B0A7]">
                           Joined {new Date(m.joinedAt || m.createdAt).toLocaleDateString()}
                         </span>
                       </div>
@@ -103,11 +103,11 @@ const ChannelMembersModal = ({
 
                     <div className="flex items-center gap-2 flex-shrink-0">
                       {isMemberCreator ? (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200/50">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/50">
                           Creator
                         </span>
                       ) : (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 text-gray-600">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-gray-100 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7]">
                           Member
                         </span>
                       )}
@@ -117,7 +117,7 @@ const ChannelMembersModal = ({
                         <button
                           onClick={() => setMemberToRemove(m)}
                           title="Remove from channel"
-                          className="p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors text-xs"
+                          className="p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/60 rounded-lg transition-colors text-xs"
                         >
                           Remove
                         </button>
@@ -129,10 +129,10 @@ const ChannelMembersModal = ({
             )}
           </div>
 
-          <div className="pt-3 border-t border-gray-100 flex justify-end">
+          <div className="pt-3 border-t border-gray-100 dark:border-[#35443A] flex justify-end">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+              className="px-4 py-2 rounded-xl text-xs font-medium text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] hover:bg-gray-200 dark:hover:bg-[#2e3f34] transition-colors"
             >
               Close
             </button>

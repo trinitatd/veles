@@ -102,28 +102,28 @@ const AuthorProfilePage = () => {
     return (
       <div className="flex flex-col gap-8 my-8 max-w-6xl mx-auto w-full animate-pulse">
         {/* Breadcrumb Skeleton */}
-        <div className="h-4 w-48 bg-slate-200 rounded-md"></div>
+        <div className="h-4 w-48 bg-slate-200 dark:bg-[#222D25] rounded-md"></div>
 
         {/* Profile Header Skeleton */}
-        <div className="bg-white/80 rounded-3xl p-8 border border-slate-200/80 shadow-sm flex flex-col md:flex-row items-center gap-6">
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full bg-slate-200 shrink-0"></div>
+        <div className="bg-white/80 dark:bg-[#1B241E] rounded-3xl p-8 border border-slate-200/80 dark:border-[#35443A] shadow-sm flex flex-col md:flex-row items-center gap-6">
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full bg-slate-200 dark:bg-[#222D25] shrink-0"></div>
           <div className="flex-1 flex flex-col items-center md:items-start gap-3 w-full">
-            <div className="h-8 w-60 bg-slate-200 rounded-md"></div>
-            <div className="h-4 w-32 bg-slate-200 rounded-md"></div>
-            <div className="h-16 w-full max-w-xl bg-slate-100 rounded-xl"></div>
+            <div className="h-8 w-60 bg-slate-200 dark:bg-[#222D25] rounded-md"></div>
+            <div className="h-4 w-32 bg-slate-200 dark:bg-[#222D25] rounded-md"></div>
+            <div className="h-16 w-full max-w-xl bg-slate-100 dark:bg-[#222D25] rounded-xl"></div>
           </div>
         </div>
 
         {/* Articles Grid Skeleton */}
         <div className="mt-6 flex flex-col gap-4">
-          <div className="h-6 w-44 bg-slate-200 rounded-md"></div>
+          <div className="h-6 w-44 bg-slate-200 dark:bg-[#222D25] rounded-md"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-2xl h-80 border border-slate-100 p-4 flex flex-col gap-3">
-                <div className="h-40 bg-slate-200 rounded-xl"></div>
-                <div className="h-6 bg-slate-200 rounded w-3/4"></div>
-                <div className="h-4 bg-slate-100 rounded w-full"></div>
-                <div className="h-4 bg-slate-100 rounded w-1/2"></div>
+              <div key={i} className="bg-white dark:bg-[#1B241E] rounded-2xl h-80 border border-slate-100 dark:border-[#35443A] p-4 flex flex-col gap-3">
+                <div className="h-40 bg-slate-200 dark:bg-[#222D25] rounded-xl"></div>
+                <div className="h-6 bg-slate-200 dark:bg-[#222D25] rounded w-3/4"></div>
+                <div className="h-4 bg-slate-100 dark:bg-[#222D25] rounded w-full"></div>
+                <div className="h-4 bg-slate-100 dark:bg-[#222D25] rounded w-1/2"></div>
               </div>
             ))}
           </div>
@@ -136,25 +136,25 @@ const AuthorProfilePage = () => {
   if (authorError || !author) {
     return (
       <div className="my-16 flex flex-col items-center justify-center text-center px-4 max-w-md mx-auto">
-        <div className="w-20 h-20 rounded-full bg-red-50 text-red-500 flex items-center justify-center text-4xl mb-4 border border-red-100 shadow-sm">
+        <div className="w-20 h-20 rounded-full bg-red-50 dark:bg-red-950/30 text-red-500 flex items-center justify-center text-4xl mb-4 border border-red-100 dark:border-red-900/40 shadow-sm">
           👤
         </div>
-        <h1 className="text-2xl font-bold text-gray-800 mb-2 font-[Philosopher]">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-[#E5E9E4] mb-2 font-[Philosopher]">
           Author Not Found
         </h1>
-        <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-          The author profile <span className="font-semibold text-gray-800">@{username}</span> could not be found or does not exist.
+        <p className="text-gray-600 dark:text-[#A5B0A7] mb-6 text-sm leading-relaxed">
+          The author profile <span className="font-semibold text-gray-800 dark:text-[#E5E9E4]">@{username}</span> could not be found or does not exist.
         </p>
         <div className="flex gap-3">
           <Link
             to="/posts"
-            className="px-5 py-2.5 rounded-xl bg-green-800 hover:bg-green-900 text-white font-medium text-sm transition-colors shadow-sm"
+            className="px-5 py-2.5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#7BC98C] dark:hover:bg-[#68b87a] text-white dark:text-[#111713] font-medium text-sm transition-colors shadow-sm"
           >
             Explore Articles
           </Link>
           <Link
             to="/"
-            className="px-5 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-sm transition-colors"
+            className="px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-[#222D25] hover:bg-gray-200 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] font-medium text-sm transition-colors"
           >
             Go Home
           </Link>
@@ -173,7 +173,7 @@ const AuthorProfilePage = () => {
   return (
     <div className="flex flex-col gap-8 my-6 max-w-6xl mx-auto w-full">
       {/* BREADCRUMB NAVIGATION */}
-      <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-[#2f4b3a]">
+      <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-[#2f4b3a] dark:text-[#7BC98C]">
         <Link to="/" className="hover:underline opacity-80">
           Home
         </Link>
@@ -182,13 +182,13 @@ const AuthorProfilePage = () => {
           Authors
         </Link>
         <span>•</span>
-        <span className="font-semibold text-green-800">@{author.username}</span>
+        <span className="font-semibold text-green-800 dark:text-[#7BC98C]">@{author.username}</span>
       </nav>
 
       {/* AUTHOR HERO CARD */}
-      <section className="relative overflow-hidden rounded-3xl bg-white/90 backdrop-blur-sm border border-[#2f4b3a]/15 shadow-sm p-6 sm:p-8 md:p-10">
+      <section className="relative overflow-hidden rounded-3xl bg-white/90 dark:bg-[#1B241E] backdrop-blur-sm border border-[#2f4b3a]/15 dark:border-[#35443A] shadow-sm p-6 sm:p-8 md:p-10">
         {/* Subtle decorative green accent background glow */}
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-green-50/60 blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-green-50/60 dark:bg-emerald-950/20 blur-3xl pointer-events-none"></div>
 
         <div className="relative flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
           {/* Avatar with status/badge border */}
@@ -196,13 +196,13 @@ const AuthorProfilePage = () => {
             <img
               src={avatarSrc}
               alt={author.username}
-              className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full object-cover border-4 border-white shadow-md bg-emerald-50 ring-2 ring-[#176B3A]/20"
+              className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full object-cover border-4 border-white dark:border-[#222D25] shadow-md bg-emerald-50 dark:bg-[#222D25] ring-2 ring-[#176B3A]/20 dark:ring-[#7BC98C]/30"
               onError={(e) => {
                 e.currentTarget.src = "/userImg.jpeg";
               }}
             />
             <span
-              className="absolute bottom-1 right-2 w-5 h-5 rounded-full bg-emerald-600 border-2 border-white shadow-sm"
+              className="absolute bottom-1 right-2 w-5 h-5 rounded-full bg-emerald-600 border-2 border-white dark:border-[#222D25] shadow-sm"
               title="Verified Author"
             ></span>
           </div>
@@ -210,34 +210,34 @@ const AuthorProfilePage = () => {
           {/* Author Details & Bio */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left gap-3">
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-wrap">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 font-[Philosopher]">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-[#E5E9E4] font-[Philosopher]">
                 {author.username}
               </h1>
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100/80 text-emerald-900 border border-emerald-300/60 self-center sm:self-auto">
+              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100/80 dark:bg-[#25382B] text-emerald-900 dark:text-[#7BC98C] border border-emerald-300/60 dark:border-[#35443A] self-center sm:self-auto">
                 Author
               </span>
             </div>
 
-            <p className="text-sm font-medium text-green-800/90 -mt-1">
+            <p className="text-sm font-medium text-green-800/90 dark:text-[#7BC98C] -mt-1">
               @{author.username}
             </p>
 
             {/* Author Bio */}
             <div className="mt-1 max-w-2xl">
               {author.about ? (
-                <p className="text-gray-600 leading-relaxed text-sm sm:text-base font-normal">
+                <p className="text-gray-600 dark:text-[#A5B0A7] leading-relaxed text-sm sm:text-base font-normal">
                   {author.about}
                 </p>
               ) : (
-                <p className="text-gray-400 italic text-sm">
+                <p className="text-gray-400 dark:text-gray-500 italic text-sm">
                   Passionate contributor writing ideas and insights on Veles.
                 </p>
               )}
             </div>
 
             {/* Metadata Stats Pills */}
-            <div className="flex items-center gap-3 sm:gap-4 mt-2 flex-wrap justify-center md:justify-start text-xs sm:text-sm text-gray-500">
-              <div className="flex items-center gap-1.5 bg-[#e5f3f1]/70 px-3 py-1.5 rounded-xl border border-green-800/10 font-medium text-green-900">
+            <div className="flex items-center gap-3 sm:gap-4 mt-2 flex-wrap justify-center md:justify-start text-xs sm:text-sm text-gray-500 dark:text-[#A5B0A7]">
+              <div className="flex items-center gap-1.5 bg-[#e5f3f1]/70 dark:bg-[#222D25] px-3 py-1.5 rounded-xl border border-green-800/10 dark:border-[#35443A] font-medium text-green-900 dark:text-[#7BC98C]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -246,7 +246,7 @@ const AuthorProfilePage = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-4 h-4 text-green-800"
+                  className="w-4 h-4 text-green-800 dark:text-[#7BC98C]"
                 >
                   <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
                   <path d="M6 6h10" />
@@ -261,7 +261,7 @@ const AuthorProfilePage = () => {
               </div>
 
               {joinDate && (
-                <div className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-200/60 text-gray-600 font-medium">
+                <div className="flex items-center gap-1.5 bg-gray-50 dark:bg-[#222D25] px-3 py-1.5 rounded-xl border border-gray-200/60 dark:border-[#35443A] text-gray-600 dark:text-[#A5B0A7] font-medium">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -270,7 +270,7 @@ const AuthorProfilePage = () => {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="w-4 h-4 text-gray-500"
+                    className="w-4 h-4 text-gray-500 dark:text-[#A5B0A7]"
                   >
                     <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
                     <line x1="16" x2="16" y1="2" y2="6" />
@@ -287,7 +287,7 @@ const AuthorProfilePage = () => {
               <button
                 type="button"
                 onClick={handleShare}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 shadow-sm transition-all hover:border-[#176B3A]"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white dark:bg-[#222D25] hover:bg-gray-50 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] border border-gray-200 dark:border-[#35443A] shadow-sm transition-all hover:border-[#176B3A] dark:hover:border-[#7BC98C]"
                 title="Share this author profile"
               >
                 <svg
@@ -298,7 +298,7 @@ const AuthorProfilePage = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-4 h-4 text-green-800"
+                  className="w-4 h-4 text-green-800 dark:text-[#7BC98C]"
                 >
                   <circle cx="18" cy="5" r="3" />
                   <circle cx="6" cy="12" r="3" />
@@ -312,7 +312,7 @@ const AuthorProfilePage = () => {
               {isOwnProfile && (
                 <Link
                   to="/dashboard"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-green-800 hover:bg-green-900 text-white shadow-sm transition-colors"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-green-800 hover:bg-green-900 dark:bg-[#7BC98C] dark:hover:bg-[#68b87a] text-white dark:text-[#111713] shadow-sm transition-colors"
                 >
                   <span>Edit in Dashboard</span>
                   <span></span>
@@ -325,20 +325,20 @@ const AuthorProfilePage = () => {
 
       {/* CHANNELS SECTION */}
       <section className="flex flex-col gap-6">
-        <div className="flex items-center justify-between border-b border-[#2f4b3a]/15 pb-4">
+        <div className="flex items-center justify-between border-b border-[#2f4b3a]/15 dark:border-[#35443A] pb-4">
           <div className="flex items-center gap-3">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 font-[Philosopher] flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-[#E5E9E4] font-[Philosopher] flex items-center gap-2">
               <span>Community Channels</span>
             </h2>
             {channelsData?.totalCount !== undefined && (
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-[#25382B] text-emerald-800 dark:text-[#7BC98C] border border-emerald-200 dark:border-[#35443A]">
                 {channelsData.totalCount}
               </span>
             )}
           </div>
           <Link
             to="/channels"
-            className="text-xs sm:text-sm font-medium text-green-800 hover:underline"
+            className="text-xs sm:text-sm font-medium text-green-800 dark:text-[#7BC98C] hover:underline"
           >
             Explore All Channels
           </Link>
@@ -350,14 +350,14 @@ const AuthorProfilePage = () => {
             {[1, 2, 3].map((n) => (
               <div
                 key={n}
-                className="bg-white rounded-2xl h-44 border border-slate-100 p-5 flex flex-col justify-between shadow-xs"
+                className="bg-white dark:bg-[#1B241E] rounded-2xl h-44 border border-slate-100 dark:border-[#35443A] p-5 flex flex-col justify-between shadow-xs"
               >
                 <div className="flex flex-col gap-2.5">
-                  <div className="h-5 bg-slate-200 rounded w-2/3"></div>
-                  <div className="h-4 bg-slate-100 rounded w-full"></div>
-                  <div className="h-4 bg-slate-100 rounded w-4/5"></div>
+                  <div className="h-5 bg-slate-200 dark:bg-[#222D25] rounded w-2/3"></div>
+                  <div className="h-4 bg-slate-100 dark:bg-[#222D25] rounded w-full"></div>
+                  <div className="h-4 bg-slate-100 dark:bg-[#222D25] rounded w-4/5"></div>
                 </div>
-                <div className="h-4 bg-slate-100 rounded w-1/3"></div>
+                <div className="h-4 bg-slate-100 dark:bg-[#222D25] rounded w-1/3"></div>
               </div>
             ))}
           </div>
@@ -365,21 +365,21 @@ const AuthorProfilePage = () => {
 
         {/* Error fetching channels state */}
         {channelsError && (
-          <div className="py-6 text-center text-red-500 bg-red-50/60 rounded-2xl border border-red-100 text-xs">
+          <div className="py-6 text-center text-red-500 bg-red-50/60 dark:bg-red-950/30 rounded-2xl border border-red-100 dark:border-red-900/40 text-xs">
             Failed to load channels for this author.
           </div>
         )}
 
         {/* Empty state: Author has no eligible public channels */}
         {!isChannelsPending && (!channelsData?.channels || channelsData.channels.length === 0) && (
-          <div className="bg-white/70 rounded-2xl border border-dashed border-[#2f4b3a]/25 p-7 text-center flex flex-col items-center justify-center gap-2 shadow-2xs">
+          <div className="bg-white/70 dark:bg-[#1B241E] rounded-2xl border border-dashed border-[#2f4b3a]/25 dark:border-[#35443A] p-7 text-center flex flex-col items-center justify-center gap-2 shadow-2xs">
             <span className="text-2xl">💬</span>
-            <p className="text-xs text-gray-600 font-medium">
+            <p className="text-xs text-gray-600 dark:text-[#A5B0A7] font-medium">
               @{author.username} hasn&apos;t created or joined any public channels yet.
             </p>
             <Link
               to="/channels"
-              className="text-xs text-green-800 hover:underline font-semibold mt-0.5"
+              className="text-xs text-green-800 dark:text-[#7BC98C] hover:underline font-semibold mt-0.5"
             >
               Browse technical communities on Veles  
             </Link>
@@ -397,8 +397,8 @@ const AuthorProfilePage = () => {
                   onClick={() => setChannelFilter("all")}
                   className={`px-3 py-1 rounded-xl text-xs font-semibold transition-colors ${
                     channelFilter === "all"
-                      ? "bg-green-800 text-white shadow-2xs"
-                      : "bg-white hover:bg-gray-100 text-gray-600 border border-gray-200"
+                      ? "bg-green-800 dark:bg-[#7BC98C] text-white dark:text-[#111713] shadow-2xs"
+                      : "bg-white dark:bg-[#222D25] hover:bg-gray-100 dark:hover:bg-[#2b3a2f] text-gray-600 dark:text-[#A5B0A7] border border-gray-200 dark:border-[#35443A]"
                   }`}
                 >
                   All ({channelsData.totalCount})
@@ -408,8 +408,8 @@ const AuthorProfilePage = () => {
                   onClick={() => setChannelFilter("created")}
                   className={`px-3 py-1 rounded-xl text-xs font-semibold transition-colors ${
                     channelFilter === "created"
-                      ? "bg-green-800 text-white shadow-2xs"
-                      : "bg-white hover:bg-gray-100 text-gray-600 border border-gray-200"
+                      ? "bg-green-800 dark:bg-[#7BC98C] text-white dark:text-[#111713] shadow-2xs"
+                      : "bg-white dark:bg-[#222D25] hover:bg-gray-100 dark:hover:bg-[#2b3a2f] text-gray-600 dark:text-[#A5B0A7] border border-gray-200 dark:border-[#35443A]"
                   }`}
                 >
                   Created ({channelsData.createdCount})
@@ -419,8 +419,8 @@ const AuthorProfilePage = () => {
                   onClick={() => setChannelFilter("joined")}
                   className={`px-3 py-1 rounded-xl text-xs font-semibold transition-colors ${
                     channelFilter === "joined"
-                      ? "bg-green-800 text-white shadow-2xs"
-                      : "bg-white hover:bg-gray-100 text-gray-600 border border-gray-200"
+                      ? "bg-green-800 dark:bg-[#7BC98C] text-white dark:text-[#111713] shadow-2xs"
+                      : "bg-white dark:bg-[#222D25] hover:bg-gray-100 dark:hover:bg-[#2b3a2f] text-gray-600 dark:text-[#A5B0A7] border border-gray-200 dark:border-[#35443A]"
                   }`}
                 >
                   Joined ({channelsData.joinedCount})
@@ -433,24 +433,24 @@ const AuthorProfilePage = () => {
                 <Link
                   key={channel._id}
                   to={`/channels/${channel.slug}`}
-                  className="group flex flex-col justify-between p-5 rounded-2xl bg-white border border-[#2f4b3a]/15 shadow-2xs hover:shadow-md hover:border-green-800/40 hover:-translate-y-0.5 transition-all duration-200"
+                  className="group flex flex-col justify-between p-5 rounded-2xl bg-white dark:bg-[#1B241E] border border-[#2f4b3a]/15 dark:border-[#35443A] shadow-2xs hover:shadow-md hover:border-green-800/40 dark:hover:border-[#7BC98C]/60 hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <div className="flex flex-col gap-2.5">
                     {/* Header: Name + Relationship Pill */}
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-1.5 min-w-0">
-                        <span className="text-green-800/70 font-bold text-base">#</span>
-                        <h3 className="font-bold text-gray-800 text-sm sm:text-base truncate group-hover:text-green-800 transition-colors">
+                        <span className="text-green-800/70 dark:text-[#7BC98C]/80 font-bold text-base">#</span>
+                        <h3 className="font-bold text-gray-800 dark:text-[#E5E9E4] text-sm sm:text-base truncate group-hover:text-green-800 dark:group-hover:text-[#7BC98C] transition-colors">
                           {channel.name}
                         </h3>
                       </div>
                       {channel.relationship === "creator" ? (
-                        <span className="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/60 flex items-center gap-1">
+                        <span className="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 dark:bg-[#25382B] text-emerald-800 dark:text-[#7BC98C] border border-emerald-200/60 dark:border-[#35443A] flex items-center gap-1">
                           <span></span>
                           <span>Creator</span>
                         </span>
                       ) : (
-                        <span className="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-teal-50 text-teal-800 border border-teal-200/60 flex items-center gap-1">
+                        <span className="shrink-0 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-teal-50 dark:bg-[#222D25] text-teal-800 dark:text-[#7BC98C] border border-teal-200/60 dark:border-[#35443A] flex items-center gap-1">
                           <span></span>
                           <span>Member</span>
                         </span>
@@ -458,19 +458,19 @@ const AuthorProfilePage = () => {
                     </div>
 
                     {/* Description */}
-                    <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed min-h-[2rem]">
+                    <p className="text-xs text-gray-600 dark:text-[#A5B0A7] line-clamp-2 leading-relaxed min-h-[2rem]">
                       {channel.description || "Topic-based technical community."}
                     </p>
                   </div>
 
                   {/* Footer: Member count & Action hint */}
-                  <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between text-xs">
-                    <span className="text-gray-500 font-medium flex items-center gap-1.5">
-                      <span className="text-gray-400">👥</span>
+                  <div className="pt-3 mt-3 border-t border-gray-100 dark:border-[#35443A] flex items-center justify-between text-xs">
+                    <span className="text-gray-500 dark:text-[#A5B0A7] font-medium flex items-center gap-1.5">
+                      <span className="text-gray-400 dark:text-[#A5B0A7]">👥</span>
                       <span>{channel.memberCount || 1} {channel.memberCount === 1 ? "member" : "members"}</span>
                     </span>
 
-                    <span className="font-semibold text-green-800 group-hover:translate-x-0.5 transition-transform flex items-center gap-1 text-[11px]">
+                    <span className="font-semibold text-green-800 dark:text-[#7BC98C] group-hover:translate-x-0.5 transition-transform flex items-center gap-1 text-[11px]">
                       <span>Open</span>
                       <span> </span>
                     </span>
@@ -484,18 +484,18 @@ const AuthorProfilePage = () => {
 
       {/* PUBLISHED ARTICLES SECTION */}
       <section className="flex flex-col gap-6">
-        <div className="flex items-center justify-between border-b border-[#2f4b3a]/15 pb-4">
+        <div className="flex items-center justify-between border-b border-[#2f4b3a]/15 dark:border-[#35443A] pb-4">
           <div className="flex items-center gap-3">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 font-[Philosopher]">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-[#E5E9E4] font-[Philosopher]">
               Published Articles
             </h2>
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-green-100 text-green-800">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-green-100 dark:bg-[#25382B] text-green-800 dark:text-[#7BC98C]">
               {posts ? posts.length : 0}
             </span>
           </div>
           <Link
             to="/posts"
-            className="text-xs sm:text-sm font-medium text-green-800 hover:underline"
+            className="text-xs sm:text-sm font-medium text-green-800 dark:text-[#7BC98C] hover:underline"
           >
             Explore All Posts  
           </Link>
@@ -507,12 +507,12 @@ const AuthorProfilePage = () => {
             {[1, 2, 3].map((n) => (
               <div
                 key={n}
-                className="bg-white rounded-2xl h-80 border border-slate-100 p-5 flex flex-col gap-4 shadow-sm"
+                className="bg-white dark:bg-[#1B241E] rounded-2xl h-80 border border-slate-100 dark:border-[#35443A] p-5 flex flex-col gap-4 shadow-sm"
               >
-                <div className="h-44 bg-slate-200 rounded-xl"></div>
-                <div className="h-5 bg-slate-200 rounded w-2/3"></div>
-                <div className="h-4 bg-slate-100 rounded w-full"></div>
-                <div className="h-4 bg-slate-100 rounded w-1/3"></div>
+                <div className="h-44 bg-slate-200 dark:bg-[#222D25] rounded-xl"></div>
+                <div className="h-5 bg-slate-200 dark:bg-[#222D25] rounded w-2/3"></div>
+                <div className="h-4 bg-slate-100 dark:bg-[#222D25] rounded w-full"></div>
+                <div className="h-4 bg-slate-100 dark:bg-[#222D25] rounded w-1/3"></div>
               </div>
             ))}
           </div>
@@ -520,26 +520,26 @@ const AuthorProfilePage = () => {
 
         {/* Error fetching posts state */}
         {postsError && (
-          <div className="py-12 text-center text-red-500 bg-red-50 rounded-2xl border border-red-100">
+          <div className="py-12 text-center text-red-500 bg-red-50 dark:bg-red-950/30 rounded-2xl border border-red-100 dark:border-red-900/40">
             Failed to load articles for this author. Please try refreshing.
           </div>
         )}
 
         {/* Empty state: Author has no published articles */}
         {!isPostsPending && (!posts || posts.length === 0) && (
-          <div className="bg-white/80 rounded-2xl border border-dashed border-[#2f4b3a]/30 p-12 text-center flex flex-col items-center gap-3">
-            <div className="w-16 h-16 rounded-full bg-green-50 text-green-800 flex items-center justify-center text-3xl">
+          <div className="bg-white/80 dark:bg-[#1B241E] rounded-2xl border border-dashed border-[#2f4b3a]/30 dark:border-[#35443A] p-12 text-center flex flex-col items-center gap-3">
+            <div className="w-16 h-16 rounded-full bg-green-50 dark:bg-[#25382B] text-green-800 dark:text-[#7BC98C] flex items-center justify-center text-3xl">
               📝
             </div>
-            <h3 className="text-lg font-semibold text-gray-800">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-[#E5E9E4]">
               No Published Articles Yet
             </h3>
-            <p className="text-sm text-gray-500 max-w-md">
+            <p className="text-sm text-gray-500 dark:text-[#A5B0A7] max-w-md">
               {author.username} hasn&apos;t published any articles yet. When they write and publish new posts, they will show up here.
             </p>
             <Link
               to="/"
-              className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-800 text-white text-sm font-medium hover:bg-green-900 transition-colors shadow-sm"
+              className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#7BC98C] dark:hover:bg-[#68b87a] text-white dark:text-[#111713] text-sm font-medium transition-colors shadow-sm"
             >
               Browse Recent Posts
             </Link>
@@ -552,10 +552,10 @@ const AuthorProfilePage = () => {
             {posts.map((post) => (
               <article
                 key={post._id}
-                className="group flex flex-col rounded-2xl border border-[#176B3A]/30 bg-white overflow-hidden shadow-sm hover:shadow-md hover:border-[#176B3A] transition-all duration-300"
+                className="group flex flex-col rounded-2xl border border-[#176B3A]/30 dark:border-[#35443A] bg-white dark:bg-[#1B241E] overflow-hidden shadow-sm hover:shadow-md hover:border-[#176B3A] dark:hover:border-[#7BC98C] transition-all duration-300"
               >
                 {/* Cover Image */}
-                <Link to={`/${post.slug}`} className="block relative overflow-hidden aspect-video bg-emerald-50/50">
+                <Link to={`/${post.slug}`} className="block relative overflow-hidden aspect-video bg-emerald-50/50 dark:bg-[#222D25]">
                   {post.img ? (
                     <Image
                       src={post.img}
@@ -564,7 +564,7 @@ const AuthorProfilePage = () => {
                       alt={post.title}
                     />
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100/60 to-[#d9e6df] text-green-900/60">
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100/60 to-[#d9e6df] dark:from-[#222D25] dark:to-[#1B241E] text-green-900/60 dark:text-[#7BC98C]">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -586,7 +586,7 @@ const AuthorProfilePage = () => {
                   )}
 
                   {/* Category Pill Tag */}
-                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold bg-white/95 text-green-800 shadow-sm backdrop-blur-sm border border-green-800/10">
+                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold bg-white/95 dark:bg-[#222D25]/95 text-green-800 dark:text-[#7BC98C] shadow-sm backdrop-blur-sm border border-green-800/10 dark:border-[#35443A]">
                     {post.category || "General"}
                   </span>
                 </Link>
@@ -595,7 +595,7 @@ const AuthorProfilePage = () => {
                 <div className="flex-1 p-5 flex flex-col justify-between gap-4">
                   <div className="flex flex-col gap-2.5">
                     {/* Publication Date & Likes */}
-                    <div className="flex items-center justify-between text-xs text-gray-400">
+                    <div className="flex items-center justify-between text-xs text-gray-400 dark:text-[#A5B0A7]">
                       <span>{format(post.createdAt)}</span>
                       {post.likes && post.likes.length > 0 && (
                         <span className="flex items-center gap-1 text-red-500 font-medium">
@@ -616,22 +616,22 @@ const AuthorProfilePage = () => {
                     {/* Article Title */}
                     <Link
                       to={`/${post.slug}`}
-                      className="text-lg font-bold text-gray-800 group-hover:text-green-800 transition-colors line-clamp-2 leading-snug"
+                      className="text-lg font-bold text-gray-800 dark:text-[#E5E9E4] group-hover:text-green-800 dark:group-hover:text-[#7BC98C] transition-colors line-clamp-2 leading-snug"
                     >
                       {post.title}
                     </Link>
 
                     {/* Article Description */}
-                    <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                    <p className="text-sm text-gray-600 dark:text-[#A5B0A7] line-clamp-3 leading-relaxed">
                       {post.desc || "Read the full article on Veles to discover new insights."}
                     </p>
                   </div>
 
                   {/* Read More Link */}
-                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+                  <div className="pt-3 border-t border-gray-100 dark:border-[#35443A] flex items-center justify-between">
                     <Link
                       to={`/${post.slug}`}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-green-800 hover:text-green-900 group-hover:translate-x-0.5 transition-all"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-green-800 dark:text-[#7BC98C] hover:text-green-900 dark:hover:text-[#9fe2ad] group-hover:translate-x-0.5 transition-all"
                     >
                       <span>Read Article</span>
                       <svg
@@ -649,7 +649,7 @@ const AuthorProfilePage = () => {
                       </svg>
                     </Link>
 
-                    <span className="text-[11px] text-gray-400">
+                    <span className="text-[11px] text-gray-400 dark:text-[#A5B0A7]">
                       {post.category}
                     </span>
                   </div>

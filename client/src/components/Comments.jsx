@@ -60,28 +60,30 @@ const Comments = ({ postId, post }) => {
 
   return (
     <div className="flex flex-col gap-8 lg:w-3/5 mb-12">
-      <h1 className="text-xl text-gray-500 underline">Comments</h1>
+      <h1 className="text-xl font-bold text-gray-700 dark:text-[#E5E9E4] border-b border-gray-200 dark:border-[#35443A] pb-2">
+        Comments ({data?.length || 0})
+      </h1>
       <form
         onSubmit={handleSubmit}
-        className="flex items-center justify-between gap-8 w-full"
+        className="flex items-center justify-between gap-4 w-full"
       >
         <textarea
           name="desc"
-          placeholder="Write a comment..."
-          className="w-full p-4 rounded-xl shadow-sm border border-gray-100 focus:outline-none focus:ring-1 focus:ring-green-800"
+          placeholder="Write a thoughtful comment..."
+          className="w-full p-4 rounded-xl shadow-sm border border-gray-100 dark:border-[#35443A] bg-white dark:bg-[#1B241E] text-gray-800 dark:text-[#E5E9E4] placeholder-gray-400 dark:placeholder-[#A5B0A7]/60 focus:outline-none focus:ring-1 focus:ring-green-800 dark:focus:ring-[#7BC98C] transition-colors"
           rows={2}
         />
         <button
           disabled={mutation.isPending}
-          className="bg-green-800 px-5 py-3 text-white font-medium rounded-xl hover:bg-green-900 transition-colors disabled:opacity-50"
+          className="bg-green-800 dark:bg-[#25382B] dark:border dark:border-[#35443A] hover:bg-green-900 dark:hover:bg-[#2e4736] px-5 py-3 text-white font-medium rounded-xl transition-colors disabled:opacity-50 shrink-0 shadow-sm"
         >
           {mutation.isPending ? "Sending..." : "Send"}
         </button>
       </form>
       {isPending ? (
-        "Loading..."
+        <div className="py-6 text-sm text-gray-500 dark:text-[#A5B0A7]">Loading comments...</div>
       ) : error ? (
-        "Error loading comments!"
+        <div className="py-6 text-sm text-red-500">Error loading comments!</div>
       ) : (
         <>
           {mutation.isPending && (

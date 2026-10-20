@@ -122,19 +122,19 @@ const AdminComments = () => {
   return (
     <div className="flex flex-col gap-6">
       {/* HEADER SECTION */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200 dark:border-[#35443A]">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-[#E5E9E4] tracking-tight">
             Comment Management
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-[#A5B0A7] mt-1">
             Review community comments, moderate discussions, and edit or remove inappropriate remarks.
           </p>
         </div>
       </div>
 
       {/* SEARCH BAR */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-sm p-4">
         <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
           <div className="relative flex-1">
             <input
@@ -142,11 +142,11 @@ const AdminComments = () => {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search comments by keyword or content..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all"
+              className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] text-gray-900 dark:text-[#E5E9E4] placeholder-gray-400 dark:placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"
+              className="w-4 h-4 text-gray-400 dark:text-[#A5B0A7] absolute left-3 top-1/2 -translate-y-1/2"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -161,7 +161,7 @@ const AdminComments = () => {
           </div>
           <button
             type="submit"
-            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition-colors"
+            className="px-4 py-2 bg-gray-100 dark:bg-[#222D25] hover:bg-gray-200 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] text-xs font-semibold rounded-xl transition-colors"
           >
             Search
           </button>
@@ -182,10 +182,10 @@ const AdminComments = () => {
       </div>
 
       {/* COMMENTS TABLE */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-sm overflow-hidden flex flex-col">
         {isPending ? (
-          <div className="py-20 text-center text-sm text-gray-500 flex flex-col items-center gap-3">
-            <div className="w-8 h-8 border-3 border-green-800 border-t-transparent rounded-full animate-spin"></div>
+          <div className="py-20 text-center text-sm text-gray-500 dark:text-[#A5B0A7] flex flex-col items-center gap-3">
+            <div className="w-8 h-8 border-3 border-green-800 dark:border-[#7BC98C] border-t-transparent rounded-full animate-spin"></div>
             <span>Loading comments...</span>
           </div>
         ) : error ? (
@@ -194,11 +194,11 @@ const AdminComments = () => {
           </div>
         ) : comments.length === 0 ? (
           <div className="py-20 text-center flex flex-col items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xl">
+            <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-[#222D25] text-gray-400 dark:text-[#A5B0A7] flex items-center justify-center text-xl">
               💬
             </div>
-            <h3 className="font-bold text-gray-700">No comments found</h3>
-            <p className="text-xs text-gray-400 max-w-sm">
+            <h3 className="font-bold text-gray-700 dark:text-[#E5E9E4]">No comments found</h3>
+            <p className="text-xs text-gray-400 dark:text-[#A5B0A7] max-w-sm">
               {search
                 ? "No comments matched your search criteria."
                 : "No comments have been posted yet across the platform."}
@@ -208,7 +208,7 @@ const AdminComments = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-50/70 border-b border-gray-200 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+                <tr className="bg-gray-50/70 dark:bg-[#162019] border-b border-gray-200 dark:border-[#35443A] text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7]">
                   <th className="py-3 px-4">Comment Content</th>
                   <th className="py-3 px-4">Author</th>
                   <th className="py-3 px-4">Associated Article</th>
@@ -216,12 +216,12 @@ const AdminComments = () => {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 text-sm">
+              <tbody className="divide-y divide-gray-100 dark:divide-[#35443A] text-sm">
                 {comments.map((comment) => (
-                  <tr key={comment._id} className="hover:bg-gray-50/60 transition-colors group">
+                  <tr key={comment._id} className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors group">
                     {/* Content */}
                     <td className="py-3.5 px-4 max-w-md">
-                      <p className="text-gray-800 line-clamp-2 text-sm leading-relaxed">
+                      <p className="text-gray-800 dark:text-[#E5E9E4] line-clamp-2 text-sm leading-relaxed">
                         {comment.desc}
                       </p>
                     </td>
@@ -235,11 +235,11 @@ const AdminComments = () => {
                           className="w-6 h-6 rounded-full object-cover"
                         />
                         <div className="flex flex-col">
-                          <span className="text-xs font-semibold text-gray-800">
+                          <span className="text-xs font-semibold text-gray-800 dark:text-[#E5E9E4]">
                             {comment.user?.username ? `@${comment.user.username}` : "Anonymous"}
                           </span>
                           {comment.user?.email && (
-                            <span className="text-[10px] text-gray-400">
+                            <span className="text-[10px] text-gray-400 dark:text-[#A5B0A7]">
                               {comment.user.email}
                             </span>
                           )}
@@ -252,18 +252,18 @@ const AdminComments = () => {
                       {comment.post ? (
                         <Link
                           to={`/${comment.post.slug}`}
-                          className="text-xs font-medium text-green-800 hover:text-green-900 hover:underline line-clamp-1"
+                          className="text-xs font-medium text-green-800 dark:text-[#7BC98C] hover:text-green-900 dark:hover:text-[#9fe2ad] hover:underline line-clamp-1"
                           title={comment.post.title}
                         >
                           {comment.post.title}
                         </Link>
                       ) : (
-                        <span className="text-xs text-gray-400 italic">Article removed</span>
+                        <span className="text-xs text-gray-400 dark:text-[#A5B0A7] italic">Article removed</span>
                       )}
                     </td>
 
                     {/* Date */}
-                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-gray-400">
+                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-gray-400 dark:text-[#A5B0A7]">
                       {format(comment.createdAt)}
                     </td>
 
@@ -274,7 +274,7 @@ const AdminComments = () => {
                         {comment.post && (
                           <Link
                             to={`/${comment.post.slug}`}
-                            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+                            className="p-1.5 rounded-lg text-gray-400 dark:text-[#A5B0A7] hover:text-gray-700 dark:hover:text-[#E5E9E4] hover:bg-gray-100 dark:hover:bg-[#222D25] transition-colors"
                             title="View Associated Article"
                           >
                             <svg
@@ -302,7 +302,7 @@ const AdminComments = () => {
                         {/* Edit Comment */}
                         <button
                           onClick={() => handleStartEdit(comment)}
-                          className="p-1.5 rounded-lg text-blue-600 hover:text-blue-800 hover:bg-blue-50 transition-colors"
+                          className="p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-[#222D25] transition-colors"
                           title="Edit Comment"
                         >
                           <svg
@@ -324,7 +324,7 @@ const AdminComments = () => {
                         {/* Delete Comment */}
                         <button
                           onClick={() => setCommentToDelete(comment)}
-                          className="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50 transition-colors"
+                          className="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-[#222D25] transition-colors"
                           title="Delete Comment"
                         >
                           <svg
@@ -353,24 +353,24 @@ const AdminComments = () => {
 
         {/* PAGINATION BAR */}
         {totalPages > 1 && (
-          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+          <div className="p-4 border-t border-gray-100 dark:border-[#35443A] flex items-center justify-between text-xs text-gray-500 dark:text-[#A5B0A7]">
             <span>
-              Showing page <strong className="text-gray-800">{page}</strong> of{" "}
-              <strong className="text-gray-800">{totalPages}</strong> ({totalComments} total comments)
+              Showing page <strong className="text-gray-800 dark:text-[#E5E9E4]">{page}</strong> of{" "}
+              <strong className="text-gray-800 dark:text-[#E5E9E4]">{totalPages}</strong> ({totalComments} total comments)
             </span>
 
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] hover:bg-gray-50 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Previous
               </button>
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] hover:bg-gray-50 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Next
               </button>
@@ -384,39 +384,39 @@ const AdminComments = () => {
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
           <form
             onSubmit={handleSaveEdit}
-            className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95"
+            className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-4 animate-in fade-in zoom-in-95"
           >
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-gray-900">Edit Comment</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">Edit Comment</h3>
               <button
                 type="button"
                 onClick={() => setCommentToEdit(null)}
-                className="text-gray-400 hover:text-gray-600 p-1"
+                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1"
               >
                 ✕
               </button>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 p-2.5 rounded-xl">
+            <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-[#A5B0A7] bg-gray-50 dark:bg-[#222D25] p-2.5 rounded-xl border border-transparent dark:border-[#35443A]">
               <span>Author:</span>
-              <strong className="text-gray-800">@{commentToEdit.user?.username || "Anonymous"}</strong>
+              <strong className="text-gray-800 dark:text-[#E5E9E4]">@{commentToEdit.user?.username || "Anonymous"}</strong>
               {commentToEdit.post && (
                 <>
                   <span className="mx-1">•</span>
                   <span>On:</span>
-                  <strong className="text-gray-800 truncate max-w-xs">{commentToEdit.post.title}</strong>
+                  <strong className="text-gray-800 dark:text-[#E5E9E4] truncate max-w-xs">{commentToEdit.post.title}</strong>
                 </>
               )}
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-700">Comment Text</label>
+              <label className="text-xs font-semibold text-gray-700 dark:text-[#E5E9E4]">Comment Text</label>
               <textarea
                 value={editDesc}
                 onChange={(e) => setEditDesc(e.target.value)}
                 rows={4}
                 required
-                className="w-full p-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800"
+                className="w-full p-3 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] text-gray-800 dark:text-[#E5E9E4] text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800"
               />
             </div>
 
@@ -425,14 +425,14 @@ const AdminComments = () => {
                 type="button"
                 onClick={() => setCommentToEdit(null)}
                 disabled={editMutation.isPending}
-                className="px-4 py-2 text-xs font-semibold text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] rounded-xl hover:bg-gray-200 dark:hover:bg-[#2b3a2f] transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={editMutation.isPending}
-                className="px-4 py-2 text-xs font-semibold text-white bg-green-800 rounded-xl hover:bg-green-900 transition-colors disabled:opacity-50"
+                className="px-4 py-2 text-xs font-semibold text-white bg-green-800 hover:bg-green-900 dark:bg-[#7BC98C] dark:hover:bg-[#68b87a] dark:text-[#111713] rounded-xl transition-colors disabled:opacity-50"
               >
                 {editMutation.isPending ? "Saving..." : "Save Changes"}
               </button>
@@ -444,20 +444,20 @@ const AdminComments = () => {
       {/* DELETE CONFIRMATION MODAL */}
       {commentToDelete && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl shrink-0">
+          <div className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-4 animate-in fade-in zoom-in-95">
+            <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 flex items-center justify-center text-xl shrink-0">
               ⚠️
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-900">Delete Comment</h3>
-              <p className="text-sm text-gray-600 mt-1">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">Delete Comment</h3>
+              <p className="text-sm text-gray-600 dark:text-[#A5B0A7] mt-1">
                 Are you sure you want to delete this comment by{" "}
-                <span className="font-semibold text-gray-800">
+                <span className="font-semibold text-gray-800 dark:text-[#E5E9E4]">
                   @{commentToDelete.user?.username || "Anonymous"}
                 </span>
                 ?
               </p>
-              <div className="mt-3 p-3 bg-gray-50 rounded-xl text-xs text-gray-700 italic border border-gray-200 line-clamp-3">
+              <div className="mt-3 p-3 bg-gray-50 dark:bg-[#222D25] rounded-xl text-xs text-gray-700 dark:text-[#A5B0A7] italic border border-gray-200 dark:border-[#35443A] line-clamp-3">
                 "{commentToDelete.desc}"
               </div>
             </div>
@@ -467,7 +467,7 @@ const AdminComments = () => {
                 type="button"
                 onClick={() => setCommentToDelete(null)}
                 disabled={deleteMutation.isPending}
-                className="px-4 py-2 text-xs font-semibold text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] rounded-xl hover:bg-gray-200 dark:hover:bg-[#2b3a2f] transition-colors"
               >
                 Cancel
               </button>

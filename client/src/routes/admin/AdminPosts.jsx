@@ -137,19 +137,19 @@ const AdminPosts = () => {
   return (
     <div className="flex flex-col gap-6">
       {/* HEADER SECTION */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200 dark:border-[#35443A]">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-[#E5E9E4] tracking-tight">
             Post Management
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-[#A5B0A7] mt-1">
             Browse, inspect, edit, feature, and moderate all articles across Veles.
           </p>
         </div>
       </div>
 
       {/* FILTER & SEARCH BAR */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-sm p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         {/* Search Input */}
         <form onSubmit={handleSearchSubmit} className="flex-1 flex items-center gap-2">
           <div className="relative flex-1">
@@ -158,11 +158,11 @@ const AdminPosts = () => {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search articles by title..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all"
+              className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] text-gray-900 dark:text-[#E5E9E4] placeholder-gray-400 dark:placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"
+              className="w-4 h-4 text-gray-400 dark:text-[#A5B0A7] absolute left-3 top-1/2 -translate-y-1/2"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -177,7 +177,7 @@ const AdminPosts = () => {
           </div>
           <button
             type="submit"
-            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition-colors"
+            className="px-4 py-2 bg-gray-100 dark:bg-[#222D25] hover:bg-gray-200 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] text-xs font-semibold rounded-xl transition-colors"
           >
             Search
           </button>
@@ -202,7 +202,7 @@ const AdminPosts = () => {
           <select
             value={category}
             onChange={handleCategoryChange}
-            className="px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-medium rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-800/20"
+            className="px-3 py-2 bg-gray-50 dark:bg-[#222D25] border border-gray-200 dark:border-[#35443A] text-xs font-medium rounded-xl text-gray-700 dark:text-[#E5E9E4] focus:outline-none focus:ring-2 focus:ring-green-800/20"
           >
             {categories.map((c) => (
               <option key={c.value} value={c.value}>
@@ -215,7 +215,7 @@ const AdminPosts = () => {
           <select
             value={featured}
             onChange={handleFeaturedChange}
-            className="px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-medium rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-800/20"
+            className="px-3 py-2 bg-gray-50 dark:bg-[#222D25] border border-gray-200 dark:border-[#35443A] text-xs font-medium rounded-xl text-gray-700 dark:text-[#E5E9E4] focus:outline-none focus:ring-2 focus:ring-green-800/20"
           >
             <option value="all">All Posts (Featured & Standard)</option>
             <option value="true">Featured Only</option>
@@ -226,7 +226,7 @@ const AdminPosts = () => {
           <select
             value={sort}
             onChange={handleSortChange}
-            className="px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-medium rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-800/20"
+            className="px-3 py-2 bg-gray-50 dark:bg-[#222D25] border border-gray-200 dark:border-[#35443A] text-xs font-medium rounded-xl text-gray-700 dark:text-[#E5E9E4] focus:outline-none focus:ring-2 focus:ring-green-800/20"
           >
             <option value="newest">Sort: Newest</option>
             <option value="oldest">Sort: Oldest</option>
@@ -236,10 +236,10 @@ const AdminPosts = () => {
       </div>
 
       {/* POSTS TABLE */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-sm overflow-hidden flex flex-col">
         {isPending ? (
-          <div className="py-20 text-center text-sm text-gray-500 flex flex-col items-center gap-3">
-            <div className="w-8 h-8 border-3 border-green-800 border-t-transparent rounded-full animate-spin"></div>
+          <div className="py-20 text-center text-sm text-gray-500 dark:text-[#A5B0A7] flex flex-col items-center gap-3">
+            <div className="w-8 h-8 border-3 border-green-800 dark:border-[#7BC98C] border-t-transparent rounded-full animate-spin"></div>
             <span>Loading articles...</span>
           </div>
         ) : error ? (
@@ -248,11 +248,11 @@ const AdminPosts = () => {
           </div>
         ) : posts.length === 0 ? (
           <div className="py-20 text-center flex flex-col items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xl">
+            <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-[#222D25] text-gray-400 dark:text-[#A5B0A7] flex items-center justify-center text-xl">
               🔍
             </div>
-            <h3 className="font-bold text-gray-700">No articles found</h3>
-            <p className="text-xs text-gray-400 max-w-sm">
+            <h3 className="font-bold text-gray-700 dark:text-[#E5E9E4]">No articles found</h3>
+            <p className="text-xs text-gray-400 dark:text-[#A5B0A7] max-w-sm">
               Try adjusting your search query or removing category/featured filters.
             </p>
           </div>
@@ -260,7 +260,7 @@ const AdminPosts = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-50/70 border-b border-gray-200 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+                <tr className="bg-gray-50/70 dark:bg-[#162019] border-b border-gray-200 dark:border-[#35443A] text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7]">
                   <th className="py-3 px-4">Article</th>
                   <th className="py-3 px-4">Author</th>
                   <th className="py-3 px-3">Category</th>
@@ -272,14 +272,14 @@ const AdminPosts = () => {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 text-sm">
+              <tbody className="divide-y divide-gray-100 dark:divide-[#35443A] text-sm">
                 {posts.map((post) => (
-                  <tr key={post._id} className="hover:bg-gray-50/60 transition-colors group">
+                  <tr key={post._id} className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors group">
                     {/* Article Title & Cover */}
                     <td className="py-3.5 px-4 max-w-xs">
                       <div className="flex items-center gap-3">
                         {post.img ? (
-                          <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-gray-100">
+                          <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-gray-100 dark:bg-[#222D25]">
                             <Image
                               src={post.img}
                               w="48"
@@ -288,19 +288,19 @@ const AdminPosts = () => {
                             />
                           </div>
                         ) : (
-                          <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-800 font-bold flex items-center justify-center shrink-0 text-xs">
+                          <div className="w-10 h-10 rounded-lg bg-emerald-50 dark:bg-[#25382B] text-emerald-800 dark:text-[#7BC98C] font-bold flex items-center justify-center shrink-0 text-xs">
                             {post.category?.slice(0, 2).toUpperCase() || "PO"}
                           </div>
                         )}
                         <div className="flex flex-col min-w-0">
                           <Link
                             to={`/${post.slug}`}
-                            className="font-medium text-gray-800 group-hover:text-green-800 transition-colors line-clamp-1"
+                            className="font-medium text-gray-800 dark:text-[#E5E9E4] group-hover:text-green-800 dark:group-hover:text-[#7BC98C] transition-colors line-clamp-1"
                             title={post.title}
                           >
                             {post.title}
                           </Link>
-                          <span className="text-[11px] text-gray-400 line-clamp-1">
+                          <span className="text-[11px] text-gray-400 dark:text-[#A5B0A7] line-clamp-1">
                             {post.desc || "No excerpt"}
                           </span>
                         </div>
@@ -315,7 +315,7 @@ const AdminPosts = () => {
                           alt={post.user?.username || "Author"}
                           className="w-6 h-6 rounded-full object-cover"
                         />
-                        <span className="text-xs font-medium text-gray-700">
+                        <span className="text-xs font-medium text-gray-700 dark:text-[#E5E9E4]">
                           {post.user?.username ? `@${post.user.username}` : "Unknown"}
                         </span>
                       </div>
@@ -323,28 +323,28 @@ const AdminPosts = () => {
 
                     {/* Category */}
                     <td className="py-3.5 px-3 whitespace-nowrap">
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700 capitalize">
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-[#222D25] text-gray-700 dark:text-[#A5B0A7] capitalize">
                         {post.category || "General"}
                       </span>
                     </td>
 
                     {/* Views */}
-                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-gray-600 font-medium">
+                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-gray-600 dark:text-[#A5B0A7] font-medium">
                       {post.visit || 0}
                     </td>
 
                     {/* Likes */}
-                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-red-600 font-medium">
+                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-red-600 dark:text-red-400 font-medium">
                       ❤️ {post.likesCount ?? (post.likes?.length || 0)}
                     </td>
 
                     {/* Comments */}
-                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-amber-600 font-medium">
+                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-amber-600 dark:text-amber-400 font-medium">
                       💬 {post.commentCount || 0}
                     </td>
 
                     {/* Created Date */}
-                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-gray-400">
+                    <td className="py-3.5 px-3 whitespace-nowrap text-xs text-gray-400 dark:text-[#A5B0A7]">
                       {format(post.createdAt)}
                     </td>
 
@@ -360,8 +360,8 @@ const AdminPosts = () => {
                         disabled={featureMutation.isPending}
                         className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-colors border ${
                           post.isFeatured
-                            ? "bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200"
-                            : "bg-gray-100 text-gray-500 border-gray-200 hover:bg-gray-200"
+                            ? "bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 border-amber-300 dark:border-amber-900/50 hover:bg-amber-200"
+                            : "bg-gray-100 dark:bg-[#222D25] text-gray-500 dark:text-[#A5B0A7] border-gray-200 dark:border-[#35443A] hover:bg-gray-200 dark:hover:bg-[#2b3a2f]"
                         }`}
                         title="Click to toggle featured status"
                       >
@@ -375,7 +375,7 @@ const AdminPosts = () => {
                         {/* View Post */}
                         <Link
                           to={`/${post.slug}`}
-                          className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+                          className="p-1.5 rounded-lg text-gray-400 dark:text-[#A5B0A7] hover:text-gray-700 dark:hover:text-[#E5E9E4] hover:bg-gray-100 dark:hover:bg-[#222D25] transition-colors"
                           title="View Article"
                         >
                           <svg
@@ -402,7 +402,7 @@ const AdminPosts = () => {
                         {/* Edit Post */}
                         <Link
                           to={`/edit/${post._id}`}
-                          className="p-1.5 rounded-lg text-blue-600 hover:text-blue-800 hover:bg-blue-50 transition-colors"
+                          className="p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-[#222D25] transition-colors"
                           title="Edit Article"
                         >
                           <svg
@@ -424,7 +424,7 @@ const AdminPosts = () => {
                         {/* Delete Post */}
                         <button
                           onClick={() => setPostToDelete(post)}
-                          className="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50 transition-colors"
+                          className="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-[#222D25] transition-colors"
                           title="Delete Article"
                         >
                           <svg
@@ -453,24 +453,24 @@ const AdminPosts = () => {
 
         {/* PAGINATION BAR */}
         {totalPages > 1 && (
-          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+          <div className="p-4 border-t border-gray-100 dark:border-[#35443A] flex items-center justify-between text-xs text-gray-500 dark:text-[#A5B0A7]">
             <span>
-              Showing page <strong className="text-gray-800">{page}</strong> of{" "}
-              <strong className="text-gray-800">{totalPages}</strong> ({totalPosts} total articles)
+              Showing page <strong className="text-gray-800 dark:text-[#E5E9E4]">{page}</strong> of{" "}
+              <strong className="text-gray-800 dark:text-[#E5E9E4]">{totalPages}</strong> ({totalPosts} total articles)
             </span>
 
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] hover:bg-gray-50 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Previous
               </button>
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] hover:bg-gray-50 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Next
               </button>
@@ -482,15 +482,15 @@ const AdminPosts = () => {
       {/* DELETE CONFIRMATION MODAL */}
       {postToDelete && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl shrink-0">
+          <div className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-4 animate-in fade-in zoom-in-95">
+            <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 flex items-center justify-center text-xl shrink-0">
               ⚠️
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-900">Delete Article</h3>
-              <p className="text-sm text-gray-600 mt-1">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">Delete Article</h3>
+              <p className="text-sm text-gray-600 dark:text-[#A5B0A7] mt-1">
                 Are you sure you want to permanently delete{" "}
-                <span className="font-semibold text-gray-800">
+                <span className="font-semibold text-gray-800 dark:text-[#E5E9E4]">
                   "{postToDelete.title}"
                 </span>
                 ? All associated comments and likes will be permanently removed. This action cannot be undone.
@@ -502,7 +502,7 @@ const AdminPosts = () => {
                 type="button"
                 onClick={() => setPostToDelete(null)}
                 disabled={deleteMutation.isPending}
-                className="px-4 py-2 text-xs font-semibold text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] rounded-xl hover:bg-gray-200 dark:hover:bg-[#2b3a2f] transition-colors"
               >
                 Cancel
               </button>

@@ -51,37 +51,37 @@ const ReportMessageModal = ({ isOpen, message, channelId, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-100 flex flex-col gap-4">
-        <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-4 text-gray-800 dark:text-[#E5E9E4]">
+        <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-[#35443A]">
           <div>
-            <h3 className="text-lg font-bold text-gray-900">Report Message</h3>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">Report Message</h3>
+            <p className="text-xs text-gray-500 dark:text-[#A5B0A7] mt-0.5">
               Help keep our technical discussions productive and respectful.
             </p>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+            className="text-gray-400 dark:text-[#A5B0A7] hover:text-gray-600 dark:hover:text-white p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#222D25] transition-colors"
           >
             ✕
           </button>
         </div>
 
         {/* Message Snippet Preview */}
-        <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 text-xs text-gray-600 italic line-clamp-2">
+        <div className="bg-gray-50 dark:bg-[#111713] p-3 rounded-xl border border-gray-100 dark:border-[#35443A] text-xs text-gray-600 dark:text-[#A5B0A7] italic line-clamp-2">
           "{message.content}"
         </div>
 
         {error && (
-          <div className="p-3 text-xs bg-red-50 text-red-700 rounded-xl border border-red-100">
+          <div className="p-3 text-xs bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 rounded-xl border border-red-100 dark:border-red-800/60">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">
+            <label className="text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] uppercase tracking-wider">
               Reason for reporting *
             </label>
             <textarea
@@ -91,19 +91,19 @@ const ReportMessageModal = ({ isOpen, message, channelId, onClose }) => {
               placeholder="e.g. Harassment, spam, off-topic abusive content, or confidential information..."
               rows={3}
               maxLength={500}
-              className="w-full p-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all text-gray-800"
+              className="w-full p-3 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#111713] text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all text-gray-800 dark:text-[#E5E9E4] dark:placeholder-[#A5B0A7]"
             />
-            <span className="text-[10px] text-gray-400 self-end">
+            <span className="text-[10px] text-gray-400 dark:text-[#A5B0A7] self-end">
               {reason.length}/500
             </span>
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-100 dark:border-[#35443A]">
             <button
               type="button"
               disabled={isSubmitting}
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] hover:bg-gray-200 dark:hover:bg-[#2e3f34] transition-colors"
             >
               Cancel
             </button>

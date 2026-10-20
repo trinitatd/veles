@@ -109,19 +109,19 @@ const AdminUsers = () => {
   return (
     <div className="flex flex-col gap-6">
       {/* HEADER SECTION */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200 dark:border-[#35443A]">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-[#E5E9E4] tracking-tight">
             User Management
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-[#A5B0A7] mt-1">
             Registered Veles community members, authors, and administrator accounts.
           </p>
         </div>
       </div>
 
       {/* SEARCH BAR */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-sm p-4">
         <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
           <div className="relative flex-1">
             <input
@@ -129,11 +129,11 @@ const AdminUsers = () => {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search by username or email..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all"
+              className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] text-gray-900 dark:text-[#E5E9E4] placeholder-gray-400 dark:placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800 transition-all"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"
+              className="w-4 h-4 text-gray-400 dark:text-[#A5B0A7] absolute left-3 top-1/2 -translate-y-1/2"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -148,7 +148,7 @@ const AdminUsers = () => {
           </div>
           <button
             type="submit"
-            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition-colors"
+            className="px-4 py-2 bg-gray-100 dark:bg-[#222D25] hover:bg-gray-200 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] text-xs font-semibold rounded-xl transition-colors"
           >
             Search
           </button>
@@ -169,10 +169,10 @@ const AdminUsers = () => {
       </div>
 
       {/* USERS TABLE */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-sm overflow-hidden flex flex-col">
         {isPending ? (
-          <div className="py-20 text-center text-sm text-gray-500 flex flex-col items-center gap-3">
-            <div className="w-8 h-8 border-3 border-green-800 border-t-transparent rounded-full animate-spin"></div>
+          <div className="py-20 text-center text-sm text-gray-500 dark:text-[#A5B0A7] flex flex-col items-center gap-3">
+            <div className="w-8 h-8 border-3 border-green-800 dark:border-[#7BC98C] border-t-transparent rounded-full animate-spin"></div>
             <span>Loading user directory...</span>
           </div>
         ) : error ? (
@@ -181,11 +181,11 @@ const AdminUsers = () => {
           </div>
         ) : users.length === 0 ? (
           <div className="py-20 text-center flex flex-col items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xl">
+            <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-[#222D25] text-gray-400 dark:text-[#A5B0A7] flex items-center justify-center text-xl">
               👥
             </div>
-            <h3 className="font-bold text-gray-700">No users found</h3>
-            <p className="text-xs text-gray-400 max-w-sm">
+            <h3 className="font-bold text-gray-700 dark:text-[#E5E9E4]">No users found</h3>
+            <p className="text-xs text-gray-400 dark:text-[#A5B0A7] max-w-sm">
               {search
                 ? "No users matched your search criteria."
                 : "No users have registered on Veles yet."}
@@ -195,7 +195,7 @@ const AdminUsers = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-50/70 border-b border-gray-200 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+                <tr className="bg-gray-50/70 dark:bg-[#162019] border-b border-gray-200 dark:border-[#35443A] text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-[#A5B0A7]">
                   <th className="py-3 px-4">User</th>
                   <th className="py-3 px-4">Email</th>
                   <th className="py-3 px-3">Articles</th>
@@ -205,28 +205,28 @@ const AdminUsers = () => {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 text-sm">
+              <tbody className="divide-y divide-gray-100 dark:divide-[#35443A] text-sm">
                 {users.map((targetUser) => {
                   const isCurrentAdminSelf =
                     targetUser.clerkUserId === currentAdmin?.id;
                   const isUserAdmin = targetUser.role === "admin";
 
                   return (
-                    <tr key={targetUser._id} className="hover:bg-gray-50/60 transition-colors group">
+                    <tr key={targetUser._id} className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors group">
                       {/* Avatar & Username */}
                       <td className="py-3.5 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-3">
                           <img
                             src={targetUser.img || "/userImg.jpeg"}
                             alt={targetUser.username}
-                            className="w-9 h-9 rounded-full object-cover border border-gray-200"
+                            className="w-9 h-9 rounded-full object-cover border border-gray-200 dark:border-[#35443A]"
                           />
                           <div className="flex flex-col">
-                            <span className="font-semibold text-gray-900 text-sm">
+                            <span className="font-semibold text-gray-900 dark:text-[#E5E9E4] text-sm">
                               @{targetUser.username}
                             </span>
                             {isCurrentAdminSelf && (
-                              <span className="text-[10px] text-green-700 font-semibold">
+                              <span className="text-[10px] text-green-700 dark:text-[#7BC98C] font-semibold">
                                 (You)
                               </span>
                             )}
@@ -235,34 +235,34 @@ const AdminUsers = () => {
                       </td>
 
                       {/* Email */}
-                      <td className="py-3.5 px-4 whitespace-nowrap text-xs text-gray-600">
+                      <td className="py-3.5 px-4 whitespace-nowrap text-xs text-gray-600 dark:text-[#A5B0A7]">
                         {targetUser.email}
                       </td>
 
                       {/* Number of Articles */}
-                      <td className="py-3.5 px-3 whitespace-nowrap text-xs font-semibold text-gray-800">
+                      <td className="py-3.5 px-3 whitespace-nowrap text-xs font-semibold text-gray-800 dark:text-[#E5E9E4]">
                         📰 {targetUser.articlesCount}
                       </td>
 
                       {/* Number of Comments */}
-                      <td className="py-3.5 px-3 whitespace-nowrap text-xs font-semibold text-gray-800">
+                      <td className="py-3.5 px-3 whitespace-nowrap text-xs font-semibold text-gray-800 dark:text-[#E5E9E4]">
                         💬 {targetUser.commentsCount}
                       </td>
 
                       {/* Joined Date */}
-                      <td className="py-3.5 px-3 whitespace-nowrap text-xs text-gray-400">
+                      <td className="py-3.5 px-3 whitespace-nowrap text-xs text-gray-400 dark:text-[#A5B0A7]">
                         {format(targetUser.createdAt)}
                       </td>
 
                       {/* Role Badge */}
                       <td className="py-3.5 px-3 whitespace-nowrap">
                         {isUserAdmin ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-[#25382B] text-emerald-800 dark:text-[#7BC98C] border border-emerald-300 dark:border-[#35443A]">
                             <span>🛡️</span>
                             <span>Admin</span>
                           </span>
                         ) : (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7]">
                             User
                           </span>
                         )}
@@ -271,7 +271,7 @@ const AdminUsers = () => {
                       {/* Actions */}
                       <td className="py-3.5 px-4 text-right whitespace-nowrap">
                         {isCurrentAdminSelf ? (
-                          <span className="text-xs text-gray-400 italic">Current Session</span>
+                          <span className="text-xs text-gray-400 dark:text-[#A5B0A7] italic">Current Session</span>
                         ) : (
                           <div className="flex items-center justify-end gap-2">
                             <button
@@ -283,15 +283,15 @@ const AdminUsers = () => {
                               }
                               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors border ${
                                 isUserAdmin
-                                  ? "bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100"
-                                  : "bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100"
+                                  ? "bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400 border-amber-200 dark:border-amber-900/50 hover:bg-amber-100 dark:hover:bg-amber-900/60"
+                                  : "bg-emerald-50 dark:bg-[#25382B] text-emerald-800 dark:text-[#7BC98C] border-emerald-200 dark:border-[#35443A] hover:bg-emerald-100 dark:hover:bg-[#2b3a2f]"
                               }`}
                             >
                               {isUserAdmin ? "Demote to User" : "Promote to Admin"}
                             </button>
                             <button
                               onClick={() => setUserToDelete(targetUser)}
-                              className="px-3 py-1.5 rounded-xl text-xs font-semibold text-red-700 bg-red-50 border border-red-200 hover:bg-red-100 transition-colors flex items-center gap-1.5"
+                              className="px-3 py-1.5 rounded-xl text-xs font-semibold text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 hover:bg-red-100 dark:hover:bg-red-900/60 transition-colors flex items-center gap-1.5"
                               title="Remove user across platforms"
                             >
                               <svg
@@ -323,24 +323,24 @@ const AdminUsers = () => {
 
         {/* PAGINATION BAR */}
         {totalPages > 1 && (
-          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+          <div className="p-4 border-t border-gray-100 dark:border-[#35443A] flex items-center justify-between text-xs text-gray-500 dark:text-[#A5B0A7]">
             <span>
-              Showing page <strong className="text-gray-800">{page}</strong> of{" "}
-              <strong className="text-gray-800">{totalPages}</strong> ({totalUsers} total users)
+              Showing page <strong className="text-gray-800 dark:text-[#E5E9E4]">{page}</strong> of{" "}
+              <strong className="text-gray-800 dark:text-[#E5E9E4]">{totalPages}</strong> ({totalUsers} total users)
             </span>
 
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] hover:bg-gray-50 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Previous
               </button>
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] hover:bg-gray-50 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Next
               </button>
@@ -352,34 +352,34 @@ const AdminUsers = () => {
       {/* ROLE MODIFICATION CONFIRMATION MODAL */}
       {userToModifyRole && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95">
+          <div className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-4 animate-in fade-in zoom-in-95">
             <div
               className={`w-12 h-12 rounded-full flex items-center justify-center text-xl shrink-0 ${
                 userToModifyRole.nextRole === "admin"
-                  ? "bg-emerald-100 text-emerald-700"
-                  : "bg-amber-100 text-amber-700"
+                  ? "bg-emerald-100 dark:bg-[#25382B] text-emerald-700 dark:text-[#7BC98C]"
+                  : "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400"
               }`}
             >
               {userToModifyRole.nextRole === "admin" ? "🛡️" : "⚠️"}
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-900">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">
                 {userToModifyRole.nextRole === "admin"
                   ? "Grant Administrator Privileges"
                   : "Revoke Administrator Privileges"}
               </h3>
-              <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+              <p className="text-sm text-gray-600 dark:text-[#A5B0A7] mt-2 leading-relaxed">
                 {userToModifyRole.nextRole === "admin" ? (
                   <>
                     Are you sure you want to promote{" "}
-                    <strong className="text-gray-900">@{userToModifyRole.username}</strong> to an
+                    <strong className="text-gray-900 dark:text-[#E5E9E4]">@{userToModifyRole.username}</strong> to an
                     administrator? They will gain full administrative access to all posts, comments,
                     users, and platform settings.
                   </>
                 ) : (
                   <>
                     Are you sure you want to demote{" "}
-                    <strong className="text-gray-900">@{userToModifyRole.username}</strong> back to a regular
+                    <strong className="text-gray-900 dark:text-[#E5E9E4]">@{userToModifyRole.username}</strong> back to a regular
                     user? They will lose access to the Admin Dashboard immediately.
                   </>
                 )}
@@ -391,7 +391,7 @@ const AdminUsers = () => {
                 type="button"
                 onClick={() => setUserToModifyRole(null)}
                 disabled={roleMutation.isPending}
-                className="px-4 py-2 text-xs font-semibold text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] rounded-xl hover:bg-gray-200 dark:hover:bg-[#2b3a2f] transition-colors"
               >
                 Cancel
               </button>
@@ -406,7 +406,7 @@ const AdminUsers = () => {
                 disabled={roleMutation.isPending}
                 className={`px-4 py-2 text-xs font-semibold text-white rounded-xl transition-colors disabled:opacity-50 ${
                   userToModifyRole.nextRole === "admin"
-                    ? "bg-green-800 hover:bg-green-900"
+                    ? "bg-green-800 hover:bg-green-900 dark:bg-[#7BC98C] dark:hover:bg-[#68b87a] dark:text-[#111713]"
                     : "bg-amber-700 hover:bg-amber-800"
                 }`}
               >
@@ -424,19 +424,19 @@ const AdminUsers = () => {
       {/* USER REMOVAL CONFIRMATION MODAL */}
       {userToDelete && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95">
-            <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl shrink-0 bg-red-100 text-red-700">
+          <div className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-4 animate-in fade-in zoom-in-95">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl shrink-0 bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-400">
               🗑️
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-900">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">
                 Remove User Across Platforms
               </h3>
-              <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+              <p className="text-sm text-gray-600 dark:text-[#A5B0A7] mt-2 leading-relaxed">
                 Are you sure you want to remove{" "}
-                <strong className="text-gray-900">@{userToDelete.username}</strong> ({userToDelete.email}) across all platforms?
+                <strong className="text-gray-900 dark:text-[#E5E9E4]">@{userToDelete.username}</strong> ({userToDelete.email}) across all platforms?
               </p>
-              <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 leading-relaxed">
+              <div className="mt-3 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-xl text-xs text-amber-900 dark:text-amber-300 leading-relaxed">
                 <strong>Activity Preservation Notice:</strong> The user account will be permanently removed from Clerk authentication and the user registry. Their activities—including articles ({userToDelete.articlesCount || 0}), comments ({userToDelete.commentsCount || 0}), messages, and community channels—will <strong>not</strong> be removed.
               </div>
             </div>
@@ -446,7 +446,7 @@ const AdminUsers = () => {
                 type="button"
                 onClick={() => setUserToDelete(null)}
                 disabled={deleteUserMutation.isPending}
-                className="px-4 py-2 text-xs font-semibold text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] rounded-xl hover:bg-gray-200 dark:hover:bg-[#2b3a2f] transition-colors"
               >
                 Cancel
               </button>

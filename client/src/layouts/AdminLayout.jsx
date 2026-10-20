@@ -9,10 +9,10 @@ const AdminLayout = () => {
   // 1. Loading State
   if (!isLoaded) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#111713]">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-green-800 border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-sm font-medium text-gray-600">
+          <div className="w-10 h-10 border-4 border-green-800 dark:border-[#7BC98C] border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-sm font-medium text-gray-600 dark:text-[#A5B0A7]">
             Verifying administrative privileges...
           </span>
         </div>
@@ -29,17 +29,17 @@ const AdminLayout = () => {
   const isAdmin = user?.publicMetadata?.role === "admin";
   if (!isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-red-100 p-8 text-center flex flex-col items-center gap-5 animate-in fade-in zoom-in-95">
-          <div className="w-16 h-16 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-3xl shadow-inner">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#111713] px-4">
+        <div className="max-w-md w-full bg-white dark:bg-[#1B241E] rounded-2xl shadow-xl border border-red-100 dark:border-red-900/40 p-8 text-center flex flex-col items-center gap-5 animate-in fade-in zoom-in-95">
+          <div className="w-16 h-16 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 flex items-center justify-center text-3xl shadow-inner">
             🛡️
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Access Restricted</h1>
-            <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-[#E5E9E4]">Access Restricted</h1>
+            <p className="text-sm text-gray-600 dark:text-[#A5B0A7] mt-2 leading-relaxed">
               This portal is restricted to authorized Veles administrators.
               Your account{" "}
-              <span className="font-semibold text-gray-800">
+              <span className="font-semibold text-gray-800 dark:text-[#E5E9E4]">
                 ({user.primaryEmailAddress?.emailAddress})
               </span>{" "}
               does not have administrative privileges.
@@ -48,13 +48,13 @@ const AdminLayout = () => {
           <div className="flex flex-col sm:flex-row gap-3 w-full mt-2">
             <Link
               to="/"
-              className="flex-1 py-2.5 px-4 rounded-xl bg-green-800 text-white text-sm font-medium hover:bg-green-900 transition-colors shadow-sm"
+              className="flex-1 py-2.5 px-4 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#7BC98C] dark:hover:bg-[#68b87a] text-white dark:text-[#111713] text-sm font-medium transition-colors shadow-sm"
             >
               Back to Veles
             </Link>
             <Link
               to="/dashboard"
-              className="flex-1 py-2.5 px-4 rounded-xl bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors"
+              className="flex-1 py-2.5 px-4 rounded-xl bg-gray-100 dark:bg-[#222D25] text-gray-700 dark:text-[#E5E9E4] text-sm font-medium hover:bg-gray-200 dark:hover:bg-[#2b3a2f] transition-colors"
             >
               Author Dashboard
             </Link>
@@ -170,9 +170,9 @@ const AdminLayout = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[#f8faf8] text-gray-800">
+    <div className="min-h-screen flex flex-col md:flex-row bg-[#f8faf8] dark:bg-[#111713] text-gray-800 dark:text-[#E5E9E4]">
       {/* DESKTOP SIDEBAR */}
-      <aside className="hidden md:flex flex-col w-64 bg-[#11231a] text-white shrink-0 border-r border-[#1a382a] sticky top-0 h-screen z-30">
+      <aside className="hidden md:flex flex-col w-64 bg-[#11231a] dark:bg-[#162019] text-white shrink-0 border-r border-[#1a382a] dark:border-[#35443A] sticky top-0 h-screen z-30">
         {/* LOGO & ADMIN BADGE */}
         <div className="p-6 border-b border-white/10 flex flex-col gap-2">
           <Link to="/" className="flex items-center gap-3">
@@ -305,7 +305,7 @@ const AdminLayout = () => {
       </aside>
 
       {/* MOBILE HEADER & DRAWER */}
-      <div className="md:hidden flex flex-col bg-[#11231a] text-white sticky top-0 z-40 border-b border-[#1a382a]">
+      <div className="md:hidden flex flex-col bg-[#11231a] dark:bg-[#162019] text-white sticky top-0 z-40 border-b border-[#1a382a] dark:border-[#35443A]">
         <div className="flex items-center justify-between px-4 py-3.5">
           <Link to="/admin" className="flex items-center gap-2.5">
             <img

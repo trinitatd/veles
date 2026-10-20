@@ -121,24 +121,24 @@ const AdminChannels = () => {
   return (
     <div className="flex flex-col gap-6">
       {/* HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200 dark:border-[#35443A]">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-[#E5E9E4]">
             Channel & Moderation Management
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-[#A5B0A7] mt-1">
             Oversee community channels, enforce guidelines, and review reported messages.
           </p>
         </div>
 
         {/* TABS */}
-        <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-xl">
+        <div className="flex items-center gap-2 bg-gray-100 dark:bg-[#1B241E] p-1 rounded-xl border border-transparent dark:border-[#35443A]">
           <button
             onClick={() => setActiveSubTab("channels")}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
               activeSubTab === "channels"
-                ? "bg-white text-gray-900 shadow-xs"
-                : "text-gray-600 hover:text-gray-900"
+                ? "bg-white dark:bg-[#222D25] text-gray-900 dark:text-[#E5E9E4] shadow-xs"
+                : "text-gray-600 dark:text-[#A5B0A7] hover:text-gray-900 dark:hover:text-[#E5E9E4]"
             }`}
           >
             Channels ({channelsData?.totalChannels ?? displayedChannels.length})
@@ -147,13 +147,13 @@ const AdminChannels = () => {
             onClick={() => setActiveSubTab("reports")}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
               activeSubTab === "reports"
-                ? "bg-white text-gray-900 shadow-xs"
-                : "text-gray-600 hover:text-gray-900"
+                ? "bg-white dark:bg-[#222D25] text-gray-900 dark:text-[#E5E9E4] shadow-xs"
+                : "text-gray-600 dark:text-[#A5B0A7] hover:text-gray-900 dark:hover:text-[#E5E9E4]"
             }`}
           >
             <span>Message Reports</span>
             {reportsData?.totalReports > 0 && (
-              <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-red-100 text-red-700 font-bold">
+              <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-400 font-bold">
                 {reportsData.totalReports}
               </span>
             )}
@@ -171,15 +171,15 @@ const AdminChannels = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by channel name or slug..."
-              className="w-full sm:w-80 px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800"
+              className="w-full sm:w-80 px-3.5 py-2 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#1B241E] text-gray-900 dark:text-[#E5E9E4] placeholder-gray-400 dark:placeholder-gray-500 text-xs focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800"
             />
 
             <div className="flex items-center gap-2 self-end sm:self-auto">
-              <span className="text-xs text-gray-400">Visibility:</span>
+              <span className="text-xs text-gray-400 dark:text-[#A5B0A7]">Visibility:</span>
               <select
                 value={visibilityFilter}
                 onChange={(e) => setVisibilityFilter(e.target.value)}
-                className="px-3 py-1.5 rounded-xl border border-gray-200 text-xs bg-white text-gray-700 focus:outline-none"
+                className="px-3 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] text-xs bg-white dark:bg-[#1B241E] text-gray-700 dark:text-[#E5E9E4] focus:outline-none"
               >
                 <option value="all">All Channels</option>
                 <option value="public">Public</option>
@@ -190,18 +190,18 @@ const AdminChannels = () => {
 
           {/* CHANNELS TABLE */}
           {isChannelsLoading ? (
-            <div className="py-12 text-center text-xs text-gray-400">
+            <div className="py-12 text-center text-xs text-gray-400 dark:text-[#A5B0A7]">
               Loading channels...
             </div>
           ) : displayedChannels.length === 0 ? (
-            <div className="p-8 text-center text-xs text-gray-400 bg-white rounded-2xl border border-gray-100">
+            <div className="p-8 text-center text-xs text-gray-400 dark:text-[#A5B0A7] bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A]">
               No channels match the criteria.
             </div>
           ) : (
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-xs overflow-x-auto">
+            <div className="bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A] shadow-xs overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="border-b border-gray-100 text-gray-400 uppercase tracking-wider font-semibold">
+                  <tr className="border-b border-gray-100 dark:border-[#35443A] text-gray-400 dark:text-[#A5B0A7] uppercase tracking-wider font-semibold">
                     <th className="py-3 px-4">Channel</th>
                     <th className="py-3 px-4">Creator</th>
                     <th className="py-3 px-4">Visibility</th>
@@ -211,23 +211,23 @@ const AdminChannels = () => {
                     <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-gray-100 dark:divide-[#35443A]">
                   {displayedChannels.map((ch) => (
-                    <tr key={ch._id} className="hover:bg-gray-50/60 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-gray-900">
+                    <tr key={ch._id} className="hover:bg-gray-50/60 dark:hover:bg-[#222D25]/60 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-gray-900 dark:text-[#E5E9E4]">
                         <Link
                           to={`/channels/${ch.slug}`}
-                          className="hover:text-green-800 transition-colors flex items-center gap-1"
+                          className="hover:text-green-800 dark:hover:text-[#7BC98C] transition-colors flex items-center gap-1"
                         >
-                          <span>#</span>
+                          <span className="text-green-800 dark:text-[#7BC98C]">#</span>
                           <span>{ch.name}</span>
                         </Link>
-                        <span className="text-[10px] text-gray-400 font-mono">
+                        <span className="text-[10px] text-gray-400 dark:text-[#A5B0A7] font-mono">
                           /{ch.slug}
                         </span>
                       </td>
 
-                      <td className="py-3.5 px-4 text-gray-600">
+                      <td className="py-3.5 px-4 text-gray-600 dark:text-[#A5B0A7]">
                         @{ch.creator?.username || "Unknown"}
                       </td>
 
@@ -235,25 +235,25 @@ const AdminChannels = () => {
                         <span
                           className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
                             ch.visibility === "public"
-                              ? "bg-emerald-50 text-emerald-700 border border-emerald-200/50"
-                              : "bg-amber-50 text-amber-700 border border-amber-200/50"
+                              ? "bg-emerald-50 dark:bg-[#25382B] text-emerald-700 dark:text-[#7BC98C] border border-emerald-200/50 dark:border-[#35443A]"
+                              : "bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200/50 dark:border-amber-900/50"
                           }`}
                         >
                           {ch.visibility}
                         </span>
                       </td>
 
-                      <td className="py-3.5 px-4 font-semibold text-gray-700">
+                      <td className="py-3.5 px-4 font-semibold text-gray-700 dark:text-[#E5E9E4]">
                         {ch.memberCount || 1}
                       </td>
 
                       <td className="py-3.5 px-4">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold capitalize bg-green-50 text-green-700 border border-green-200/50">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold capitalize bg-green-50 dark:bg-[#25382B] text-green-700 dark:text-[#7BC98C] border border-green-200/50 dark:border-[#35443A]">
                           {ch.status}
                         </span>
                       </td>
 
-                      <td className="py-3.5 px-4 text-gray-400">
+                      <td className="py-3.5 px-4 text-gray-400 dark:text-[#A5B0A7]">
                         {format(ch.createdAt)}
                       </td>
 
@@ -261,13 +261,13 @@ const AdminChannels = () => {
                         <div className="flex items-center justify-end gap-2">
                           <Link
                             to={`/channels/${ch.slug}`}
-                            className="px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium"
+                            className="px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-[#222D25] hover:bg-gray-200 dark:hover:bg-[#2b3a2f] text-gray-700 dark:text-[#E5E9E4] text-xs font-medium transition-colors"
                           >
                             View
                           </Link>
                           <button
                             onClick={() => setChannelToDelete(ch)}
-                            className="px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 text-xs font-medium transition-colors"
+                            className="px-2.5 py-1 rounded-lg bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 text-xs font-medium transition-colors"
                           >
                             Delete
                           </button>
@@ -287,11 +287,11 @@ const AdminChannels = () => {
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-400">Filter Status:</span>
+              <span className="text-xs text-gray-400 dark:text-[#A5B0A7]">Filter Status:</span>
               <select
                 value={reportStatus}
                 onChange={(e) => setReportStatus(e.target.value)}
-                className="px-3 py-1.5 rounded-xl border border-gray-200 text-xs bg-white text-gray-700 focus:outline-none"
+                className="px-3 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] text-xs bg-white dark:bg-[#1B241E] text-gray-700 dark:text-[#E5E9E4] focus:outline-none"
               >
                 <option value="all">All Reports</option>
                 <option value="pending">Pending</option>
@@ -302,11 +302,11 @@ const AdminChannels = () => {
           </div>
 
           {isReportsLoading ? (
-            <div className="py-12 text-center text-xs text-gray-400">
+            <div className="py-12 text-center text-xs text-gray-400 dark:text-[#A5B0A7]">
               Loading reports...
             </div>
           ) : reportsData?.reports?.length === 0 ? (
-            <div className="p-8 text-center text-xs text-gray-400 bg-white rounded-2xl border border-gray-100">
+            <div className="p-8 text-center text-xs text-gray-400 dark:text-[#A5B0A7] bg-white dark:bg-[#1B241E] rounded-2xl border border-gray-100 dark:border-[#35443A]">
               No reported messages found.
             </div>
           ) : (
@@ -314,50 +314,50 @@ const AdminChannels = () => {
               {reportsData.reports.map((rep) => (
                 <div
                   key={rep._id}
-                  className="p-5 rounded-2xl bg-white border border-gray-100 shadow-2xs flex flex-col gap-3"
+                  className="p-5 rounded-2xl bg-white dark:bg-[#1B241E] border border-gray-100 dark:border-[#35443A] shadow-2xs flex flex-col gap-3"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-xs">
-                      <span className="font-bold text-gray-900">
+                      <span className="font-bold text-gray-900 dark:text-[#E5E9E4]">
                         Reported in #{rep.channel?.name || "unknown"}
                       </span>
-                      <span className="text-gray-400">•</span>
-                      <span className="text-gray-500">
+                      <span className="text-gray-400 dark:text-[#A5B0A7]">•</span>
+                      <span className="text-gray-500 dark:text-[#A5B0A7]">
                         by @{rep.reporter?.username || "Anonymous"}
                       </span>
-                      <span className="text-gray-400">•</span>
-                      <span className="text-gray-400">{format(rep.createdAt)}</span>
+                      <span className="text-gray-400 dark:text-[#A5B0A7]">•</span>
+                      <span className="text-gray-400 dark:text-[#A5B0A7]">{format(rep.createdAt)}</span>
                     </div>
 
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                         rep.status === "pending"
-                          ? "bg-amber-50 text-amber-800 border border-amber-200/50"
+                          ? "bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/40"
                           : rep.status === "actioned"
-                          ? "bg-red-50 text-red-700 border border-red-200/50"
-                          : "bg-gray-100 text-gray-600"
+                          ? "bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-300 border border-red-200/50 dark:border-red-800/40"
+                          : "bg-gray-100 dark:bg-[#222D25] text-gray-600 dark:text-[#A5B0A7]"
                       }`}
                     >
                       {rep.status}
                     </span>
                   </div>
 
-                  <div className="p-3 bg-red-50/50 rounded-xl border border-red-100 text-xs text-gray-700">
-                    <span className="font-semibold text-red-800">Reason: </span>
+                  <div className="p-3 bg-red-50/50 dark:bg-red-950/20 rounded-xl border border-red-100 dark:border-red-900/40 text-xs text-gray-700 dark:text-[#E5E9E4]">
+                    <span className="font-semibold text-red-800 dark:text-red-400">Reason: </span>
                     {rep.reason}
                   </div>
 
-                  <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 text-xs text-gray-800">
-                    <div className="text-[10px] text-gray-400 mb-1">
+                  <div className="p-3 bg-gray-50 dark:bg-[#222D25] rounded-xl border border-gray-100 dark:border-[#35443A] text-xs text-gray-800 dark:text-[#E5E9E4]">
+                    <div className="text-[10px] text-gray-400 dark:text-[#A5B0A7] mb-1">
                       Message author: @{rep.message?.sender?.username || "Unknown"}
                     </div>
-                    <div className="font-mono text-gray-700 whitespace-pre-wrap">
+                    <div className="font-mono text-gray-700 dark:text-[#E5E9E4] whitespace-pre-wrap">
                       {rep.message?.content || "[Deleted content]"}
                     </div>
                   </div>
 
                   {rep.status === "pending" && (
-                    <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-50">
+                    <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-50 dark:border-[#35443A]">
                       <button
                         onClick={() =>
                           resolveReportMutation.mutate({
@@ -367,7 +367,7 @@ const AdminChannels = () => {
                           })
                         }
                         disabled={resolveReportMutation.isPending}
-                        className="px-3 py-1.5 rounded-xl border border-gray-200 hover:bg-gray-100 text-xs font-semibold text-gray-700 transition-colors disabled:opacity-50"
+                        className="px-3 py-1.5 rounded-xl border border-gray-200 dark:border-[#35443A] hover:bg-gray-100 dark:hover:bg-[#222D25] text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] transition-colors disabled:opacity-50"
                       >
                         Dismiss Report
                       </button>

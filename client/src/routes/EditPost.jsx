@@ -138,7 +138,7 @@ const EditPost = () => {
   if (!isLoaded || isFetchingPost) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-gray-500 text-lg">Loading post details...</div>
+        <div className="text-gray-500 dark:text-[#A5B0A7] text-lg">Loading post details...</div>
       </div>
     );
   }
@@ -146,13 +146,13 @@ const EditPost = () => {
   if (isLoaded && !isSignedIn) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <h2 className="text-2xl font-semibold text-gray-800">
+        <h2 className="text-2xl font-semibold text-gray-800 dark:text-[#E5E9E4]">
           Sign In Required
         </h2>
-        <p className="text-gray-600">You must be logged in to edit posts.</p>
+        <p className="text-gray-600 dark:text-[#A5B0A7]">You must be logged in to edit posts.</p>
         <Link
           to="/login"
-          className="py-2.5 px-6 rounded-3xl bg-green-800 text-white font-medium"
+          className="py-2.5 px-6 rounded-3xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white font-medium transition-colors"
         >
           Login 👋
         </Link>
@@ -163,13 +163,13 @@ const EditPost = () => {
   if (fetchError || !post) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <h2 className="text-2xl font-semibold text-red-600">
+        <h2 className="text-2xl font-semibold text-red-600 dark:text-red-400">
           Post Not Found
         </h2>
-        <p className="text-gray-600">The post you are trying to edit does not exist.</p>
+        <p className="text-gray-600 dark:text-[#A5B0A7]">The post you are trying to edit does not exist.</p>
         <Link
           to="/dashboard"
-          className="py-2 px-5 rounded-xl bg-gray-800 text-white font-medium text-sm"
+          className="py-2 px-5 rounded-xl bg-gray-800 hover:bg-gray-700 dark:bg-[#222D25] dark:hover:bg-[#2e3f34] text-white font-medium text-sm transition-colors"
         >
           Back to Dashboard
         </Link>
@@ -185,13 +185,13 @@ const EditPost = () => {
   if (!isAuthor) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <h2 className="text-2xl font-semibold text-red-600">
+        <h2 className="text-2xl font-semibold text-red-600 dark:text-red-400">
           Unauthorized
         </h2>
-        <p className="text-gray-600">You can edit only your own posts.</p>
+        <p className="text-gray-600 dark:text-[#A5B0A7]">You can edit only your own posts.</p>
         <Link
           to="/dashboard"
-          className="py-2 px-5 rounded-xl bg-green-800 text-white font-medium text-sm"
+          className="py-2 px-5 rounded-xl bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white font-medium text-sm transition-colors"
         >
           Go to Dashboard
         </Link>
@@ -224,15 +224,15 @@ const EditPost = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-64px)] md:h-[calc(100vh-80px)] flex flex-col gap-6 max-w-5xl mx-auto w-full">
+    <div className="h-[calc(100vh-64px)] md:h-[calc(100vh-80px)] flex flex-col gap-6 max-w-5xl mx-auto w-full text-gray-800 dark:text-[#E5E9E4]">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Edit Post</h1>
-          <p className="text-sm text-gray-500">Update your article content and settings</p>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-[#E5E9E4]">Edit Post</h1>
+          <p className="text-sm text-gray-500 dark:text-[#A5B0A7]">Update your article content and settings</p>
         </div>
         <Link
           to="/dashboard"
-          className="text-sm text-gray-600 hover:text-green-800 transition-colors"
+          className="text-sm text-gray-600 dark:text-[#A5B0A7] hover:text-green-800 dark:hover:text-[#7BC98C] transition-colors"
         >
           ← Back to Dashboard
         </Link>
@@ -244,13 +244,13 @@ const EditPost = () => {
           <Upload type="image" setProgress={setProgress} setData={setCover}>
             <button
               type="button"
-              className="w-max p-2.5 shadow-sm border border-gray-200 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+              className="w-max p-2.5 shadow-sm border border-gray-200 dark:border-[#35443A] rounded-xl text-sm font-medium text-gray-700 dark:text-[#E5E9E4] bg-white dark:bg-[#1B241E] hover:bg-gray-50 dark:hover:bg-[#222D25] transition-colors"
             >
               {cover ? "Change Cover Image 🖼️" : "Add Cover Image 🖼️"}
             </button>
           </Upload>
           {cover && (
-            <span className="text-xs text-green-700 bg-green-50 px-2.5 py-1 rounded-md font-medium">
+            <span className="text-xs text-green-700 dark:text-[#7BC98C] bg-green-50 dark:bg-[#222D25] border border-green-200/50 dark:border-[#35443A] px-2.5 py-1 rounded-md font-medium">
               Cover image set ✓
             </span>
           )}
@@ -258,7 +258,7 @@ const EditPost = () => {
 
         {/* TITLE */}
         <input
-          className="text-3xl md:text-4xl font-semibold bg-transparent outline-none border-b border-gray-200 pb-2 focus:border-green-800 transition-colors"
+          className="text-3xl md:text-4xl font-semibold bg-transparent outline-none border-b border-gray-200 dark:border-[#35443A] pb-2 text-gray-900 dark:text-[#E5E9E4] placeholder-gray-400 dark:placeholder-[#A5B0A7] focus:border-green-800 dark:focus:border-[#7BC98C] transition-colors"
           type="text"
           placeholder="Post Title..."
           value={title}
@@ -268,7 +268,7 @@ const EditPost = () => {
 
         {/* CATEGORY */}
         <div className="flex items-center gap-4">
-          <label htmlFor="category" className="text-sm font-medium text-gray-700">
+          <label htmlFor="category" className="text-sm font-medium text-gray-700 dark:text-[#E5E9E4]">
             Choose a category:
           </label>
           <select
@@ -276,20 +276,20 @@ const EditPost = () => {
             id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="p-2 rounded-xl bg-white shadow-sm border border-gray-200 text-sm font-medium focus:outline-none focus:ring-1 focus:ring-green-800"
+            className="p-2 rounded-xl bg-white dark:bg-[#1B241E] shadow-sm border border-gray-200 dark:border-[#35443A] text-gray-800 dark:text-[#E5E9E4] text-sm font-medium focus:outline-none focus:ring-1 focus:ring-green-800 dark:focus:ring-[#7BC98C]"
           >
-            <option value="general">General</option>
-            <option value="web-design">Web Design</option>
-            <option value="ai_ml">AI & ML</option>
-            <option value="databases">Databases</option>
-            <option value="seo">Search Engines</option>
-            <option value="devops">DevOps</option>
+            <option value="general" className="dark:bg-[#1B241E]">General</option>
+            <option value="web-design" className="dark:bg-[#1B241E]">Web Design</option>
+            <option value="ai_ml" className="dark:bg-[#1B241E]">AI & ML</option>
+            <option value="databases" className="dark:bg-[#1B241E]">Databases</option>
+            <option value="seo" className="dark:bg-[#1B241E]">Search Engines</option>
+            <option value="devops" className="dark:bg-[#1B241E]">DevOps</option>
           </select>
         </div>
 
         {/* SHORT DESCRIPTION */}
         <textarea
-          className="p-4 rounded-xl bg-white shadow-sm border border-gray-200 text-sm focus:outline-none focus:ring-1 focus:ring-green-800"
+          className="p-4 rounded-xl bg-white dark:bg-[#1B241E] shadow-sm border border-gray-200 dark:border-[#35443A] text-gray-800 dark:text-[#E5E9E4] placeholder-gray-400 dark:placeholder-[#A5B0A7] text-sm focus:outline-none focus:ring-1 focus:ring-green-800 dark:focus:ring-[#7BC98C]"
           name="desc"
           placeholder="A short summary of your post..."
           value={desc}
@@ -301,12 +301,12 @@ const EditPost = () => {
         <div className="flex flex-1 min-h-[300px]">
           <div className="flex flex-col gap-2 mr-2" onMouseDown={saveSelection}>
             <Upload type="image" setProgress={setProgress} setData={setImg} onClick={saveSelection}>
-              <span className="cursor-pointer text-xl p-1 rounded hover:bg-gray-100" title="Insert Image">
+              <span className="cursor-pointer text-xl p-1 rounded hover:bg-gray-100 dark:hover:bg-[#222D25] block transition-colors" title="Insert Image">
                 🌆
               </span>
             </Upload>
             <Upload type="video" setProgress={setProgress} setData={setVideo} onClick={saveSelection}>
-              <span className="cursor-pointer text-xl p-1 rounded hover:bg-gray-100" title="Insert Video">
+              <span className="cursor-pointer text-xl p-1 rounded hover:bg-gray-100 dark:hover:bg-[#222D25] block transition-colors" title="Insert Video">
                 ▶️
               </span>
             </Upload>
@@ -314,7 +314,7 @@ const EditPost = () => {
           <ReactQuill
             ref={quillRef}
             theme="snow"
-            className="flex-1 rounded-xl bg-white shadow-sm"
+            className="flex-1 rounded-xl bg-white dark:bg-[#1B241E] border border-transparent dark:border-[#35443A] shadow-sm"
             value={content}
             onChange={setContent}
             onChangeSelection={handleSelectionChange}
@@ -327,13 +327,13 @@ const EditPost = () => {
           <button
             type="submit"
             disabled={updateMutation.isPending || (0 < progress && progress < 100)}
-            className="bg-green-800 hover:bg-green-900 text-white font-medium rounded-xl p-2.5 w-40 disabled:bg-green-400 disabled:cursor-not-allowed transition-colors shadow-sm"
+            className="bg-green-800 hover:bg-green-900 dark:bg-[#25382B] dark:hover:bg-[#2e4535] text-white dark:text-[#E5E9E4] font-medium rounded-xl p-2.5 w-40 disabled:bg-green-400 dark:disabled:bg-green-950 disabled:cursor-not-allowed transition-colors shadow-sm"
           >
             {updateMutation.isPending ? "Saving..." : "Save Changes"}
           </button>
           <Link
             to="/dashboard"
-            className="text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors"
+            className="text-sm font-medium text-gray-500 dark:text-[#A5B0A7] hover:text-gray-800 dark:hover:text-[#E5E9E4] transition-colors"
           >
             Cancel
           </Link>
