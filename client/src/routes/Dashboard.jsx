@@ -1101,7 +1101,7 @@ const Dashboard = () => {
                   to="/channels"
                   className="px-4 py-2 rounded-xl border border-gray-200 hover:border-gray-300 text-xs font-semibold text-gray-700 transition-colors"
                 >
-                  Browse Channels →
+                  Browse Channels  
                 </Link>
                 <button
                   onClick={() => setIsCreateChannelOpen(true)}

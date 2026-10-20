@@ -381,7 +381,7 @@ const AuthorProfilePage = () => {
               to="/channels"
               className="text-xs text-green-800 hover:underline font-semibold mt-0.5"
             >
-              Browse technical communities on Veles →
+              Browse technical communities on Veles  
             </Link>
           </div>
         )}
@@ -472,7 +472,7 @@ const AuthorProfilePage = () => {
 
                     <span className="font-semibold text-green-800 group-hover:translate-x-0.5 transition-transform flex items-center gap-1 text-[11px]">
                       <span>Open</span>
-                      <span>→</span>
+                      <span> </span>
                     </span>
                   </div>
                 </Link>
@@ -497,7 +497,7 @@ const AuthorProfilePage = () => {
             to="/posts"
             className="text-xs sm:text-sm font-medium text-green-800 hover:underline"
           >
-            Explore All Posts →
+            Explore All Posts  
           </Link>
         </div>
 

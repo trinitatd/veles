@@ -160,7 +160,7 @@ const AdminOverview = () => {
               to="/admin/posts"
               className="text-xs font-semibold text-green-800 hover:text-green-900 transition-colors"
             >
-              View all posts →
+              View all posts  
             </Link>
           </div>
 

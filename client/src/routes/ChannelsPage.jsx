@@ -1369,9 +1369,9 @@ const ChannelsPage = () => {
                         >
                           {c.visibility === "private" && !c.isMember
                             ? c.joinRequestStatus === "pending"
-                              ? "Request Pending →"
-                              : "Request Access →"
-                            : "Open Channel →"}
+                              ? "Request Pending  "
+                              : "Request Access  "
+                            : "Open Channel  "}
                         </button>
                       </div>
                     </div>
