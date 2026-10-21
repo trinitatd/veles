@@ -1,10 +1,9 @@
+
 import "dotenv/config";
-import dns from "dns";
 import http from "http";
-
-dns.setServers(["8.8.8.8", "1.1.1.1"]);
-
 import express from "express";
+import cors from "cors";
+import { clerkMiddleware } from "@clerk/express";
 
 import connectDB from "./lib/connectDB.js";
 import userRouter from "./routes/user.route.js";
@@ -14,32 +13,35 @@ import webhookRouter from "./routes/webhook.route.js";
 import adminRouter from "./routes/admin.route.js";
 import channelRouter from "./routes/channel.route.js";
 import { initSocket } from "./socket.js";
-import { clerkMiddleware } from "@clerk/express";
-import cors from "cors";
 
 const app = express();
 const server = http.createServer(app);
 
-// Initialize real-time Socket.IO with server
-initSocket(server);
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL,
+].filter(Boolean);
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin(origin, callback) {
+      // Allow requests without an Origin header, such as server-to-server calls.
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Origin not allowed by CORS"));
+    },
     credentials: true,
   })
 );
-app.use(clerkMiddleware());
-app.use("/webhooks", webhookRouter);
-app.use(express.json());
 
-app.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
+// Keep webhook parsing compatible with your existing webhook handler.
+// If it verifies Svix signatures, it must receive the raw request body.
+app.use("/webhooks", webhookRouter);
+
+app.use(express.json());
+app.use(clerkMiddleware());
 
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
@@ -47,7 +49,6 @@ app.use("/comments", commentRouter);
 app.use("/admin", adminRouter);
 app.use("/channels", channelRouter);
 
-// Catch-all 404 handler for undefined routes to always return consistent JSON errors
 app.use((req, res) => {
   res.status(404).json({
     message: `Cannot ${req.method} ${req.originalUrl}`,
@@ -55,20 +56,41 @@ app.use((req, res) => {
 });
 
 app.use((error, req, res, next) => {
-  res.status(error.status || 500);
+  if (res.headersSent) {
+    return next(error);
+  }
 
-  res.json({
-    message: error.message || "Something went wrong!",
-    status: error.status,
-    stack: error.stack,
+  console.error("Request error:", error);
+
+  res.status(error.status || 500).json({
+    message:
+      process.env.NODE_ENV === "production"
+        ? "Something went wrong!"
+        : error.message,
+    ...(process.env.NODE_ENV !== "production" && {
+      stack: error.stack,
+    }),
   });
 });
 
 const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => {
-  connectDB();
-  console.log(`Server is running on port ${PORT}!`);
-});
+async function startServer() {
+  try {
+    await connectDB();
+
+    // Socket.IO shares the same HTTP server.
+    initSocket(server);
+
+    server.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server listening on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start Veles backend:", error);
+    process.exit(1);
+  }
+}
+
+startServer();
 
 export { app, server };

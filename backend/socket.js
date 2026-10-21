@@ -14,15 +14,22 @@ let ioInstance = null;
 export const getIO = () => ioInstance;
 
 export const initSocket = (httpServer) => {
-  const io = new Server(httpServer, {
-    cors: {
-      origin: process.env.CLIENT_URL || "http://localhost:5173",
-      credentials: true,
-      methods: ["GET", "POST", "PATCH", "DELETE"],
-    },
-    pingTimeout: 60000,
-    pingInterval: 25000,
-  });
+  
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL,
+].filter(Boolean);
+
+const io = new Server(httpServer, {
+  cors: {
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  },
+  pingTimeout: 60000,
+  pingInterval: 25000,
+});
+
 
   // Socket Authentication Middleware via Clerk JWT
   io.use(async (socket, next) => {
