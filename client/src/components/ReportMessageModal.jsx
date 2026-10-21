@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { buildApiUrl } from "../utils/api";
 
 const ReportMessageModal = ({ isOpen, message, channelId, onClose }) => {
   const { getToken } = useAuth();
@@ -25,7 +26,7 @@ const ReportMessageModal = ({ isOpen, message, channelId, onClose }) => {
     try {
       const token = await getToken();
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/channels/${channelId}/messages/${message._id}/report`,
+        buildApiUrl(`/channels/${channelId}/messages/${message._id}/report`),
         { reason: cleanReason },
         {
           headers: {

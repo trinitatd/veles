@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { buildApiUrl } from "../utils/api";
 
 const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
   const { getToken } = useAuth();
@@ -39,7 +40,7 @@ const CreateChannelModal = ({ isOpen, onClose, onCreated }) => {
     try {
       const token = await getToken();
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/channels`,
+        buildApiUrl("/channels"),
         {
           name: cleanName,
           description: description.trim(),

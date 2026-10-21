@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { format } from "timeago.js";
 import Image from "../../components/Image";
+import { buildApiUrl } from "../../utils/api";
 
 const AdminOverview = () => {
   const { user } = useUser();
@@ -13,7 +14,7 @@ const AdminOverview = () => {
     queryKey: ["adminStats"],
     queryFn: async () => {
       const token = await getToken();
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/stats`, {
+      const res = await axios.get(buildApiUrl("/admin/stats"), {
         headers: {
           Authorization: `Bearer ${token}`,
         },

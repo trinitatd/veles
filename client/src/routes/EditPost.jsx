@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Upload from "../components/Upload";
+import { buildApiUrl } from "../utils/api";
 
 const EditPost = () => {
   const { id } = useParams();
@@ -33,7 +34,7 @@ const EditPost = () => {
     queryKey: ["postById", id],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/posts/by-id/${id}`
+        buildApiUrl(`/posts/by-id/${id}`)
       );
       return res.data;
     },
@@ -110,7 +111,7 @@ const EditPost = () => {
     mutationFn: async (updatedData) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/posts/${id}`,
+        buildApiUrl(`/posts/${id}`),
         updatedData,
         {
           headers: {

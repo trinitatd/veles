@@ -1,11 +1,12 @@
 import { IKContext, IKUpload } from "imagekitio-react";
 import { useRef } from "react";
 import { toast } from "react-toastify";
+import { buildApiUrl } from "../utils/api";
 
 const authenticator = async () => {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/posts/upload-auth`
+      buildApiUrl("/posts/upload-auth")
     );
 
     if (!response.ok) {

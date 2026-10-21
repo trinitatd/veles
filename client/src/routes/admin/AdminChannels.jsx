@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import ConfirmModal from "../../components/ConfirmModal";
+import { buildApiUrl } from "../../utils/api";
 
 const AdminChannels = () => {
   const { getToken } = useAuth();
@@ -32,7 +33,7 @@ const AdminChannels = () => {
       if (visibilityFilter !== "all") params.append("visibility", visibilityFilter);
 
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/admin/channels?${params.toString()}`,
+        buildApiUrl(`/admin/channels?${params.toString()}`),
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -47,7 +48,7 @@ const AdminChannels = () => {
     queryFn: async () => {
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/admin/reports?status=${reportStatus}&limit=50`,
+        buildApiUrl(`/admin/reports?status=${reportStatus}&limit=50`),
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -61,7 +62,7 @@ const AdminChannels = () => {
     mutationFn: async ({ channelId, reason }) => {
       const token = await getToken();
       return axios.delete(
-        `${import.meta.env.VITE_API_URL}/admin/channels/${channelId}`,
+        buildApiUrl(`/admin/channels/${channelId}`),
         {
           data: { reason },
           headers: { Authorization: `Bearer ${token}` },
@@ -101,7 +102,7 @@ const AdminChannels = () => {
     mutationFn: async ({ reportId, status, action, reason }) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/admin/reports/${reportId}`,
+        buildApiUrl(`/admin/reports/${reportId}`),
         { status, action, reason },
         {
           headers: { Authorization: `Bearer ${token}` },

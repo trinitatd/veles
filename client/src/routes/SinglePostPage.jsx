@@ -6,9 +6,10 @@ import Comments from "../components/Comments";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "timeago.js";
+import { buildApiUrl } from "../utils/api";
 
 const fetchPost = async (slug) => {
-  const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts/${slug}`);
+  const res = await axios.get(buildApiUrl(`/posts/${slug}`));
   return res.data;
 };
 

@@ -11,6 +11,7 @@ import EditChannelModal from "../components/EditChannelModal";
 import ConfirmModal from "../components/ConfirmModal";
 import ManageRequestsModal from "../components/ManageRequestsModal";
 import ThemeToggle from "../components/ThemeToggle";
+import { buildApiUrl } from "../utils/api";
 
 const Dashboard = () => {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -36,7 +37,7 @@ const Dashboard = () => {
     queryFn: async () => {
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/users/profile`,
+        buildApiUrl("/users/profile"),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +62,7 @@ const Dashboard = () => {
     mutationFn: async (newUsername) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/users/profile`,
+        buildApiUrl("/users/profile"),
         { username: newUsername },
         {
           headers: {
@@ -121,7 +122,7 @@ const Dashboard = () => {
     mutationFn: async (newAbout) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/users/profile`,
+        buildApiUrl("/users/profile"),
         { about: newAbout },
         {
           headers: {
@@ -159,7 +160,7 @@ const Dashboard = () => {
     queryFn: async () => {
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/posts/user/my-posts`,
+        buildApiUrl("/posts/user/my-posts"),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -181,7 +182,7 @@ const Dashboard = () => {
     queryFn: async () => {
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/posts/user/saved-posts`,
+        buildApiUrl("/posts/user/saved-posts"),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -203,7 +204,7 @@ const Dashboard = () => {
     queryFn: async () => {
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/posts/user/readlist-posts`,
+        buildApiUrl("/posts/user/readlist-posts"),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -225,7 +226,7 @@ const Dashboard = () => {
     queryFn: async () => {
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/posts/user/liked-posts`,
+        buildApiUrl("/posts/user/liked-posts"),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -241,7 +242,7 @@ const Dashboard = () => {
   const deleteMutation = useMutation({
     mutationFn: async (postId) => {
       const token = await getToken();
-      return axios.delete(`${import.meta.env.VITE_API_URL}/posts/${postId}`, {
+      return axios.delete(buildApiUrl(`/posts/${postId}`), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -268,7 +269,7 @@ const Dashboard = () => {
     mutationFn: async (postId) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/users/save`,
+        buildApiUrl("/users/save"),
         { postId },
         {
           headers: {
@@ -292,7 +293,7 @@ const Dashboard = () => {
     mutationFn: async (postId) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/users/readlist`,
+        buildApiUrl("/users/readlist"),
         { postId },
         {
           headers: {
@@ -316,7 +317,7 @@ const Dashboard = () => {
     mutationFn: async (postId) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/posts/${postId}/like`,
+        buildApiUrl(`/posts/${postId}/like`),
         {},
         {
           headers: {
@@ -345,7 +346,7 @@ const Dashboard = () => {
     queryFn: async () => {
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/channels/user`,
+        buildApiUrl("/channels/user"),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -362,7 +363,7 @@ const Dashboard = () => {
     mutationFn: async (channelId) => {
       const token = await getToken();
       return axios.delete(
-        `${import.meta.env.VITE_API_URL}/channels/${channelId}`,
+        buildApiUrl(`/channels/${channelId}`),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -389,7 +390,7 @@ const Dashboard = () => {
     mutationFn: async (channelId) => {
       const token = await getToken();
       return axios.post(
-        `${import.meta.env.VITE_API_URL}/channels/${channelId}/leave`,
+        buildApiUrl(`/channels/${channelId}/leave`),
         {},
         {
           headers: {

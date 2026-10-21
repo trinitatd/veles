@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "timeago.js";
 
+import { buildApiUrl } from "../utils/api";
 import { useChannelSocket } from "../utils/useChannelSocket";
 import CreateChannelModal from "../components/CreateChannelModal";
 import EditChannelModal from "../components/EditChannelModal";
@@ -192,7 +193,7 @@ const ChannelsPage = () => {
         if (token) headers.Authorization = `Bearer ${token}`;
       }
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/channels?limit=50`,
+        buildApiUrl("/channels?limit=50"),
         { headers }
       );
       setChannels(res.data.channels || []);
@@ -209,7 +210,7 @@ const ChannelsPage = () => {
     try {
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/channels/user`,
+        buildApiUrl("/channels/user"),
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -247,7 +248,7 @@ const ChannelsPage = () => {
           if (token) headers.Authorization = `Bearer ${token}`;
         }
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/channels/${slug}`,
+          buildApiUrl(`/channels/${slug}`),
           { headers }
         );
         setActiveChannel(res.data);
@@ -280,7 +281,7 @@ const ChannelsPage = () => {
         setLoadingMessages(true);
         const token = await getToken();
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/messages?limit=50`,
+          buildApiUrl(`/channels/${activeChannel._id}/messages?limit=50`),
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -308,7 +309,7 @@ const ChannelsPage = () => {
       const oldestMessageDate = messages[0]?.createdAt;
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/messages?limit=30&before=${oldestMessageDate}`,
+        buildApiUrl(`/channels/${activeChannel._id}/messages?limit=30&before=${oldestMessageDate}`),
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -339,7 +340,7 @@ const ChannelsPage = () => {
         // Fallback to REST endpoint if socket is reconnecting
         const token = await getToken();
         const res = await axios.post(
-          `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/messages`,
+          buildApiUrl(`/channels/${activeChannel._id}/messages`),
           { content },
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -373,7 +374,7 @@ const ChannelsPage = () => {
     try {
       const token = await getToken();
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/join`,
+        buildApiUrl(`/channels/${activeChannel._id}/join`),
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -412,7 +413,7 @@ const ChannelsPage = () => {
     try {
       const token = await getToken();
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/request-join`,
+        buildApiUrl(`/channels/${activeChannel._id}/request-join`),
         { note },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -449,7 +450,7 @@ const ChannelsPage = () => {
     try {
       const token = await getToken();
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/cancel-request`,
+        buildApiUrl(`/channels/${activeChannel._id}/cancel-request`),
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -483,7 +484,7 @@ const ChannelsPage = () => {
     try {
       const token = await getToken();
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/leave`,
+        buildApiUrl(`/channels/${activeChannel._id}/leave`),
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -515,7 +516,7 @@ const ChannelsPage = () => {
     try {
       const token = await getToken();
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}`,
+        buildApiUrl(`/channels/${activeChannel._id}`),
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -549,7 +550,7 @@ const ChannelsPage = () => {
       } else {
         const token = await getToken();
         const res = await axios.patch(
-          `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/messages/${messageId}`,
+          buildApiUrl(`/channels/${activeChannel._id}/messages/${messageId}`),
           { content: editInput.trim() },
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -577,7 +578,7 @@ const ChannelsPage = () => {
       } else {
         const token = await getToken();
         await axios.delete(
-          `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/messages/${deletingMessage._id}`,
+          buildApiUrl(`/channels/${activeChannel._id}/messages/${deletingMessage._id}`),
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -604,7 +605,7 @@ const ChannelsPage = () => {
     try {
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/members`,
+        buildApiUrl(`/channels/${activeChannel._id}/members`),
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -622,7 +623,7 @@ const ChannelsPage = () => {
     try {
       const token = await getToken();
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/channels/${activeChannel._id}/members/${memberClerkId}`,
+        buildApiUrl(`/channels/${activeChannel._id}/members/${memberClerkId}`),
         {
           headers: { Authorization: `Bearer ${token}` },
         }

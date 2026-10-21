@@ -3,13 +3,14 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSearchParams } from "react-router-dom";
+import { buildApiUrl } from "../utils/api";
 
 const fetchPosts = async (pageParam, searchParams) => {
   const searchParamsObj = Object.fromEntries([...searchParams]);
 
   console.log(searchParamsObj);
 
-  const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`, {
+  const res = await axios.get(buildApiUrl("/posts"), {
     params: { page: pageParam, limit: 10, ...searchParamsObj },
   });
   return res.data;

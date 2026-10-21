@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "timeago.js";
+import { buildApiUrl } from "../../utils/api";
 
 const AdminUsers = () => {
   const { user: currentAdmin } = useUser();
@@ -29,7 +30,7 @@ const AdminUsers = () => {
       if (search) params.append("search", search);
 
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/admin/users?${params.toString()}`,
+        buildApiUrl(`/admin/users?${params.toString()}`),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -45,7 +46,7 @@ const AdminUsers = () => {
     mutationFn: async ({ userId, role }) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/admin/users/${userId}/role`,
+        buildApiUrl(`/admin/users/${userId}/role`),
         { role },
         {
           headers: {
@@ -71,7 +72,7 @@ const AdminUsers = () => {
     mutationFn: async (userId) => {
       const token = await getToken();
       return axios.delete(
-        `${import.meta.env.VITE_API_URL}/admin/users/${userId}`,
+        buildApiUrl(`/admin/users/${userId}`),
         {
           headers: {
             Authorization: `Bearer ${token}`,

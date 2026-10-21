@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { buildApiUrl } from "../utils/api";
 
 const Comment = ({ comment, postId, post }) => {
   const { user } = useUser();
@@ -41,7 +42,7 @@ const Comment = ({ comment, postId, post }) => {
     mutationFn: async () => {
       const token = await getToken();
       return axios.delete(
-        `${import.meta.env.VITE_API_URL}/comments/${comment._id}`,
+        buildApiUrl(`/comments/${comment._id}`),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,7 +64,7 @@ const Comment = ({ comment, postId, post }) => {
     mutationFn: async (updatedDesc) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/comments/${comment._id}`,
+        buildApiUrl(`/comments/${comment._id}`),
         { desc: updatedDesc },
         {
           headers: {

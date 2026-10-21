@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "timeago.js";
+import { buildApiUrl } from "../../utils/api";
 
 const AdminComments = () => {
   const { getToken } = useAuth();
@@ -30,7 +31,7 @@ const AdminComments = () => {
       if (search) params.append("search", search);
 
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/admin/comments?${params.toString()}`,
+        buildApiUrl(`/admin/comments?${params.toString()}`),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ const AdminComments = () => {
     mutationFn: async ({ commentId, desc }) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/admin/comments/${commentId}`,
+        buildApiUrl(`/admin/comments/${commentId}`),
         { desc },
         {
           headers: {
@@ -72,7 +73,7 @@ const AdminComments = () => {
     mutationFn: async (commentId) => {
       const token = await getToken();
       return axios.delete(
-        `${import.meta.env.VITE_API_URL}/admin/comments/${commentId}`,
+        buildApiUrl(`/admin/comments/${commentId}`),
         {
           headers: {
             Authorization: `Bearer ${token}`,

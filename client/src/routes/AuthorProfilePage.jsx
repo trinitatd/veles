@@ -6,24 +6,25 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useUser } from "@clerk/clerk-react";
 import Image from "../components/Image";
+import { buildApiUrl } from "../utils/api";
 
 const fetchAuthorProfile = async (username) => {
   const res = await axios.get(
-    `${import.meta.env.VITE_API_URL}/users/by-username/${encodeURIComponent(username)}`
+    buildApiUrl(`/users/by-username/${encodeURIComponent(username)}`)
   );
   return res.data;
 };
 
 const fetchAuthorPosts = async (username) => {
   const res = await axios.get(
-    `${import.meta.env.VITE_API_URL}/posts/author/${encodeURIComponent(username)}`
+    buildApiUrl(`/posts/author/${encodeURIComponent(username)}`)
   );
   return res.data;
 };
 
 const fetchAuthorChannels = async (username) => {
   const res = await axios.get(
-    `${import.meta.env.VITE_API_URL}/channels/author/${encodeURIComponent(username)}`
+    buildApiUrl(`/channels/author/${encodeURIComponent(username)}`)
   );
   return res.data;
 };

@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { buildApiUrl } from "../utils/api";
 
 const ManageRequestsModal = ({
   isOpen,
@@ -23,7 +24,7 @@ const ManageRequestsModal = ({
       setLoading(true);
       const token = await getToken();
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/channels/${channel._id}/requests?status=${filter}`,
+        buildApiUrl(`/channels/${channel._id}/requests?status=${filter}`),
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -50,7 +51,7 @@ const ManageRequestsModal = ({
     try {
       const token = await getToken();
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/channels/${channel._id}/requests/${requestId}/accept`,
+        buildApiUrl(`/channels/${channel._id}/requests/${requestId}/accept`),
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -77,7 +78,7 @@ const ManageRequestsModal = ({
     try {
       const token = await getToken();
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/channels/${channel._id}/requests/${requestId}/decline`,
+        buildApiUrl(`/channels/${channel._id}/requests/${requestId}/decline`),
         { note: "Declined by creator" },
         {
           headers: { Authorization: `Bearer ${token}` },

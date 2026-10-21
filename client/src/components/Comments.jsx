@@ -3,10 +3,11 @@ import Comment from "./Comment";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { toast } from "react-toastify";
+import { buildApiUrl } from "../utils/api";
 
 const fetchComments = async (postId) => {
   const res = await axios.get(
-    `${import.meta.env.VITE_API_URL}/comments/${postId}`
+    buildApiUrl(`/comments/${postId}`)
   );
   return res.data;
 };
@@ -26,7 +27,7 @@ const Comments = ({ postId, post }) => {
     mutationFn: async (newComment) => {
       const token = await getToken();
       return axios.post(
-        `${import.meta.env.VITE_API_URL}/comments/${postId}`,
+        buildApiUrl(`/comments/${postId}`),
         newComment,
         {
           headers: {

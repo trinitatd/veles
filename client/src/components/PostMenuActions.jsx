@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { buildApiUrl } from "../utils/api";
 
 const PostMenuActions = ({ post }) => {
   const { user } = useUser();
@@ -16,7 +17,7 @@ const PostMenuActions = ({ post }) => {
     queryFn: async () => {
       const token = await getToken();
       if (!token) return [];
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/saved`, {
+      const res = await axios.get(buildApiUrl("/users/saved"), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -34,7 +35,7 @@ const PostMenuActions = ({ post }) => {
     queryFn: async () => {
       const token = await getToken();
       if (!token) return [];
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/readlist`, {
+      const res = await axios.get(buildApiUrl("/users/readlist"), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,7 +74,7 @@ const PostMenuActions = ({ post }) => {
   const deleteMutation = useMutation({
     mutationFn: async () => {
       const token = await getToken();
-      return axios.delete(`${import.meta.env.VITE_API_URL}/posts/${post._id}`, {
+      return axios.delete(buildApiUrl(`/posts/${post._id}`), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -94,7 +95,7 @@ const PostMenuActions = ({ post }) => {
     mutationFn: async () => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/posts/${post._id}/like`,
+        buildApiUrl(`/posts/${post._id}/like`),
         {},
         {
           headers: {
@@ -116,7 +117,7 @@ const PostMenuActions = ({ post }) => {
     mutationFn: async () => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/users/save`,
+        buildApiUrl("/users/save"),
         {
           postId: post._id,
         },
@@ -139,7 +140,7 @@ const PostMenuActions = ({ post }) => {
     mutationFn: async () => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/users/readlist`,
+        buildApiUrl("/users/readlist"),
         {
           postId: post._id,
         },
@@ -163,7 +164,7 @@ const PostMenuActions = ({ post }) => {
     mutationFn: async () => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/posts/feature`,
+        buildApiUrl("/posts/feature"),
         {
           postId: post._id,
         },

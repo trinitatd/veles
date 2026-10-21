@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { io } from "socket.io-client";
+import { API_BASE_URL } from "./api.js";
 
-const SOCKET_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const SOCKET_URL = API_BASE_URL;
 
 export const useChannelSocket = (channelId, handlers = {}) => {
   const { getToken, isSignedIn } = useAuth();

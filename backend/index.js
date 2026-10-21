@@ -1,4 +1,3 @@
-
 import "dotenv/config";
 import http from "http";
 import express from "express";
@@ -35,6 +34,16 @@ app.use(
     credentials: true,
   })
 );
+
+// Normalize duplicate slashes in request path (e.g. //posts -> /posts)
+app.use((req, res, next) => {
+  if (req.url) {
+    const [path, query] = req.url.split("?");
+    const cleanPath = path.replace(/\/{2,}/g, "/");
+    req.url = query !== undefined ? `${cleanPath}?${query}` : cleanPath;
+  }
+  next();
+});
 
 // Keep webhook parsing compatible with your existing webhook handler.
 // If it verifies Svix signatures, it must receive the raw request body.
@@ -73,12 +82,16 @@ app.use((error, req, res, next) => {
   });
 });
 
+import { fileURLToPath } from "url";
 
 const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   try {
     await connectDB();
+
+    // Socket.IO shares the same HTTP server.
+    initSocket(server);
 
     server.listen(PORT, "0.0.0.0", () => {
       console.log(`Server is running on port ${PORT}!`);
@@ -89,7 +102,13 @@ async function startServer() {
   }
 }
 
-startServer();
+const isDirectRun =
+  process.argv[1] &&
+  (process.argv[1] === fileURLToPath(import.meta.url) ||
+    process.argv[1].endsWith("index.js"));
 
+if (isDirectRun || process.env.NODE_ENV === "production") {
+  startServer();
+}
 
-export { app, server };
+export { app, server, startServer };

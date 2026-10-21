@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { buildApiUrl } from "../utils/api";
 
 const EditChannelModal = ({ isOpen, channel, onClose, onUpdated }) => {
   const { getToken } = useAuth();
@@ -41,7 +42,7 @@ const EditChannelModal = ({ isOpen, channel, onClose, onUpdated }) => {
     try {
       const token = await getToken();
       const res = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/channels/${channel._id}`,
+        buildApiUrl(`/channels/${channel._id}`),
         {
           name: cleanName,
           description: description.trim(),

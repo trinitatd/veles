@@ -6,6 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "timeago.js";
 import Image from "../../components/Image";
+import { buildApiUrl } from "../../utils/api";
 
 const categories = [
   { label: "All Categories", value: "all" },
@@ -45,7 +46,7 @@ const AdminPosts = () => {
       if (featured !== "all") params.append("featured", featured);
 
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/admin/posts?${params.toString()}`,
+        buildApiUrl(`/admin/posts?${params.toString()}`),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +62,7 @@ const AdminPosts = () => {
     mutationFn: async ({ postId, isFeatured }) => {
       const token = await getToken();
       return axios.patch(
-        `${import.meta.env.VITE_API_URL}/admin/posts/${postId}/feature`,
+        buildApiUrl(`/admin/posts/${postId}/feature`),
         { isFeatured },
         {
           headers: {
@@ -89,7 +90,7 @@ const AdminPosts = () => {
   const deleteMutation = useMutation({
     mutationFn: async (postId) => {
       const token = await getToken();
-      return axios.delete(`${import.meta.env.VITE_API_URL}/admin/posts/${postId}`, {
+      return axios.delete(buildApiUrl(`/admin/posts/${postId}`), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
