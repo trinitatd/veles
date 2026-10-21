@@ -77,12 +77,12 @@ const Navbar = () => {
             About
           </Link>
           <Link to="/write" onClick={() => setOpen(false)} className="hover:text-emerald-300 transition-colors">
-            Write ✍️
+            Write 
           </Link>
           <SignedOut>
             <Link to="/login" onClick={() => setOpen(false)}>
               <button className="py-2 px-6 rounded-3xl bg-green-700 hover:bg-green-600 dark:bg-[#25382B] dark:border dark:border-[#35443A] text-white transition-colors">
-                Login 👋
+                Login
               </button>
             </Link>
           </SignedOut>
@@ -163,7 +163,7 @@ const Navbar = () => {
           <SignedOut>
             <Link to="/login">
               <button className="py-1.5 px-3.5 md:px-4 lg:px-5 rounded-3xl bg-green-700 hover:bg-green-600 dark:bg-[#25382B] dark:border dark:border-[#35443A] dark:hover:bg-[#2e4736] text-white text-xs md:text-sm font-medium shadow-sm transition-colors whitespace-nowrap">
-                Login 👋
+                Login 
               </button>
             </Link>
           </SignedOut>

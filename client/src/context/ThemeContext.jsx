@@ -9,17 +9,7 @@ export const ThemeProvider = ({ children }) => {
       if (saved === "dark" || saved === "light") {
         return saved;
       }
-      if (typeof document !== "undefined") {
-        if (
-          document.documentElement.classList.contains("dark") ||
-          document.documentElement.getAttribute("data-theme") === "dark"
-        ) {
-          return "dark";
-        }
-      }
-      return typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
+      return "light";
     } catch {
       return "light";
     }
@@ -67,7 +57,7 @@ export const ThemeProvider = ({ children }) => {
     applyTheme(theme);
   }, [theme]);
 
-  // Handle multi-tab sync and system preference changes
+  // Handle multi-tab sync
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -79,31 +69,10 @@ export const ThemeProvider = ({ children }) => {
       }
     };
 
-    // Listen for OS system theme changes when no preference is saved in localStorage
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleMediaChange = (e) => {
-      const saved = localStorage.getItem("veles_theme");
-      if (!saved) {
-        const sysTheme = e.matches ? "dark" : "light";
-        setThemeState(sysTheme);
-        applyTheme(sysTheme);
-      }
-    };
-
     window.addEventListener("storage", handleStorage);
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener("change", handleMediaChange);
-    } else if (mediaQuery.addListener) {
-      mediaQuery.addListener(handleMediaChange);
-    }
 
     return () => {
       window.removeEventListener("storage", handleStorage);
-      if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener("change", handleMediaChange);
-      } else if (mediaQuery.removeListener) {
-        mediaQuery.removeListener(handleMediaChange);
-      }
     };
   }, []);
 

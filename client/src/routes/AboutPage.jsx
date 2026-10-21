@@ -32,46 +32,75 @@ export const aboutContent = {
 
   // 4 Developers details
   developers: [
-    {
-      id: 1,
-      name: "Trinita T D",
-      role: "Lead Full-Stack Developer",
-      bio: "Spearheads the end-to-end application architecture, core API design, and real-time features. Passionate about performant web standards and clean code design.",
-      avatar: "/logo.png",
-      skills: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-    },
-    {
-      id: 2,
-      name: "Gauri Smiju",
-      role: "Frontend Engineer & UI/UX Designer",
-      bio: "Crafts delightful user interfaces, responsive design layouts, and accessible interaction patterns. Sarah designed the visual aesthetic and theme of the blog.",
-      avatar: "/logo.png",
-      skills: ["React", "Tailwind CSS", "UI/UX", "Figma", "Accessibility"],
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-    },
-    {
-      id: 3,
-      name: "Yasina Thasneem M",
-      role: "Backend Architect & Database Engineer",
-      bio: "Architects scalable database schemas, query optimizations, and secure authentication flows. David ensures seamless data reliability and server resilience.",
-      avatar: "/logo.png",
-      skills: ["Node.js", "MongoDB", "Mongoose", "REST APIs", "Clerk Auth"],
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-    },
-    {
-      id: 4,
-      name: "Vivek R",
-      role: "DevOps & Cloud Infrastructure Engineer",
-      bio: "Automates continuous deployment pipelines, environment configurations, asset delivery, and cloud monitoring to maintain 99.9% platform uptime.",
-      avatar: "/logo.png",
-      skills: ["Docker", "CI/CD", "Cloud Architecture", "Vite", "ImageKit"],
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-    },
+{
+  id: 1,
+  name: "Trinita T D",
+  role: "Lead Integration & Deployment Engineer",
+  bio: "Leads the integration of frontend and backend components, manages deployment workflows, and ensures seamless communication between application services. Focused on reliable deployments, production readiness, and end-to-end system integration.",
+  avatar: "/profile-pic.png",
+  skills: [
+    "Full-Stack Integration",
+    "Deployment & Hosting",
+    "React",
+    "Node.js",
+    "MongoDB",
+    "Git & GitHub"
+  ],
+  github: "https://github.com",
+  linkedin: "https://linkedin.com",
+},
+  
+{
+  id: 2,
+  name: "Gauri Smiju",
+  role: "Database Engineer",
+  bio: "Designs and manages the database architecture, ensures efficient data storage and retrieval, and maintains data consistency and integrity. Focused on database performance, schema design, and reliable data management for Veles.",
+  avatar: "/profile-pic.png",
+  skills: [
+    "MongoDB",
+    "Mongoose",
+    "Database Design",
+    "Schema Modeling",
+    "Query Optimization",
+    "Data Integrity"
+  ],
+  github: "https://github.com",
+  linkedin: "https://linkedin.com",
+},
+{
+  id: 3,
+  name: "Yasina Thasneem M",
+  role: "Backend Engineer",
+  bio: "Develops and manages the server-side infrastructure of Veles, implementing RESTful APIs, business logic, and secure authentication flows. Focused on backend reliability, API performance, and seamless communication between the frontend and database.",
+  avatar: "/profile-pic.png",
+  skills: [
+    "Node.js",
+    "Express.js",
+    "REST APIs",
+    "Clerk Auth",
+    "API Security",
+    "Server Management"
+  ],
+  github: "https://github.com",
+  linkedin: "https://linkedin.com",
+},
+{
+  id: 4,
+  name: "Vivek R",
+  role: "Frontend Engineer",
+  bio: "Develops and maintains the user-facing interface of Veles, creating responsive layouts, reusable UI components, and intuitive user interactions. Focused on visual consistency, accessibility, and delivering a smooth user experience across devices.",
+  avatar: "/profile-pic.png",
+  skills: [
+    "React",
+    "JavaScript",
+    "Tailwind CSS",
+    "Responsive Web Design",
+    "UI Components",
+    "Frontend Optimization"
+  ],
+  github: "https://github.com",
+  linkedin: "https://linkedin.com",
+},
   ],
 };
 
