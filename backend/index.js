@@ -73,24 +73,23 @@ app.use((error, req, res, next) => {
   });
 });
 
+
 const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   try {
     await connectDB();
 
-    // Socket.IO shares the same HTTP server.
-    initSocket(server);
-
     server.listen(PORT, "0.0.0.0", () => {
-      console.log(`Server listening on port ${PORT}`);
+      console.log(`Server is running on port ${PORT}!`);
     });
-  } catch (error) {
-    console.error("Failed to start Veles backend:", error);
+  } catch (err) {
+    console.error("Backend startup failed:", err.message);
     process.exit(1);
   }
 }
 
 startServer();
+
 
 export { app, server };
