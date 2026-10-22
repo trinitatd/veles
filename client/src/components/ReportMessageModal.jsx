@@ -140,7 +140,11 @@ const ReportMessageModal = ({ isOpen, message, channelId, onClose }) => {
     }
   };
 
-  const senderUsername = message.sender?.username || "CommunityMember";
+  // If modal is not open or message is null, do not render modal content
+  if (!isOpen || !message) return null;
+
+  const senderUsername =
+    message?.sender?.username || message?.senderClerkId || "CommunityMember";
 
   return (
     <div
@@ -181,12 +185,12 @@ const ReportMessageModal = ({ isOpen, message, channelId, onClose }) => {
             <span className="font-semibold text-gray-700 dark:text-[#E5E9E4]">
               @{senderUsername}
             </span>
-            {message.createdAt && (
+            {message?.createdAt && (
               <span>{format(message.createdAt)}</span>
             )}
           </div>
           <p className="text-xs text-gray-600 dark:text-[#A5B0A7] italic line-clamp-3 break-words">
-            "{message.content}"
+            "{message?.content || ""}"
           </p>
         </div>
 

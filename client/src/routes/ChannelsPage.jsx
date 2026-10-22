@@ -1143,6 +1143,7 @@ const ChannelsPage = () => {
                       </div>
                     ) : (
                       messages.map((msg) => {
+                        if (!msg) return null;
                         const isOwn =
                           isSignedIn && user?.id === msg.senderClerkId;
                         const canDelete =
@@ -1158,7 +1159,7 @@ const ChannelsPage = () => {
                             msg.channel?._id === activeChannel?._id);
                         const hasActions = canEdit || canDelete || canReport;
                         const username =
-                          msg.sender?.username || "CommunityMember";
+                          msg.sender?.username || msg.senderClerkId || "CommunityMember";
                         const avatar =
                           msg.sender?.img || "/userImg.jpeg";
 
@@ -1443,12 +1444,14 @@ const ChannelsPage = () => {
         }}
       />
 
-      <ReportMessageModal
-        isOpen={!!reportingMessage}
-        message={reportingMessage}
-        channelId={activeChannel?._id}
-        onClose={() => setReportingMessage(null)}
-      />
+      {reportingMessage && (
+        <ReportMessageModal
+          isOpen={!!reportingMessage}
+          message={reportingMessage}
+          channelId={activeChannel?._id}
+          onClose={() => setReportingMessage(null)}
+        />
+      )}
 
       <ChannelMembersModal
         isOpen={isMembersOpen}
