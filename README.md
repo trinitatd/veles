@@ -246,14 +246,14 @@ credentials.
 ## Team
 
 **Veles --- Team of Four Student Engineers**\
+Group 4 (S5 2024-28)\
 Information Technology\
 Government Engineering College, Barton Hill, Kerala, India
 
-Add each team member's name, role, and profile links here.
 
 ## License
 
-No license has been specified yet. Unless a license is added to the
-repository, reuse and redistribution are not automatically permitted.
-Add a `LICENSE` file when the project's licensing decision has been
-made.
+
+Veles is licensed under the [MIT License](LICENSE).
+You are free to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, subject to the terms and conditions of the MIT License.
+See the [LICENSE](LICENSE) file for the full license text.
