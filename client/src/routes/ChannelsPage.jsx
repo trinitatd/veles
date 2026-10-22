@@ -1148,6 +1148,15 @@ const ChannelsPage = () => {
                         const canDelete =
                           isOwn || isCreatorOfActive || isAdmin;
                         const canEdit = isOwn && !msg.isDeleted;
+                        const canReport =
+                          Boolean(isSignedIn) &&
+                          !isOwn &&
+                          !msg.isDeleted &&
+                          Boolean(activeChannel?.isMember) &&
+                          (!msg.channel ||
+                            msg.channel === activeChannel?._id ||
+                            msg.channel?._id === activeChannel?._id);
+                        const hasActions = canEdit || canDelete || canReport;
                         const username =
                           msg.sender?.username || "CommunityMember";
                         const avatar =
@@ -1231,27 +1240,56 @@ const ChannelsPage = () => {
                             </div>
 
                             {/* Message hover actions toolbar */}
-                            {!msg.isDeleted && editingMessageId !== msg._id && (
-                              <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 bg-white dark:bg-[#222D25] border border-gray-200 dark:border-[#35443A] shadow-2xs rounded-lg p-1 absolute top-1 right-2">
+                            {!msg.isDeleted && editingMessageId !== msg._id && hasActions && (
+                              <div className="opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity flex items-center gap-1 bg-white dark:bg-[#222D25] border border-gray-200 dark:border-[#35443A] shadow-2xs rounded-lg p-1 absolute top-1 right-2 z-10">
                                 {canEdit && (
                                   <button
+                                    type="button"
                                     onClick={() => {
                                       setEditingMessageId(msg._id);
                                       setEditInput(msg.content);
                                     }}
                                     title="Edit Message"
-                                    className="p-1 hover:bg-gray-100 dark:hover:bg-[#1B241E] rounded text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white text-[11px]"
+                                    aria-label="Edit Message"
+                                    className="p-1 hover:bg-gray-100 dark:hover:bg-[#1B241E] rounded text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white text-[11px] transition-colors"
                                   >
                                     ✏️
                                   </button>
                                 )}
                                 {canDelete && (
                                   <button
+                                    type="button"
                                     onClick={() => setDeletingMessage(msg)}
                                     title="Delete Message"
-                                    className="p-1 hover:bg-red-50 dark:hover:bg-red-950/60 rounded text-gray-400 hover:text-red-600 dark:hover:text-red-400 text-[11px]"
+                                    aria-label="Delete Message"
+                                    className="p-1 hover:bg-red-50 dark:hover:bg-red-950/60 rounded text-gray-400 hover:text-red-600 dark:hover:text-red-400 text-[11px] transition-colors"
                                   >
                                     🗑️
+                                  </button>
+                                )}
+                                {canReport && (
+                                  <button
+                                    type="button"
+                                    onClick={() => setReportingMessage(msg)}
+                                    title="Report Message"
+                                    aria-label="Report Message"
+                                    className="p-1 hover:bg-amber-50 dark:hover:bg-amber-950/60 rounded text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 text-[11px] transition-colors flex items-center justify-center cursor-pointer"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="w-3.5 h-3.5"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      aria-hidden="true"
+                                    >
+                                      <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                                      <line x1="4" y1="22" x2="4" y2="15" />
+                                    </svg>
+                                    <span className="sr-only">Report Message</span>
                                   </button>
                                 )}
                               </div>
