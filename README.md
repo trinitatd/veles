@@ -1,6 +1,3 @@
-::: {align="center"}
-`<img src="client/public/logo.png" alt="Veles logo" width="150" />`{=html}
-
 # VELES
 
 ### A Technical Publishing & Real-Time Community Platform
@@ -63,11 +60,11 @@ platform statistics.
 
 ### Light mode
 
-![Veles light mode interface](client/public/light-mode.jpeg)
+![Veles light mode interface](client/public/light-mode-ss.png)
 
 ### Dark mode
 
-![Veles dark mode interface](client/public/dark-mode.jpeg)
+![Veles dark mode interface](client\public\dark-mode-ss.png)
 
 ## Features
 
@@ -148,6 +145,8 @@ messages and server-enforced membership permissions.
 
   Leaving                 Members can leave       Members can leave
   -----------------------------------------------------------------------
+
+
 
 ### Private-channel membership workflow
 
@@ -655,6 +654,7 @@ College, Barton Hill, Kerala, India**.
                                                   Tailwind styling,
                                                   responsive layouts, and
                                                   user experience
+
   -----------------------------------------------------------------------
 
 ## License
