@@ -64,7 +64,7 @@ platform statistics.
 
 ### Dark mode
 
-![Veles dark mode interface](client\public\dark-mode-ss.png)
+![Veles dark mode interface](client/public/dark-mode-ss.png)
 
 ## Features
 
@@ -125,30 +125,17 @@ Channels are a core part of Veles. They provide dedicated spaces for
 technical discussions, study groups, and communities, with persistent
 messages and server-enforced membership permissions.
 
-### Public and private channels
+## Public and Private Channels
 
-  -----------------------------------------------------------------------
-  Capability              Public channel          Private channel
-  ----------------------- ----------------------- -----------------------
-  Discovery               Visible in the channel  Discoverable in the
-                          directory               channel directory
+| Capability | Public Channel | Private Channel |
+|---|---|---|
+| **Discovery** | Visible in the channel directory | Discoverable in the channel directory |
+| **Joining** | Authenticated users can join directly | Users submit a join request |
+| **Approval** | Not required | Channel creator approves or declines |
+| **Messages and member list** | Available to active members | Restricted to active members and platform administrators |
+| **Leaving** | Members can leave | Members can leave |
 
-  Joining                 Authenticated users can Users submit a join
-                          join directly           request
-
-  Approval                Not required            Channel creator
-                                                  approves or declines
-
-  Messages and member     Available to active     Restricted to active
-  list                    members                 members and platform
-                                                  administrators
-
-  Leaving                 Members can leave       Members can leave
-  -----------------------------------------------------------------------
-
-
-
-### Private-channel membership workflow
+## Private-Channel Membership Workflow
 
 1.  A user discovers a private channel and requests to join.
 2.  Veles records the request and notifies the channel creator.
@@ -631,31 +618,14 @@ Veles was developed as a Web Application Development microproject by
 four Information Technology students at **Government Engineering
 College, Barton Hill, Kerala, India**.
 
-  -----------------------------------------------------------------------
-  Contributor             Role                    Focus
-  ----------------------- ----------------------- -----------------------
-  **Trinita T D**         Lead Integration &      Frontend/backend
-                          Deployment Engineer     integration,
-                                                  deployment, production
-                                                  readiness, and API
-                                                  routing
+ ## Contributors
 
-  **Gauri Smiju**         Database Engineer       MongoDB schema design,
-                                                  Mongoose indexes,
-                                                  aggregation pipelines,
-                                                  and data consistency
-
-  **Yasina Thasneem M**   Backend Engineer        Express architecture,
-                                                  REST APIs, Clerk
-                                                  authentication, and
-                                                  server-side security
-
-  **Vivek R**             Frontend Engineer       React components,
-                                                  Tailwind styling,
-                                                  responsive layouts, and
-                                                  user experience
-
-  -----------------------------------------------------------------------
+| Contributor | Role | Focus |
+|---|---|---|
+| **Trinita T D** | Lead Integration & Deployment Engineer | Frontend/backend integration, deployment, production readiness, and API routing |
+| **Gauri Smiju** | Database Engineer | MongoDB schema design, Mongoose indexes, aggregation pipelines, and data consistency |
+| **Yasina Thasneem M** | Backend Engineer | Express architecture, REST APIs, Clerk authentication, and server-side security |
+| **Vivek R** | Frontend Engineer | React components, Tailwind styling, responsive layouts, and user experience |
 
 ## License
 
