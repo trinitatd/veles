@@ -22,7 +22,7 @@ import AdminUsers from "./routes/admin/AdminUsers.jsx";
 import AdminChannels from "./routes/admin/AdminChannels.jsx";
 import ChannelsPage from "./routes/ChannelsPage.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
-import { ClerkProvider } from "@clerk/clerk-react";
+import { ClerkProvider, AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -92,6 +92,15 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <RegisterPage />,
+      },
+      {
+        path: "/sso-callback",
+        element: (
+          <AuthenticateWithRedirectCallback
+            signInFallbackRedirectUrl="/"
+            signUpFallbackRedirectUrl="/"
+          />
+        ),
       },
       {
         path: "/about",
