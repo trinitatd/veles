@@ -634,9 +634,3 @@ College, Barton Hill, Kerala, India**.
 
 
 ------------------------------------------------------------------------
-
-::: {align="center"}
-**Veles --- Where technical knowledge meets community.**
-
-[Explore the live application](https://veles-phi.vercel.app/)
-:::
