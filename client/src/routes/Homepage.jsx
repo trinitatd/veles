@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import MainCategories from "../components/MainCategories";
 import FeaturedPosts from "../components/FeaturedPosts";
 import PostList from "../components/PostList";
 
 const Homepage = () => {
+  const [searchParams] = useSearchParams();
+  const currentCat = searchParams.get("cat");
+  const isAllPosts = !currentCat || currentCat === "all" || currentCat === "general";
+
   return (
     <div className="mt-4 flex flex-col">
       {/* BANNER / HERO */}
@@ -166,7 +170,7 @@ const Homepage = () => {
       </div>
 
       {/* FEATURED POSTS */}
-      <FeaturedPosts />
+      {isAllPosts && <FeaturedPosts />}
 
       {/* POST LIST */}
       <div className="">

@@ -224,64 +224,10 @@ export const getAdminPosts = async (req, res, next) => {
 
 /**
  * PATCH /admin/posts/:id
- * Admin edit any post on the platform
+ * Admin edit post (disabled)
  */
-export const updateAdminPost = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const post = await Post.findById(id);
-
-    if (!post) {
-      return res.status(404).json("Post not found!");
-    }
-
-    const { title, category, desc, content, img, isFeatured } = req.body;
-
-    if (title && title.trim() && title.trim() !== post.title) {
-      let baseSlug = title
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
-
-      if (!baseSlug) {
-        baseSlug = `post-${Date.now()}`;
-      }
-
-      let slug = baseSlug;
-      let existingPost = await Post.findOne({ slug, _id: { $ne: post._id } });
-      let counter = 2;
-
-      while (existingPost) {
-        slug = `${baseSlug}-${counter}`;
-        existingPost = await Post.findOne({ slug, _id: { $ne: post._id } });
-        counter++;
-      }
-
-      post.title = title.trim();
-      post.slug = slug;
-    }
-
-    if (category !== undefined) post.category = category;
-    if (desc !== undefined) post.desc = desc;
-    if (content !== undefined) post.content = content;
-    if (img !== undefined) post.img = img;
-    if (isFeatured !== undefined) post.isFeatured = Boolean(isFeatured);
-
-    const updatedPost = await post.save();
-
-    await recordAdminLog(
-      req,
-      "UPDATE_POST",
-      `Updated article "${updatedPost.title}"`,
-      updatedPost._id,
-      "post"
-    );
-
-    res.status(200).json(updatedPost);
-  } catch (error) {
-    next(error);
-  }
+export const updateAdminPost = async (req, res) => {
+  return res.status(403).json("Editing posts is disabled for administrators.");
 };
 
 /**
@@ -393,41 +339,10 @@ export const getAdminComments = async (req, res, next) => {
 
 /**
  * PATCH /admin/comments/:id
- * Admin edit any comment on the platform
+ * Admin edit comment (disabled)
  */
-export const updateAdminComment = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const { desc } = req.body;
-
-    if (!desc || !desc.trim()) {
-      return res.status(400).json("Comment description cannot be empty!");
-    }
-
-    const comment = await Comment.findById(id).populate("post", "title");
-    if (!comment) {
-      return res.status(404).json("Comment not found!");
-    }
-
-    comment.desc = desc.trim();
-    await comment.save();
-
-    const populated = await Comment.findById(id)
-      .populate("user", "username img email clerkUserId")
-      .populate("post", "title slug");
-
-    await recordAdminLog(
-      req,
-      "UPDATE_COMMENT",
-      `Edited comment on "${comment.post?.title || "article"}"`,
-      id,
-      "comment"
-    );
-
-    res.status(200).json(populated);
-  } catch (error) {
-    next(error);
-  }
+export const updateAdminComment = async (req, res) => {
+  return res.status(403).json("Editing comments is disabled for administrators.");
 };
 
 /**

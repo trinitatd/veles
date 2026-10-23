@@ -111,9 +111,9 @@ export const updateComment = async (req, res) => {
   const isCommentOwner = comment.user.toString() === user._id.toString();
   const isAdmin = role === "admin";
 
-  // EDIT: ONLY the comment owner (or admin) can edit
+  // EDIT: ONLY the comment owner can edit
   // Being the post author does NOT grant permission to edit other users' comments
-  if (!isCommentOwner && !isAdmin) {
+  if (!isCommentOwner) {
     return res
       .status(403)
       .json("You can edit only your own comment!");

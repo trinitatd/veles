@@ -181,7 +181,7 @@ const EditPost = () => {
   // Verify ownership
   const isAuthor =
     post.user?.clerkUserId === user?.id ||
-    user?.publicMetadata?.role === "admin";
+    (post.user?.username && user?.username && post.user.username === user.username);
 
   if (!isAuthor) {
     return (

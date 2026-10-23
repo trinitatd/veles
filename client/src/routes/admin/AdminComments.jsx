@@ -15,8 +15,6 @@ const AdminComments = () => {
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [commentToDelete, setCommentToDelete] = useState(null);
-  const [commentToEdit, setCommentToEdit] = useState(null);
-  const [editDesc, setEditDesc] = useState("");
 
   // Fetch comments with pagination and search
   const { data, isPending, error } = useQuery({
@@ -39,32 +37,6 @@ const AdminComments = () => {
         }
       );
       return res.data;
-    },
-  });
-
-  // Edit comment mutation
-  const editMutation = useMutation({
-    mutationFn: async ({ commentId, desc }) => {
-      const token = await getToken();
-      return axios.patch(
-        buildApiUrl(`/admin/comments/${commentId}`),
-        { desc },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-    },
-    onSuccess: () => {
-      toast.success("Comment updated successfully!");
-      setCommentToEdit(null);
-      setEditDesc("");
-      queryClient.invalidateQueries({ queryKey: ["adminComments"] });
-      queryClient.invalidateQueries({ queryKey: ["adminStats"] });
-    },
-    onError: (err) => {
-      toast.error(err.response?.data?.message || err.response?.data || "Failed to update comment");
     },
   });
 
@@ -99,23 +71,6 @@ const AdminComments = () => {
     setPage(1);
   };
 
-  const handleStartEdit = (comment) => {
-    setCommentToEdit(comment);
-    setEditDesc(comment.desc || "");
-  };
-
-  const handleSaveEdit = (e) => {
-    e.preventDefault();
-    if (!editDesc.trim()) {
-      toast.error("Comment cannot be empty!");
-      return;
-    }
-    editMutation.mutate({
-      commentId: commentToEdit._id,
-      desc: editDesc.trim(),
-    });
-  };
-
   const comments = data?.comments || [];
   const totalComments = data?.totalComments || 0;
   const totalPages = data?.totalPages || 1;
@@ -129,7 +84,7 @@ const AdminComments = () => {
             Comment Management
           </h1>
           <p className="text-sm text-gray-500 dark:text-[#A5B0A7] mt-1">
-            Review community comments, moderate discussions, and edit or remove inappropriate remarks.
+            Review community comments, moderate discussions, and remove inappropriate remarks.
           </p>
         </div>
       </div>
@@ -300,28 +255,6 @@ const AdminComments = () => {
                           </Link>
                         )}
 
-                        {/* Edit Comment */}
-                        <button
-                          onClick={() => handleStartEdit(comment)}
-                          className="p-1.5 rounded-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-[#222D25] transition-colors"
-                          title="Edit Comment"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-4 h-4"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                            />
-                          </svg>
-                        </button>
-
                         {/* Delete Comment */}
                         <button
                           onClick={() => setCommentToDelete(comment)}
@@ -379,68 +312,6 @@ const AdminComments = () => {
           </div>
         )}
       </div>
-
-      {/* EDIT COMMENT MODAL */}
-      {commentToEdit && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
-          <form
-            onSubmit={handleSaveEdit}
-            className="bg-white dark:bg-[#1B241E] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-gray-100 dark:border-[#35443A] flex flex-col gap-4 animate-in fade-in zoom-in-95"
-          >
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-[#E5E9E4]">Edit Comment</h3>
-              <button
-                type="button"
-                onClick={() => setCommentToEdit(null)}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-[#A5B0A7] bg-gray-50 dark:bg-[#222D25] p-2.5 rounded-xl border border-transparent dark:border-[#35443A]">
-              <span>Author:</span>
-              <strong className="text-gray-800 dark:text-[#E5E9E4]">@{commentToEdit.user?.username || "Anonymous"}</strong>
-              {commentToEdit.post && (
-                <>
-                  <span className="mx-1">•</span>
-                  <span>On:</span>
-                  <strong className="text-gray-800 dark:text-[#E5E9E4] truncate max-w-xs">{commentToEdit.post.title}</strong>
-                </>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-700 dark:text-[#E5E9E4]">Comment Text</label>
-              <textarea
-                value={editDesc}
-                onChange={(e) => setEditDesc(e.target.value)}
-                rows={4}
-                required
-                className="w-full p-3 rounded-xl border border-gray-200 dark:border-[#35443A] bg-white dark:bg-[#222D25] text-gray-800 dark:text-[#E5E9E4] text-sm focus:outline-none focus:ring-2 focus:ring-green-800/20 focus:border-green-800"
-              />
-            </div>
-
-            <div className="flex items-center justify-end gap-3 mt-2">
-              <button
-                type="button"
-                onClick={() => setCommentToEdit(null)}
-                disabled={editMutation.isPending}
-                className="px-4 py-2 text-xs font-semibold text-gray-700 dark:text-[#E5E9E4] bg-gray-100 dark:bg-[#222D25] rounded-xl hover:bg-gray-200 dark:hover:bg-[#2b3a2f] transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={editMutation.isPending}
-                className="px-4 py-2 text-xs font-semibold text-white bg-green-800 hover:bg-green-900 dark:bg-[#7BC98C] dark:hover:bg-[#68b87a] dark:text-[#111713] rounded-xl transition-colors disabled:opacity-50"
-              >
-                {editMutation.isPending ? "Saving..." : "Save Changes"}
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
 
       {/* DELETE CONFIRMATION MODAL */}
       {commentToDelete && (

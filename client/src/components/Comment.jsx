@@ -35,7 +35,7 @@ const Comment = ({ comment, postId, post }) => {
 
   // Permissions
   const canDelete = isCommentOwner || isPostAuthor || isAdmin;
-  const canEdit = isCommentOwner || isAdmin;
+  const canEdit = isCommentOwner;
 
   // Delete mutation
   const deleteMutation = useMutation({
